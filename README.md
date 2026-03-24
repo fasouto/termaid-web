@@ -12,6 +12,3 @@ python3 -m http.server 8000
 
 Then open http://localhost:8000.
 
-## Deployment
-
-Hosted on GitHub Pages with a custom domain (`termaid.com`). Pushes to `main` deploy automatically.
