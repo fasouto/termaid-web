@@ -202,6 +202,10 @@
             flex-wrap: wrap;
         }
 
+        .option-gap {
+            width: 0.5rem;
+        }
+
 
         .option {
             display: flex;
@@ -246,13 +250,6 @@
             width: 14px;
             height: 14px;
             accent-color: var(--text);
-        }
-
-        .option-sep {
-            width: 1px;
-            height: 1.2rem;
-            background: var(--border);
-            margin: 0 0.25rem;
         }
 
         .option-info {
@@ -566,6 +563,9 @@
                 border-top: 1px solid var(--border);
             }
             textarea, #output { min-height: 300px; }
+            .options-row { gap: 0.6rem; }
+            .option-gap { width: 0; }
+            .options-label { min-width: auto; margin-right: 0; }
         }
     </style>
 </head>
@@ -599,13 +599,13 @@
                 <input type="number" id="padding-y" value="2" min="0">
                 <span class="option-info">?<span class="tooltip">Vertical padding inside node boxes</span></span>
             </div>
-            <div class="option-sep"></div>
+            <div class="option-gap"></div>
             <div class="option">
                 <label for="ascii-mode">ASCII</label>
                 <input type="checkbox" id="ascii-mode">
                 <span class="option-info">?<span class="tooltip">Use ASCII instead of Unicode box-drawing</span></span>
             </div>
-            <div class="option-sep"></div>
+            <div class="option-gap"></div>
             <div class="option">
                 <label for="rounded-edges">Round edges</label>
                 <input type="checkbox" id="rounded-edges" checked>
@@ -631,6 +631,7 @@
                     <span class="panel-label">Output</span>
                     <div class="panel-actions">
                         <span id="status" class="status"></span>
+                        <span class="shortcut-hint">&#8984;+Shift+C</span>
                         <button class="btn btn-secondary" id="copy-btn" onclick="copyOutput()">Copy</button>
                     </div>
                 </div>
@@ -781,6 +782,7 @@
                 const result = py.runPython('_termaid_render(_input, padding_x=_pad_x, padding_y=_pad_y, use_ascii=_ascii, rounded_edges=_rounded)');
                 document.getElementById('output').textContent = result;
                 setStatus('Rendered', 'ready');
+                setTimeout(() => setStatus('', ''), 2000);
             } catch (e) {
                 const msg = e.message || String(e);
                 const lines = msg.split('\n').filter(l => l.trim());
@@ -815,6 +817,21 @@
             if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
                 e.preventDefault();
                 renderDiagram();
+            }
+            if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'c') {
+                e.preventDefault();
+                copyOutput();
+            }
+        });
+
+        // ASCII mode disables rounded edges (ASCII has no rounded chars)
+        document.getElementById('ascii-mode').addEventListener('change', (e) => {
+            const rounded = document.getElementById('rounded-edges');
+            if (e.target.checked) {
+                rounded.checked = false;
+                rounded.disabled = true;
+            } else {
+                rounded.disabled = false;
             }
         });
 
