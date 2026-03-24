@@ -3,267 +3,513 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>termaid — Mermaid diagrams in your terminal</title>
+    <title>termaid — Mermaid diagrams as Unicode art</title>
+    <meta name="description" content="Render Mermaid diagrams as Unicode. Try it live in the browser.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #1e1e2e;
-            --surface: #181825;
-            --border: #313244;
-            --text: #cdd6f4;
-            --subtext: #a6adc8;
-            --accent: #89b4fa;
-            --accent-hover: #74c7ec;
-            --green: #a6e3a1;
-            --yellow: #f9e2af;
+            --bg: #fdfcf8;
+            --surface: #ffffff;
+            --border: #d6d3cd;
+            --border-hover: #b0ada6;
+            --text: #1c1917;
+            --subtext: #57534e;
+            --muted: #78716c;
+            --accent: #1c1917;
+            --link: #44403c;
+            --link-hover: #1c1917;
+            --green: #16a34a;
+            --yellow: #ca8a04;
+            --red: #dc2626;
+            --render-bg: #2563eb;
+            --render-hover: #1d4ed8;
+            --terminal-bg: #1a1a2e;
+            --terminal-text: #cdd6f4;
+            --shadow: 0 1px 3px rgba(28,25,23,0.08), 0 1px 2px rgba(28,25,23,0.05);
+            --shadow-lg: 0 4px 16px rgba(28,25,23,0.1), 0 1px 3px rgba(28,25,23,0.06);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0f0f14;
+                --surface: #1a1a24;
+                --border: #333346;
+                --border-hover: #4a4a60;
+                --text: #e2e8f0;
+                --subtext: #b0b8c8;
+                --muted: #8892a4;
+                --accent: #e2e8f0;
+                --link: #94a3b8;
+                --link-hover: #e2e8f0;
+                --green: #4ade80;
+                --yellow: #fbbf24;
+                --red: #f87171;
+                --render-bg: #3b82f6;
+                --render-hover: #2563eb;
+                --terminal-bg: #0a0a12;
+                --terminal-text: #cdd6f4;
+                --shadow: 0 1px 3px rgba(0,0,0,0.3), 0 1px 2px rgba(0,0,0,0.2);
+                --shadow-lg: 0 4px 16px rgba(0,0,0,0.4), 0 1px 3px rgba(0,0,0,0.25);
+            }
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             background: var(--bg);
             color: var(--text);
             min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
         }
 
+        /* Header */
         header {
-            padding: 2rem 2rem 1rem;
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 2.5rem 2rem 1.5rem;
             text-align: center;
         }
 
-        header h1 {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-
-        header h1 span {
-            color: var(--accent);
-        }
-
-        header p {
-            color: var(--subtext);
-            font-size: 1.1rem;
-            margin-bottom: 1rem;
-        }
-
-        .install {
-            display: inline-block;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            padding: 0.5rem 1rem;
-            font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
-            font-size: 0.9rem;
-            color: var(--green);
-            margin-bottom: 0.5rem;
-        }
-
-        .links {
-            margin-top: 0.75rem;
-        }
-
-        .links a {
-            color: var(--accent);
-            text-decoration: none;
-            margin: 0 0.75rem;
-            font-size: 0.95rem;
-        }
-
-        .links a:hover {
-            color: var(--accent-hover);
-            text-decoration: underline;
-        }
-
-        .examples-bar {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            padding: 1rem 2rem;
-        }
-
-        .examples-bar button {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            color: var(--text);
-            padding: 0.4rem 0.9rem;
-            border-radius: 6px;
-            cursor: pointer;
+        .ascii-title {
+            font-family: 'JetBrains Mono', monospace;
             font-size: 0.85rem;
+            line-height: 1.15;
+            color: var(--text);
+            margin: 0 auto 0.75rem;
+            display: inline-block;
+            text-align: left;
+        }
+
+        header .tagline {
+            color: var(--subtext);
+            font-size: 1.15rem;
+            line-height: 1.7;
+            margin-bottom: 0.6rem;
+        }
+
+        .install-cmd {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #1c1917;
+            border-radius: 8px;
+            padding: 0.5rem 1rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            color: #f5f5f4;
+            box-shadow: var(--shadow);
+        }
+
+        .install-cmd .dollar {
+            opacity: 0.5;
+            user-select: none;
+        }
+
+        .github-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            color: var(--text);
+            text-decoration: none;
+            font-size: 0.88rem;
+            font-weight: 500;
+            padding: 0.4rem 0.8rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--surface);
             transition: all 0.15s;
         }
 
-        .examples-bar button:hover {
-            border-color: var(--accent);
-            color: var(--accent);
+        .github-link:hover {
+            border-color: var(--border-hover);
+            box-shadow: var(--shadow);
         }
 
-        .examples-bar button.active {
-            background: var(--accent);
-            color: var(--bg);
-            border-color: var(--accent);
+        .github-link svg {
+            width: 18px;
+            height: 18px;
+            fill: var(--text);
         }
 
-        .editor-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-            padding: 0 2rem 2rem;
-            max-width: 1400px;
+        /* Examples */
+        .examples-section {
+            max-width: 1300px;
             margin: 0 auto;
+            padding: 0.5rem 2rem 0.75rem;
+        }
+
+        .examples-row {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+        }
+
+        .examples-label {
+            font-size: 0.72rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--muted);
+            margin-right: 0.1rem;
+        }
+
+        #examples-bar {
+            display: flex;
+            gap: 0.45rem;
+            flex-wrap: wrap;
+        }
+
+        .example-btn {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            color: var(--subtext);
+            padding: 0.38rem 0.8rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 500;
+            transition: all 0.15s;
+        }
+
+        .example-btn:hover {
+            border-color: var(--border-hover);
+            color: var(--text);
+        }
+
+        .example-btn.active {
+            background: var(--text);
+            color: var(--bg);
+            border-color: var(--text);
+        }
+
+        /* Editor */
+        .editor-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 2rem 1.5rem;
+        }
+
+        .editor-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 2fr 3fr;
+            min-height: 560px;
         }
 
         .panel {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            overflow: hidden;
             display: flex;
             flex-direction: column;
+        }
+
+        .panel + .panel {
+            border-left: 1px solid var(--border);
         }
 
         .panel-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0.6rem 1rem;
+            padding: 0.6rem 0.85rem;
             border-bottom: 1px solid var(--border);
-            font-size: 0.85rem;
-            color: var(--subtext);
-            font-weight: 600;
         }
 
-        .panel-header button {
-            background: var(--accent);
-            color: var(--bg);
+        .panel-label {
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--muted);
+        }
+
+        .panel-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn {
             border: none;
-            padding: 0.35rem 0.8rem;
-            border-radius: 4px;
+            padding: 0.35rem 0.75rem;
+            border-radius: 6px;
             cursor: pointer;
-            font-size: 0.8rem;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.78rem;
             font-weight: 600;
-            transition: background 0.15s;
+            transition: all 0.15s;
         }
 
-        .panel-header button:hover {
-            background: var(--accent-hover);
+        .btn:active {
+            transform: translateY(0.5px);
         }
 
-        .panel-header button:disabled {
+        .btn:disabled {
             opacity: 0.5;
             cursor: not-allowed;
         }
 
-        #render-btn {
-            background: var(--green);
+        .btn-render {
+            background: var(--render-bg);
+            color: white;
+            padding: 0.4rem 1rem;
+            font-size: 0.82rem;
+            border-radius: 7px;
+            box-shadow: 0 1px 2px rgba(37,99,235,0.3);
         }
 
-        #render-btn:hover {
-            background: #b4e8a8;
+        .btn-render:hover:not(:disabled) {
+            background: var(--render-hover);
+            box-shadow: 0 2px 6px rgba(37,99,235,0.4);
         }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--subtext);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--border-hover);
+            color: var(--text);
+        }
+
+        .btn-secondary.copied {
+            background: var(--green);
+            color: white;
+            border-color: var(--green);
+        }
+
+        .shortcut-hint {
+            font-size: 0.65rem;
+            color: var(--muted);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .status {
+            font-size: 0.7rem;
+        }
+
+        .status.loading { color: var(--yellow); }
+        .status.ready { color: var(--green); }
+        .status.error { color: var(--red); }
 
         textarea {
             flex: 1;
-            background: var(--bg);
+            background: transparent;
             color: var(--text);
             border: none;
-            padding: 1rem;
-            font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
-            font-size: 0.9rem;
+            padding: 0.85rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.82rem;
             line-height: 1.5;
             resize: none;
-            min-height: 400px;
             outline: none;
+        }
+
+        textarea::placeholder {
+            color: var(--muted);
         }
 
         #output {
             flex: 1;
-            background: var(--bg);
-            padding: 1rem;
-            font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
-            font-size: 0.8rem;
+            background: var(--terminal-bg);
+            padding: 0.85rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
             line-height: 1.3;
             white-space: pre;
             overflow: auto;
-            min-height: 400px;
-            color: var(--text);
+            color: var(--terminal-text);
         }
 
-        .status {
-            font-size: 0.8rem;
+        /* About */
+        .about {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 2rem 2rem 2.5rem;
+        }
+
+        .about h2 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .about p {
             color: var(--subtext);
+            font-size: 1rem;
+            line-height: 1.75;
+            margin-bottom: 0.75rem;
+            max-width: 640px;
         }
 
-        .status.loading {
-            color: var(--yellow);
+        .about .about-supported {
+            color: var(--muted);
+            font-size: 0.9rem;
         }
 
-        .status.ready {
-            color: var(--green);
+        .about p a {
+            color: var(--text);
+            font-weight: 500;
+            text-decoration: underline;
+            text-decoration-color: var(--border);
+            text-underline-offset: 2px;
+            transition: text-decoration-color 0.15s;
         }
 
-        .status.error {
-            color: #f38ba8;
+        .about p a:hover {
+            text-decoration-color: var(--text);
         }
 
+        .about code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 0.1rem 0.4rem;
+        }
+
+        .about-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-top: 1.25rem;
+            flex-wrap: wrap;
+        }
+
+        .about-link {
+            color: var(--link);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.15s;
+        }
+
+        .about-link:hover {
+            color: var(--link-hover);
+        }
+
+        /* Footer */
         footer {
             text-align: center;
-            padding: 1.5rem;
-            color: var(--subtext);
-            font-size: 0.85rem;
+            padding: 1rem 2rem 1.5rem;
+            color: var(--muted);
+            font-size: 0.78rem;
+            border-top: 1px solid var(--border);
+            max-width: 1300px;
+            margin: 0 auto;
         }
 
         footer a {
-            color: var(--accent);
+            color: var(--link);
             text-decoration: none;
         }
 
+        footer a:hover {
+            color: var(--link-hover);
+        }
+
         @media (max-width: 768px) {
-            .editor-container {
+            header { padding: 2rem 1.25rem 0.75rem; }
+            .ascii-title { font-size: 0.55rem; }
+            .examples-section { padding: 0.5rem 1.25rem; }
+            .editor-container { padding: 0 1.25rem 1.5rem; }
+            .editor-card {
                 grid-template-columns: 1fr;
-                padding: 0 1rem 1rem;
+                min-height: auto;
             }
-            header { padding: 1.5rem 1rem 0.75rem; }
-            header h1 { font-size: 1.5rem; }
+            .panel + .panel {
+                border-left: none;
+                border-top: 1px solid var(--border);
+            }
+            textarea, #output { min-height: 300px; }
         }
     </style>
 </head>
 <body>
     <header>
-        <h1><span>termaid</span></h1>
-        <p>Render Mermaid diagrams as Unicode art in your terminal</p>
-        <code class="install">pip install termaid</code>
-        <div class="links">
-            <a href="https://github.com/fasouto/termaid">GitHub</a>
-            <a href="https://pypi.org/project/termaid/">PyPI</a>
-        </div>
+        <pre class="ascii-title"> _                            _     _
+| |_ ___ _ __ _ __ ___   __ _(_) __| |
+| __/ _ \ '__| '_ ` _ \ / _` | |/ _` |
+| ||  __/ |  | | | | | | (_| | | (_| |
+ \__\___|_|  |_| |_| |_|\__,_|_|\__,_|</pre>
+        <p class="tagline">Render Mermaid diagrams as Unicode</p>
     </header>
 
-    <div class="examples-bar" id="examples-bar"></div>
+    <div class="examples-section">
+        <div class="examples-row">
+            <span class="examples-label">Examples</span>
+            <div id="examples-bar"></div>
+        </div>
+    </div>
 
     <div class="editor-container">
-        <div class="panel">
-            <div class="panel-header">
-                <span>Mermaid Code</span>
-                <button id="render-btn" onclick="renderDiagram()">Render</button>
+        <div class="editor-card">
+            <div class="panel">
+                <div class="panel-header">
+                    <span class="panel-label">Source</span>
+                    <div class="panel-actions">
+                        <span class="shortcut-hint">&#8984; Enter</span>
+                        <button class="btn btn-render" id="render-btn" onclick="renderDiagram()">Render</button>
+                    </div>
+                </div>
+                <textarea id="input" spellcheck="false" placeholder="Enter Mermaid syntax..."></textarea>
             </div>
-            <textarea id="input" spellcheck="false"></textarea>
+            <div class="panel">
+                <div class="panel-header">
+                    <span class="panel-label">Output</span>
+                    <div class="panel-actions">
+                        <span id="status" class="status"></span>
+                        <button class="btn btn-secondary" id="copy-btn" onclick="copyOutput()">Copy</button>
+                    </div>
+                </div>
+                <div id="output"></div>
+            </div>
         </div>
-        <div class="panel">
-            <div class="panel-header">
-                <span>Unicode Output</span>
-                <span>
-                    <span id="status" class="status"></span>
-                    <button onclick="copyOutput()">Copy</button>
-                </span>
-            </div>
-            <div id="output"></div>
+    </div>
+
+
+    <div class="about">
+        <h2>What is termaid?</h2>
+        <p>
+            <a href="https://github.com/fasouto/termaid">termaid</a> is an open source Python package that renders
+            <a href="https://mermaid.js.org/">Mermaid</a> diagram syntax as Unicode text art.
+            Pure Python, zero dependencies. Use it in your terminal, scripts, or CI pipelines.
+        </p>
+        <p>
+            This page runs termaid directly in your browser using
+            <a href="https://pyodide.org/">Pyodide</a> (Python compiled to WebAssembly).
+            Click an example to see a pre-rendered preview, or hit <strong>Render</strong> to run
+            your own Mermaid code live.
+        </p>
+        <p class="about-supported">
+            Supports flowcharts, sequence diagrams, class diagrams, ER diagrams,
+            state diagrams, block diagrams, git graphs, pie charts, and treemaps.
+        </p>
+        <div class="about-actions">
+            <code class="install-cmd"><span class="dollar">$</span> pip install termaid</code>
+            <a class="github-link" href="https://github.com/fasouto/termaid">
+                <svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+                fasouto/termaid
+            </a>
+            <a class="about-link" href="https://pypi.org/project/termaid/">PyPI</a>
+            <a class="about-link" href="https://github.com/fasouto/termaid-web">Site source</a>
         </div>
     </div>
 
     <footer>
-        Pure Python, zero dependencies. 9 diagram types supported.<br>
+        <a href="https://github.com/fasouto/termaid">termaid</a> &middot;
+        <a href="https://pypi.org/project/termaid/">PyPI</a> &middot;
         Built by <a href="https://github.com/fasouto">fasouto</a>
     </footer>
 
@@ -271,16 +517,17 @@
         let pyodide = null;
         let pyodideLoading = false;
         let examples = {};
+        let currentExample = null;
 
         const EXAMPLE_LABELS = {
             flowchart: 'Flowchart',
             sequence: 'Sequence',
             class: 'Class',
-            er: 'ER Diagram',
+            er: 'ER',
             state: 'State',
             block: 'Block',
-            git: 'Git Graph',
-            pie: 'Pie Chart',
+            git: 'Git',
+            pie: 'Pie',
             treemap: 'Treemap'
         };
 
@@ -291,6 +538,7 @@
             const bar = document.getElementById('examples-bar');
             for (const [key, label] of Object.entries(EXAMPLE_LABELS)) {
                 const btn = document.createElement('button');
+                btn.className = 'example-btn';
                 btn.textContent = label;
                 btn.dataset.key = key;
                 btn.onclick = () => loadExample(key);
@@ -303,16 +551,18 @@
         function loadExample(key) {
             const ex = examples[key];
             if (!ex) return;
+            currentExample = key;
 
             document.getElementById('input').value = ex.source;
             document.getElementById('output').textContent = ex.output;
+            setStatus('', '');
 
-            document.querySelectorAll('.examples-bar button').forEach(b => {
+            document.querySelectorAll('.example-btn').forEach(b => {
                 b.classList.toggle('active', b.dataset.key === key);
             });
         }
 
-        async function loadPyodide() {
+        async function initPyodide() {
             if (pyodide) return pyodide;
             if (pyodideLoading) {
                 while (!pyodide) await new Promise(r => setTimeout(r, 100));
@@ -320,7 +570,7 @@
             }
 
             pyodideLoading = true;
-            setStatus('Loading Python runtime...', 'loading');
+            setStatus('Loading Python...', 'loading');
 
             const script = document.createElement('script');
             script.src = 'https://cdn.jsdelivr.net/pyodide/v0.27.4/full/pyodide.js';
@@ -331,11 +581,12 @@
                 script.onerror = reject;
             });
 
-            pyodide = await loadPyodide();
+            pyodide = await globalThis.loadPyodide();
             setStatus('Installing termaid...', 'loading');
             await pyodide.loadPackage('micropip');
             const micropip = pyodide.pyimport('micropip');
             await micropip.install('termaid');
+            pyodide.runPython('from termaid import render as _termaid_render');
 
             setStatus('Ready', 'ready');
             return pyodide;
@@ -349,17 +600,16 @@
             btn.textContent = 'Loading...';
 
             try {
-                const py = await loadPyodide();
-
+                const py = await initPyodide();
                 py.globals.set('_input', input);
-                const result = py.runPython(`
-from termaid import render
-render(_input)
-`);
+                const result = py.runPython('_termaid_render(_input)');
                 document.getElementById('output').textContent = result;
                 setStatus('Rendered', 'ready');
             } catch (e) {
-                document.getElementById('output').textContent = 'Error: ' + e.message;
+                const msg = e.message || String(e);
+                const lines = msg.split('\n').filter(l => l.trim());
+                const short = lines[lines.length - 1] || msg;
+                document.getElementById('output').textContent = 'Error: ' + short;
                 setStatus('Error', 'error');
             } finally {
                 btn.disabled = false;
@@ -370,6 +620,13 @@ render(_input)
         function copyOutput() {
             const text = document.getElementById('output').textContent;
             navigator.clipboard.writeText(text);
+            const btn = document.getElementById('copy-btn');
+            btn.textContent = 'Copied!';
+            btn.classList.add('copied');
+            setTimeout(() => {
+                btn.textContent = 'Copy';
+                btn.classList.remove('copied');
+            }, 1500);
         }
 
         function setStatus(msg, cls) {
@@ -378,7 +635,6 @@ render(_input)
             el.className = 'status ' + cls;
         }
 
-        // Ctrl+Enter to render
         document.addEventListener('keydown', (e) => {
             if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
                 e.preventDefault();
