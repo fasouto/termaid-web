@@ -148,13 +148,14 @@
             flex-wrap: wrap;
         }
 
-        .examples-label {
+        .examples-label, .options-label {
             font-size: 0.72rem;
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.05em;
             color: var(--muted);
-            margin-right: 0.1rem;
+            min-width: 5.5rem;
+            flex-shrink: 0;
         }
 
         #examples-bar {
@@ -187,6 +188,128 @@
             border-color: var(--text);
         }
 
+        /* Options */
+        .options-section {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 2rem 0.75rem;
+        }
+
+        .options-row {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+
+        .option {
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+
+        .option label {
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--subtext);
+            cursor: pointer;
+        }
+
+        .option input[type="number"] {
+            width: 2.5rem;
+            padding: 0.2rem 0.3rem;
+            border: 1px solid var(--border);
+            border-radius: 5px;
+            background: var(--surface);
+            color: var(--text);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            text-align: center;
+            outline: none;
+            transition: border-color 0.15s;
+            -moz-appearance: textfield;
+        }
+
+        .option input[type="number"]::-webkit-inner-spin-button,
+        .option input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        .option input[type="number"]:focus {
+            border-color: var(--border-hover);
+        }
+
+        .option input[type="checkbox"] {
+            cursor: pointer;
+            width: 14px;
+            height: 14px;
+            accent-color: var(--text);
+        }
+
+        .option-sep {
+            width: 1px;
+            height: 1.2rem;
+            background: var(--border);
+            margin: 0 0.25rem;
+        }
+
+        .option-info {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: transparent;
+            border: 1px solid var(--border);
+            font-size: 0.55rem;
+            font-weight: 600;
+            color: var(--muted);
+            cursor: help;
+            flex-shrink: 0;
+            position: relative;
+            opacity: 0.6;
+        }
+
+        .option-info:hover {
+            border-color: var(--border-hover);
+            color: var(--text);
+            opacity: 1;
+        }
+
+        .option-info .tooltip {
+            display: none;
+            position: absolute;
+            bottom: calc(100% + 6px);
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--text);
+            color: var(--bg);
+            font-size: 0.72rem;
+            font-weight: 400;
+            padding: 0.35rem 0.6rem;
+            border-radius: 6px;
+            white-space: nowrap;
+            box-shadow: var(--shadow-lg);
+            z-index: 10;
+        }
+
+        .option-info .tooltip::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 5px solid transparent;
+            border-top-color: var(--text);
+        }
+
+        .option-info:hover .tooltip {
+            display: block;
+        }
+
         /* Editor */
         .editor-container {
             max-width: 1300px;
@@ -201,13 +324,14 @@
             box-shadow: var(--shadow-lg);
             overflow: hidden;
             display: grid;
-            grid-template-columns: 2fr 3fr;
-            min-height: 560px;
+            grid-template-columns: minmax(280px, 2fr) 3fr;
+            height: 560px;
         }
 
         .panel {
             display: flex;
             flex-direction: column;
+            min-height: 0;
         }
 
         .panel + .panel {
@@ -318,19 +442,25 @@
             color: var(--muted);
         }
 
-        #output {
+        .output-wrapper {
             flex: 1;
+            overflow: auto;
             background: var(--terminal-bg);
+            min-height: 0;
+        }
+
+        #output {
             padding: 0.85rem;
             font-family: 'Menlo', 'Consolas', 'DejaVu Sans Mono', monospace;
             font-size: 0.75rem;
             line-height: 1.3;
             white-space: pre;
-            overflow: auto;
             color: var(--terminal-text);
             font-variant-ligatures: none;
             -webkit-font-feature-settings: "liga" 0;
             font-feature-settings: "liga" 0;
+            width: fit-content;
+            min-width: 100%;
         }
 
         /* About */
@@ -456,6 +586,34 @@
         </div>
     </div>
 
+    <div class="options-section">
+        <div class="options-row">
+            <span class="options-label">Options</span>
+            <div class="option">
+                <label for="padding-x">Padding X</label>
+                <input type="number" id="padding-x" value="4" min="0">
+                <span class="option-info">?<span class="tooltip">Horizontal padding inside node boxes</span></span>
+            </div>
+            <div class="option">
+                <label for="padding-y">Padding Y</label>
+                <input type="number" id="padding-y" value="2" min="0">
+                <span class="option-info">?<span class="tooltip">Vertical padding inside node boxes</span></span>
+            </div>
+            <div class="option-sep"></div>
+            <div class="option">
+                <label for="ascii-mode">ASCII</label>
+                <input type="checkbox" id="ascii-mode">
+                <span class="option-info">?<span class="tooltip">Use ASCII instead of Unicode box-drawing</span></span>
+            </div>
+            <div class="option-sep"></div>
+            <div class="option">
+                <label for="rounded-edges">Round edges</label>
+                <input type="checkbox" id="rounded-edges" checked>
+                <span class="option-info">?<span class="tooltip">Rounded corners on edge turns</span></span>
+            </div>
+        </div>
+    </div>
+
     <div class="editor-container">
         <div class="editor-card">
             <div class="panel">
@@ -476,7 +634,9 @@
                         <button class="btn btn-secondary" id="copy-btn" onclick="copyOutput()">Copy</button>
                     </div>
                 </div>
-                <div id="output"></div>
+                <div class="output-wrapper">
+                    <div id="output"></div>
+                </div>
             </div>
         </div>
     </div>
@@ -608,8 +768,17 @@
 
             try {
                 const py = await initPyodide();
+                const padX = parseInt(document.getElementById('padding-x').value) || 4;
+                const padY = parseInt(document.getElementById('padding-y').value) || 2;
+                const ascii = document.getElementById('ascii-mode').checked;
+                const rounded = document.getElementById('rounded-edges').checked;
+
                 py.globals.set('_input', input);
-                const result = py.runPython('_termaid_render(_input)');
+                py.globals.set('_pad_x', padX);
+                py.globals.set('_pad_y', padY);
+                py.globals.set('_ascii', ascii);
+                py.globals.set('_rounded', rounded);
+                const result = py.runPython('_termaid_render(_input, padding_x=_pad_x, padding_y=_pad_y, use_ascii=_ascii, rounded_edges=_rounded)');
                 document.getElementById('output').textContent = result;
                 setStatus('Rendered', 'ready');
             } catch (e) {
