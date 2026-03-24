@@ -322,12 +322,15 @@
             flex: 1;
             background: var(--terminal-bg);
             padding: 0.85rem;
-            font-family: 'JetBrains Mono', monospace;
+            font-family: 'Menlo', 'Consolas', 'DejaVu Sans Mono', monospace;
             font-size: 0.75rem;
             line-height: 1.3;
             white-space: pre;
             overflow: auto;
             color: var(--terminal-text);
+            font-variant-ligatures: none;
+            -webkit-font-feature-settings: "liga" 0;
+            font-feature-settings: "liga" 0;
         }
 
         /* About */
@@ -484,7 +487,8 @@
         <p>
             <a href="https://github.com/fasouto/termaid">termaid</a> is an open source Python package that renders
             <a href="https://mermaid.js.org/">Mermaid</a> diagram syntax as Unicode text art.
-            Use it in your terminal, scripts, or CI pipelines.
+            Run it directly with <code>uvx termaid</code> or install with <code>pip install termaid</code>
+            to use it as a Python library.
         </p>
         <p>
             This page runs termaid directly in your browser using
@@ -492,9 +496,12 @@
             Click an example to see a pre-rendered preview, or hit <strong>Render</strong> to run
             your own Mermaid code live. The first render may take a few seconds to load the Python runtime.
         </p>
+        <p>
+            Output is designed for monospace fonts.
+        </p>
         <p class="about-supported">
-            Supports flowcharts, sequence diagrams, class diagrams, ER diagrams,
-            state diagrams, block diagrams, git graphs, pie charts, and treemaps.
+            Currently supports 9 of Mermaid's diagram types: flowcharts, sequence diagrams, class diagrams, ER diagrams,
+            state diagrams, block diagrams, git graphs, pie charts, and treemaps. More coming soon.
         </p>
         <div class="about-actions">
             <code class="install-cmd"><span class="dollar">$</span> pip install termaid</code>
