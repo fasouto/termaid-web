@@ -599,6 +599,11 @@
                 <input type="number" id="padding-y" value="2" min="0">
                 <span class="option-info">?<span class="tooltip">Vertical padding inside node boxes</span></span>
             </div>
+            <div class="option">
+                <label for="gap">Gap</label>
+                <input type="number" id="gap" value="4" min="1">
+                <span class="option-info">?<span class="tooltip">Space between nodes (1-2 for compact)</span></span>
+            </div>
             <div class="option-gap"></div>
             <div class="option">
                 <label for="ascii-mode">ASCII</label>
@@ -661,8 +666,8 @@
             Output is designed for monospace fonts.
         </p>
         <p class="about-supported">
-            Currently supports 9 of Mermaid's diagram types: flowcharts, sequence diagrams, class diagrams, ER diagrams,
-            state diagrams, block diagrams, git graphs, pie charts, and treemaps. More coming soon.
+            Supports 10 of Mermaid's diagram types: flowcharts, sequence diagrams, class diagrams, ER diagrams,
+            state diagrams, block diagrams, git graphs, pie charts, treemaps, and mindmaps.
         </p>
         <div class="about-actions">
             <code class="install-cmd"><span class="dollar">$</span> pip install termaid</code>
@@ -696,7 +701,8 @@
             block: 'Block',
             git: 'Git',
             pie: 'Pie',
-            treemap: 'Treemap'
+            treemap: 'Treemap',
+            mindmap: 'Mindmap'
         };
 
         async function init() {
@@ -771,15 +777,17 @@
                 const py = await initPyodide();
                 const padX = parseInt(document.getElementById('padding-x').value) || 4;
                 const padY = parseInt(document.getElementById('padding-y').value) || 2;
+                const gap = parseInt(document.getElementById('gap').value) || 4;
                 const ascii = document.getElementById('ascii-mode').checked;
                 const rounded = document.getElementById('rounded-edges').checked;
 
                 py.globals.set('_input', input);
                 py.globals.set('_pad_x', padX);
                 py.globals.set('_pad_y', padY);
+                py.globals.set('_gap', gap);
                 py.globals.set('_ascii', ascii);
                 py.globals.set('_rounded', rounded);
-                const result = py.runPython('_termaid_render(_input, padding_x=_pad_x, padding_y=_pad_y, use_ascii=_ascii, rounded_edges=_rounded)');
+                const result = py.runPython('_termaid_render(_input, padding_x=_pad_x, padding_y=_pad_y, gap=_gap, use_ascii=_ascii, rounded_edges=_rounded)');
                 document.getElementById('output').textContent = result;
                 setStatus('Rendered', 'ready');
                 setTimeout(() => setStatus('', ''), 2000);
