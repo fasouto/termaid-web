@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>termaid | Mermaid diagrams as Unicode art</title>
     <meta name="description" content="Render Mermaid diagrams as Unicode. Try it live in the browser.">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -69,25 +70,31 @@
         header {
             max-width: 1300px;
             margin: 0 auto;
-            padding: 2.5rem 2rem 1.5rem;
-            text-align: center;
+            padding: 1.25rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1.5rem;
+        }
+
+        .header-left a {
+            text-decoration: none;
+            color: var(--text);
         }
 
         .ascii-title {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 0.85rem;
+            font-size: 0.6rem;
             line-height: 1.15;
             color: var(--text);
-            margin: 0 auto 0.75rem;
-            display: inline-block;
+            display: block;
             text-align: left;
+            margin-bottom: 0.4rem;
         }
 
         header .tagline {
             color: var(--subtext);
-            font-size: 1.15rem;
-            line-height: 1.7;
-            margin-bottom: 0.6rem;
+            font-size: 1rem;
         }
 
         .install-cmd {
@@ -128,17 +135,46 @@
             box-shadow: var(--shadow);
         }
 
+        .github-link.active {
+            background: var(--text);
+            color: var(--bg);
+            border-color: var(--text);
+        }
+
         .github-link svg {
             width: 18px;
             height: 18px;
-            fill: var(--text);
+            fill: currentColor;
+        }
+
+        .header-nav {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+        }
+
+        .header-nav a {
+            color: var(--link);
+            text-decoration: none;
+            font-size: 0.88rem;
+            font-weight: 500;
+            transition: color 0.15s;
+        }
+
+        .header-nav a:hover {
+            color: var(--link-hover);
+        }
+
+        .header-nav a.active {
+            color: var(--text);
+            font-weight: 600;
         }
 
         /* Examples */
         .examples-section {
             max-width: 1300px;
             margin: 0 auto;
-            padding: 0.5rem 2rem 0.75rem;
+            padding: 1.5rem 2rem 0.75rem;
         }
 
         .examples-row {
@@ -162,6 +198,60 @@
             display: flex;
             gap: 0.45rem;
             flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .more-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .more-dropdown > .example-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .more-dropdown > .example-btn::after {
+            content: '▾';
+            font-size: 0.7rem;
+            opacity: 0.6;
+        }
+
+        .more-dropdown-menu {
+            display: none;
+            position: absolute;
+            top: calc(100% + 4px);
+            left: 0;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            box-shadow: var(--shadow-lg);
+            z-index: 20;
+            min-width: 140px;
+            padding: 0.3rem;
+        }
+
+        .more-dropdown.open .more-dropdown-menu {
+            display: block;
+        }
+
+        .more-dropdown-menu .example-btn {
+            display: block;
+            width: 100%;
+            text-align: left;
+            border: none;
+            border-radius: 5px;
+            padding: 0.4rem 0.7rem;
+        }
+
+        .more-dropdown-menu .example-btn:hover {
+            background: var(--bg);
+        }
+
+        .more-dropdown-menu .example-btn.active {
+            background: var(--text);
+            color: var(--bg);
         }
 
         .example-btn {
@@ -550,8 +640,9 @@
         }
 
         @media (max-width: 768px) {
-            header { padding: 2rem 1.25rem 0.75rem; }
-            .ascii-title { font-size: 0.55rem; }
+            header { padding: 1rem 1.25rem; flex-wrap: wrap; }
+            .ascii-title { font-size: 0.4rem; }
+            .header-nav { gap: 0.75rem; }
             .examples-section { padding: 0.5rem 1.25rem; }
             .editor-container { padding: 0 1.25rem 1.5rem; }
             .editor-card {
@@ -571,12 +662,22 @@
 </head>
 <body>
     <header>
-        <pre class="ascii-title"> _                            _     _
+        <div class="header-left">
+            <a href="/">
+                <pre class="ascii-title"> _                            _     _
 | |_ ___ _ __ _ __ ___   __ _(_) __| |
 | __/ _ \ '__| '_ ` _ \ / _` | |/ _` |
 | ||  __/ |  | | | | | | (_| | | (_| |
  \__\___|_|  |_| |_| |_|\__,_|_|\__,_|</pre>
-        <p class="tagline">Render Mermaid diagrams as Unicode</p>
+                <p class="tagline">Render Mermaid diagrams as Unicode</p>
+            </a>
+        </div>
+        <nav class="header-nav">
+            <a class="active" href="/">Playground</a>
+            <a href="examples.html">Examples</a>
+            <a href="https://github.com/fasouto/termaid">GitHub</a>
+            <a href="https://pypi.org/project/termaid/">PyPI</a>
+        </nav>
     </header>
 
     <div class="examples-section">
@@ -666,8 +767,9 @@
             Output is designed for monospace fonts.
         </p>
         <p class="about-supported">
-            Supports 13 of Mermaid's diagram types: flowcharts, sequence diagrams, class diagrams, ER diagrams,
-            state diagrams, block diagrams, git graphs, pie charts, treemaps, mindmaps, timelines, kanban boards, and quadrant charts.
+            Supports 18 of Mermaid's diagram types: flowcharts, sequence diagrams, class diagrams, ER diagrams,
+            state diagrams, block diagrams, git graphs, gantt charts, architecture diagrams, pie charts, treemaps, mindmaps,
+            XY charts, user journeys, packet diagrams, timelines, kanban boards, and quadrant charts.
         </p>
         <div class="about-actions">
             <code class="install-cmd"><span class="dollar">$</span> pip install termaid</code>
@@ -675,6 +777,7 @@
                 <svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
                 fasouto/termaid
             </a>
+            <a class="about-link" href="examples.html">Examples</a>
             <a class="about-link" href="https://pypi.org/project/termaid/">PyPI</a>
             <a class="about-link" href="https://github.com/fasouto/termaid-web">Site source</a>
         </div>
@@ -692,28 +795,37 @@
         let examples = {};
         let currentExample = null;
 
-        const EXAMPLE_LABELS = {
-            flowchart: 'Flowchart',
-            sequence: 'Sequence',
-            class: 'Class',
-            er: 'ER',
-            state: 'State',
-            block: 'Block',
-            git: 'Git',
-            pie: 'Pie',
-            treemap: 'Treemap',
-            mindmap: 'Mindmap',
-            timeline: 'Timeline',
-            kanban: 'Kanban',
-            quadrant: 'Quadrant'
-        };
+        const PRIMARY_EXAMPLES = [
+            ['flowchart', 'Flowchart'],
+            ['sequence', 'Sequence'],
+            ['class', 'Class'],
+            ['er', 'ER'],
+            ['state', 'State'],
+            ['gantt', 'Gantt'],
+            ['architecture', 'Architecture'],
+        ];
+
+        const MORE_EXAMPLES = [
+            ['block', 'Block'],
+            ['git', 'Git'],
+            ['pie', 'Pie'],
+            ['treemap', 'Treemap'],
+            ['mindmap', 'Mindmap'],
+            ['xychart', 'XY Chart'],
+            ['journey', 'Journey'],
+            ['packet', 'Packet'],
+            ['timeline', 'Timeline'],
+            ['kanban', 'Kanban'],
+            ['quadrant', 'Quadrant'],
+        ];
 
         async function init() {
             const resp = await fetch('examples.json');
             examples = await resp.json();
 
             const bar = document.getElementById('examples-bar');
-            for (const [key, label] of Object.entries(EXAMPLE_LABELS)) {
+
+            for (const [key, label] of PRIMARY_EXAMPLES) {
                 const btn = document.createElement('button');
                 btn.className = 'example-btn';
                 btn.textContent = label;
@@ -722,7 +834,51 @@
                 bar.appendChild(btn);
             }
 
-            loadExample('flowchart');
+            // "More" dropdown
+            const dropdown = document.createElement('div');
+            dropdown.className = 'more-dropdown';
+            const toggle = document.createElement('button');
+            toggle.className = 'example-btn';
+            toggle.textContent = 'More';
+            toggle.onclick = (e) => {
+                e.stopPropagation();
+                dropdown.classList.toggle('open');
+            };
+            dropdown.appendChild(toggle);
+
+            const menu = document.createElement('div');
+            menu.className = 'more-dropdown-menu';
+            for (const [key, label] of MORE_EXAMPLES) {
+                const btn = document.createElement('button');
+                btn.className = 'example-btn';
+                btn.textContent = label;
+                btn.dataset.key = key;
+                btn.onclick = () => {
+                    loadExample(key);
+                    dropdown.classList.remove('open');
+                    // Show selected name on the toggle
+                    toggle.textContent = label;
+                };
+                menu.appendChild(btn);
+            }
+            dropdown.appendChild(menu);
+            bar.appendChild(dropdown);
+
+            // Close dropdown when clicking outside
+            document.addEventListener('click', () => {
+                dropdown.classList.remove('open');
+            });
+
+            // Check for ?src= query param (from "Try it" links)
+            const params = new URLSearchParams(window.location.search);
+            const srcParam = params.get('src');
+            if (srcParam) {
+                document.getElementById('input').value = srcParam;
+                document.getElementById('output').textContent = 'Click Render to see output';
+                window.history.replaceState({}, '', '/');
+            } else {
+                loadExample('flowchart');
+            }
         }
 
         function loadExample(key) {
@@ -734,9 +890,17 @@
             document.getElementById('output').textContent = ex.output;
             setStatus('', '');
 
+            // Highlight active button (works for both primary and dropdown items)
             document.querySelectorAll('.example-btn').forEach(b => {
                 b.classList.toggle('active', b.dataset.key === key);
             });
+
+            // Reset "More" toggle text when a primary example is selected
+            const isPrimary = PRIMARY_EXAMPLES.some(([k]) => k === key);
+            const toggle = document.querySelector('.more-dropdown > .example-btn');
+            if (toggle && isPrimary) {
+                toggle.textContent = 'More';
+            }
         }
 
         async function initPyodide() {

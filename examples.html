@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>termaid | Diagram Examples</title>
+    <meta name="description" content="Gallery of all 18 Mermaid diagram types rendered as Unicode art by termaid.">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #fdfcf8;
+            --surface: #ffffff;
+            --border: #d6d3cd;
+            --border-hover: #b0ada6;
+            --text: #1c1917;
+            --subtext: #57534e;
+            --muted: #78716c;
+            --accent: #1c1917;
+            --link: #44403c;
+            --link-hover: #1c1917;
+            --terminal-bg: #1a1a2e;
+            --terminal-text: #cdd6f4;
+            --shadow: 0 1px 3px rgba(28,25,23,0.08), 0 1px 2px rgba(28,25,23,0.05);
+            --shadow-lg: 0 4px 16px rgba(28,25,23,0.1), 0 1px 3px rgba(28,25,23,0.06);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0f0f14;
+                --surface: #1a1a24;
+                --border: #333346;
+                --border-hover: #4a4a60;
+                --text: #e2e8f0;
+                --subtext: #b0b8c8;
+                --muted: #8892a4;
+                --accent: #e2e8f0;
+                --link: #94a3b8;
+                --link-hover: #e2e8f0;
+                --terminal-bg: #0a0a12;
+                --terminal-text: #cdd6f4;
+                --shadow: 0 1px 3px rgba(0,0,0,0.3), 0 1px 2px rgba(0,0,0,0.2);
+                --shadow-lg: 0 4px 16px rgba(0,0,0,0.4), 0 1px 3px rgba(0,0,0,0.25);
+            }
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .page {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Header */
+        header {
+            padding: 1.25rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1.5rem;
+        }
+
+        .header-left a {
+            text-decoration: none;
+            color: var(--text);
+        }
+
+        .ascii-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.6rem;
+            line-height: 1.15;
+            color: var(--text);
+            display: block;
+            text-align: left;
+            margin-bottom: 0.4rem;
+        }
+
+        header .tagline {
+            color: var(--subtext);
+            font-size: 1rem;
+        }
+
+        .header-nav {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+        }
+
+        .header-nav a {
+            color: var(--link);
+            text-decoration: none;
+            font-size: 0.88rem;
+            font-weight: 500;
+            transition: color 0.15s;
+        }
+
+        .header-nav a:hover {
+            color: var(--link-hover);
+        }
+
+        .header-nav a.active {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        /* Sidebar nav */
+        .layout {
+            display: flex;
+            gap: 3rem;
+            padding: 1.5rem 0 3rem;
+        }
+
+        .sidebar {
+            position: sticky;
+            top: 1.5rem;
+            align-self: flex-start;
+            min-width: 150px;
+            flex-shrink: 0;
+        }
+
+        .sidebar-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .sidebar-group-title {
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--muted);
+            margin-bottom: 0.4rem;
+        }
+
+        .sidebar a {
+            display: block;
+            color: var(--subtext);
+            text-decoration: none;
+            font-size: 0.82rem;
+            font-weight: 500;
+            padding: 0.2rem 0;
+            transition: color 0.1s;
+        }
+
+        .sidebar a:hover {
+            color: var(--text);
+        }
+
+        /* Content */
+        .content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .diagram-section {
+            margin-bottom: 3rem;
+        }
+
+        .diagram-section h2 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 0.3rem;
+            letter-spacing: -0.01em;
+        }
+
+        .diagram-section .desc {
+            color: var(--subtext);
+            font-size: 0.85rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .diagram-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .diagram-card-inner {
+            display: grid;
+            grid-template-columns: 1fr 1.6fr;
+        }
+
+        .diagram-source {
+            padding: 1rem;
+            border-right: 1px solid var(--border);
+            overflow-x: auto;
+        }
+
+        .diagram-source pre {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            line-height: 1.5;
+            color: var(--subtext);
+            white-space: pre;
+        }
+
+        .diagram-output {
+            padding: 1rem;
+            background: var(--terminal-bg);
+            overflow-x: auto;
+        }
+
+        .diagram-output pre {
+            font-family: 'Menlo', 'Consolas', 'DejaVu Sans Mono', monospace;
+            font-size: 0.7rem;
+            line-height: 1.25;
+            color: var(--terminal-text);
+            white-space: pre;
+            font-variant-ligatures: none;
+            -webkit-font-feature-settings: "liga" 0;
+            font-feature-settings: "liga" 0;
+        }
+
+        .diagram-source-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .diagram-source-label {
+            font-size: 0.6rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--muted);
+        }
+
+        .try-link {
+            font-size: 0.7rem;
+            font-weight: 500;
+            color: var(--link);
+            text-decoration: none;
+            transition: color 0.15s;
+        }
+
+        .try-link:hover {
+            color: var(--link-hover);
+        }
+
+        .variation-label {
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 0.15rem;
+        }
+
+        .variation-desc {
+            font-size: 0.78rem;
+            color: var(--muted);
+            margin-bottom: 0.6rem;
+        }
+
+        .diagram-section .diagram-card + .variation-label {
+            margin-top: 1rem;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 1.5rem 0 2rem;
+            color: var(--muted);
+            font-size: 0.78rem;
+            border-top: 1px solid var(--border);
+        }
+
+        footer a {
+            color: var(--link);
+            text-decoration: none;
+        }
+
+        footer a:hover { color: var(--link-hover); }
+
+        @media (max-width: 768px) {
+            header { flex-wrap: wrap; }
+            .ascii-title { font-size: 0.4rem; }
+            .header-nav { gap: 0.75rem; }
+            .page { padding: 0 1.25rem; }
+            .layout { flex-direction: column; gap: 1rem; }
+            .sidebar {
+                position: static;
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0.5rem 1.5rem;
+                min-width: 0;
+            }
+            .sidebar-group { margin-bottom: 0.5rem; }
+            .sidebar-group-title { margin-bottom: 0.15rem; }
+            .diagram-card-inner {
+                grid-template-columns: 1fr;
+            }
+            .diagram-source {
+                border-right: none;
+                border-bottom: 1px solid var(--border);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <header>
+            <div class="header-left">
+                <a href="/">
+                    <pre class="ascii-title"> _                            _     _
+| |_ ___ _ __ _ __ ___   __ _(_) __| |
+| __/ _ \ '__| '_ ` _ \ / _` | |/ _` |
+| ||  __/ |  | | | | | | (_| | | (_| |
+ \__\___|_|  |_| |_| |_|\__,_|_|\__,_|</pre>
+                <p class="tagline">Render Mermaid diagrams as Unicode</p>
+                </a>
+            </div>
+            <nav class="header-nav">
+                <a href="/">Playground</a>
+                <a class="active" href="examples.html">Examples</a>
+                <a href="https://github.com/fasouto/termaid">GitHub</a>
+                <a href="https://pypi.org/project/termaid/">PyPI</a>
+            </nav>
+        </header>
+
+        <div class="layout">
+            <nav class="sidebar" id="sidebar"></nav>
+            <div class="content" id="content"></div>
+        </div>
+
+        <footer>
+            <a href="https://github.com/fasouto/termaid">termaid</a> &middot;
+            <a href="https://pypi.org/project/termaid/">PyPI</a> &middot;
+            Built by <a href="https://github.com/fasouto">fasouto</a>
+        </footer>
+    </div>
+
+    <script>
+        const SECTIONS = [
+            {
+                title: 'Core',
+                items: [
+                    ['flowchart', 'Flowchart', 'Decision trees, process flows, and directed graphs'],
+                    ['sequence', 'Sequence', 'Message exchanges between participants over time'],
+                    ['class', 'Class', 'Object-oriented class hierarchies and relationships'],
+                    ['er', 'ER Diagram', 'Entity-relationship models for databases'],
+                    ['state', 'State Diagram', 'State machines with transitions and conditions'],
+                ],
+            },
+            {
+                title: 'Charts',
+                items: [
+                    ['gantt', 'Gantt', 'Project schedules with tasks, sections, and dependencies'],
+                    ['pie', 'Pie Chart', 'Proportional data as labeled slices'],
+                    ['xychart', 'XY Chart', 'Bar charts, line charts, and combinations'],
+                    ['quadrant', 'Quadrant Chart', '2x2 grids with plotted data points'],
+                ],
+            },
+            {
+                title: 'Other',
+                items: [
+                    ['architecture', 'Architecture', 'Service groups with directional connections'],
+                    ['block', 'Block', 'Grid-based block layouts'],
+                    ['git', 'Git Graph', 'Branch and merge histories'],
+                    ['treemap', 'Treemap', 'Hierarchical data as nested rectangles'],
+                    ['mindmap', 'Mindmap', 'Radial idea maps branching from a root'],
+                    ['journey', 'User Journey', 'Task timelines with satisfaction scores'],
+                    ['packet', 'Packet', 'Bit-aligned network protocol layouts'],
+                    ['timeline', 'Timeline', 'Chronological event lists with details'],
+                    ['kanban', 'Kanban', 'Column-based task boards with cards'],
+                ],
+            },
+        ];
+
+        function renderCard(ex) {
+            const card = document.createElement('div');
+            card.className = 'diagram-card';
+            const inner = document.createElement('div');
+            inner.className = 'diagram-card-inner';
+
+            const srcPanel = document.createElement('div');
+            srcPanel.className = 'diagram-source';
+
+            const srcHeader = document.createElement('div');
+            srcHeader.className = 'diagram-source-header';
+            const srcLabel = document.createElement('div');
+            srcLabel.className = 'diagram-source-label';
+            srcLabel.textContent = 'Mermaid';
+            srcHeader.appendChild(srcLabel);
+            const tryLink = document.createElement('a');
+            tryLink.className = 'try-link';
+            tryLink.textContent = 'Try it \u2192';
+            tryLink.href = '/?src=' + encodeURIComponent(ex.source);
+            srcHeader.appendChild(tryLink);
+            srcPanel.appendChild(srcHeader);
+
+            const srcPre = document.createElement('pre');
+            srcPre.textContent = ex.source;
+            srcPanel.appendChild(srcPre);
+
+            const outPanel = document.createElement('div');
+            outPanel.className = 'diagram-output';
+            const outPre = document.createElement('pre');
+            outPre.textContent = ex.output;
+            outPanel.appendChild(outPre);
+
+            inner.appendChild(srcPanel);
+            inner.appendChild(outPanel);
+            card.appendChild(inner);
+            return card;
+        }
+
+        async function init() {
+            const resp = await fetch('gallery.json');
+            const gallery = await resp.json();
+
+            const sidebar = document.getElementById('sidebar');
+            const content = document.getElementById('content');
+
+            for (const section of SECTIONS) {
+                const group = document.createElement('div');
+                group.className = 'sidebar-group';
+                const groupTitle = document.createElement('div');
+                groupTitle.className = 'sidebar-group-title';
+                groupTitle.textContent = section.title;
+                group.appendChild(groupTitle);
+
+                for (const [key, label, desc] of section.items) {
+                    const a = document.createElement('a');
+                    a.href = '#' + key;
+                    a.textContent = label;
+                    group.appendChild(a);
+
+                    const items = gallery[key];
+                    if (!items || !items.length) continue;
+
+                    const div = document.createElement('div');
+                    div.className = 'diagram-section';
+                    div.id = key;
+
+                    const h2 = document.createElement('h2');
+                    h2.textContent = label;
+                    div.appendChild(h2);
+
+                    const p = document.createElement('p');
+                    p.className = 'desc';
+                    p.textContent = desc;
+                    div.appendChild(p);
+
+                    for (const ex of items) {
+                        if (items.length > 1) {
+                            const vLabel = document.createElement('div');
+                            vLabel.className = 'variation-label';
+                            vLabel.textContent = ex.title;
+                            div.appendChild(vLabel);
+
+                            const vDesc = document.createElement('div');
+                            vDesc.className = 'variation-desc';
+                            vDesc.textContent = ex.desc;
+                            div.appendChild(vDesc);
+                        }
+
+                        div.appendChild(renderCard(ex));
+                    }
+
+                    content.appendChild(div);
+                }
+
+                sidebar.appendChild(group);
+            }
+        }
+
+        init();
+    </script>
+</body>
+</html>
