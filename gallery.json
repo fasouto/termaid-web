@@ -25,10 +25,31 @@
       "output": "┌─────┐\n│     │\n│  A  │\n│     │\n└──┬──┘\n   │\n   ├┄┄┄┄┄┄┄┄┄┄╮\n   │          ┆\n   │          ┆\n   ├━━━━━━━━━━┼━━━━━━━━━━╮\n   ▼          ▼          ▼\n┌─────┐    ┌─────┐    ┌─────┐\n│     │    │label│    │     │\n│  B  ├───►│  C  │    │  D  │\n│     │    │     │    │     │\n└─────┘    └─────┘    └─────┘"
     },
     {
+      "title": "Inline edge labels",
+      "desc": "Rendered with inline_edge_labels=True (--inline-edge-labels): labels sit on the edge itself",
+      "source": "graph LR\n    A[Request] -->|validate| B{Valid?}\n    B -->|yes| C[Process]\n    B -->|no| D[Reject]\n    C -->|persist| E[(Store)]",
+      "options": {
+        "inline_edge_labels": true
+      },
+      "output": "┌───────────┐         ┌─────◇────┐    ┌───────────┐        ╭─────────╮\n│           │         │          │yes │           │        ╰─────────╯\n│  Request  ├validate►│  Valid?  ├──┬►│  Process  ├───────►│  Store  │\n│           │         │          │  │ │           │persist │         │\n└───────────┘         └─────◇────┘  │ └───────────┘        ╰─────────╯\n                                    │\n                                    ├─no\n                                    │\n                                    │ ┌───────────┐\n                                    │ │           │\n                                    ╰►│  Reject   │\n                                      │           │\n                                      └───────────┘"
+    },
+    {
       "title": "Subgraphs",
       "desc": "Nodes grouped into named subgraphs",
       "source": "graph TD\n    subgraph Frontend\n        A[React App] --> B[Router]\n    end\n    subgraph Backend\n        C[API] --> D[Database]\n    end\n    B --> C",
       "output": "\n ┌─────────────────┐\n │ Frontend        │\n │                 │\n │                 │\n │ ┌─────────────┐ │\n │ │             │ │\n │ │  React App  │ │\n │ │             │ │\n │ └──────┬──────┘ │\n │        │        │\n │        │        │\n │        ▼        │\n │ ┌─────────────┐ │\n │ │             │ │\n │ │   Router    │ │\n │ │             │ │\n │ └──────┬──────┘ │\n │        │        │\n └────────┼────────┘\n          │\n          │\n          │\n          │\n ┌────────┼────────┐\n │ Backend│        │\n │        │        │\n │        ▼        │\n │ ┌─────────────┐ │\n │ │             │ │\n │ │     API     │ │\n │ │             │ │\n │ └──────┬──────┘ │\n │        │        │\n │        │        │\n │        ▼        │\n │ ┌─────────────┐ │\n │ │             │ │\n │ │  Database   │ │\n │ │             │ │\n │ └─────────────┘ │\n │                 │\n └─────────────────┘"
+    },
+    {
+      "title": "Subgraph links",
+      "desc": "Edges between subgraphs attach to the group border (new in 0.8.0)",
+      "source": "graph LR\n    subgraph Frontend\n        A[Web App]\n        B[Mobile App]\n    end\n    subgraph Backend\n        C[API]\n        D[(Database)]\n    end\n    Frontend --> Backend\n    C --> D",
+      "output": "\n ┌──────────────────┐      ┌────────────────┐\n │ Frontend         │      │ Backend        │\n │                  │      │                │\n │                  │      │                │\n │ ┌──────────────┐ │      │ ┌────────────┐ │\n │ │              │ │      │ │            │ │\n │ │   Web App    │ ├─────►│ │    API     │ │\n │ │              │ │      │ │            │ │\n │ └──────────────┘ │      │ └──────┬─────┘ │\n │                  │      │        │       │\n │                  │      │        │       │\n │                  │      │        ▼       │\n │ ┌──────────────┐ │      │ ╭────────────╮ │\n │ │              │ │      │ ╰────────────╯ │\n │ │  Mobile App  │ │      │ │  Database  │ │\n │ │              │ │      │ │            │ │\n │ └──────────────┘ │      │ ╰────────────╯ │\n │                  │      │                │\n └──────────────────┘      └────────────────┘"
+    },
+    {
+      "title": "Subgraph pipeline",
+      "desc": "Chained subgraph-to-subgraph edges keep stages stacked in order",
+      "source": "graph TD\n    subgraph Ingest\n        A[Collector]\n    end\n    subgraph Process\n        B[Parser] --> C[Enricher]\n    end\n    subgraph Store\n        D[(Warehouse)]\n    end\n    Ingest --> Process\n    Process --> Store",
+      "output": "\n ┌─────────────────┐\n │ Ingest          │\n │                 │\n │                 │\n │ ┌─────────────┐ │\n │ │             │ │\n │ │  Collector  │ │\n │ │             │ │\n │ └─────────────┘ │\n │                 │\n └────────┬────────┘\n          │\n          │\n          │\n          ▼\n ┌────────────────────────────────────────┐\n │ Process                                │\n │                                        │\n │                                        │\n │ ┌─────────────┐        ┌─────────────┐ │\n │ │             │        │             │ │\n │ │   Parser    ├───────►│  Enricher   │ │\n │ │             │        │             │ │\n │ └─────────────┘        └─────────────┘ │\n │                                        │\n └────────┬───────────────────────────────┘\n          │\n          │\n          │\n          ▼\n ┌─────────────────┐\n │ Store           │\n │                 │\n │                 │\n │ ╭─────────────╮ │\n │ ╰─────────────╯ │\n │ │  Warehouse  │ │\n │ │             │ │\n │ ╰─────────────╯ │\n │                 │\n └─────────────────┘"
     },
     {
       "title": "CI/CD Pipeline",
@@ -48,25 +69,31 @@
       "title": "Basic messages",
       "desc": "Solid and dashed arrows between participants",
       "source": "sequenceDiagram\n    participant C as Client\n    participant S as Server\n    participant D as Database\n    C->>S: GET /users\n    S->>D: SELECT * FROM users\n    D-->>S: Results\n    S-->>C: 200 JSON",
-      "output": " ┌──────────┐    ┌──────────┐             ┌──────────┐\n │  Client  │    │  Server  │             │ Database │\n └──────────┘    └──────────┘             └──────────┘\n       ┆ GET /users    ┆                        ┆\n       ────────────────►                        ┆\n       ┆               ┆ SELECT * FROM users    ┆\n       ┆               ─────────────────────────►\n       ┆               ┆ Results                ┆\n       ┆               ◄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄\n       ┆ 200 JSON      ┆                        ┆\n       ◄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄                        ┆\n       ┆               ┆                        ┆"
+      "output": " ┌──────────┐    ┌──────────┐            ┌────────────┐\n │  Client  │    │  Server  │            │  Database  │\n └──────────┘    └──────────┘            └────────────┘\n       ┆ GET /users    ┆                        ┆\n       ────────────────►                        ┆\n       ┆               ┆ SELECT * FROM users    ┆\n       ┆               ─────────────────────────►\n       ┆               ┆ Results                ┆\n       ┆               ◄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄\n       ┆ 200 JSON      ┆                        ┆\n       ◄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄                        ┆\n       ┆               ┆                        ┆"
     },
     {
       "title": "Arrow types",
       "desc": "Solid, dashed, and cross arrows",
       "source": "sequenceDiagram\n    A->>B: Solid arrow\n    B-->>A: Dashed arrow\n    A-xB: Solid cross\n    B--xA: Dashed cross",
-      "output": " ┌──────────┐      ┌──────────┐\n │    A     │      │    B     │\n └──────────┘      └──────────┘\n       ┆ Solid arrow     ┆\n       ──────────────────►\n       ┆ Dashed arrow    ┆\n       ◄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄\n       ┆ Solid cross     ┆\n       ──────────────────x\n       ┆ Dashed cross    ┆\n       x┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄\n       ┆                 ┆"
+      "output": " ┌─────┐           ┌─────┐\n │  A  │           │  B  │\n └─────┘           └─────┘\n    ┆ Solid arrow     ┆\n    ──────────────────►\n    ┆ Dashed arrow    ┆\n    ◄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄\n    ┆ Solid cross     ┆\n    ──────────────────x\n    ┆ Dashed cross    ┆\n    x┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄\n    ┆                 ┆"
     },
     {
       "title": "Notes",
       "desc": "Notes placed to the right of or over participants",
       "source": "sequenceDiagram\n    participant A as Alice\n    participant B as Bob\n    A->>B: Hello\n    Note right of B: Thinking...\n    B-->>A: Hi there!\n    Note over A,B: Conversation started",
-      "output": " ┌──────────┐            ┌──────────┐\n │  Alice   │            │   Bob    │\n └──────────┘            └──────────┘\n       ┆ Hello                 ┆\n       ────────────────────────►\n       ┆                       ┆\n       ┆                       ┆ ┌─────────────┐\n       ┆                       ┆ │ Thinking... │\n       ┆                       ┆ └─────────────┘\n       ┆ Hi there!             ┆\n       ◄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄\n       ┆                       ┆\n     ┌──────────────────────────┐\n     │   Conversation started   │\n     └──────────────────────────┘\n       ┆                       ┆"
+      "output": " ┌─────────┐              ┌───────┐\n │  Alice  │              │  Bob  │\n └─────────┘              └───────┘\n      ┆ Hello                 ┆\n      ────────────────────────►\n      ┆                       ┆\n      ┆                       ┆ ┌─────────────┐\n      ┆                       ┆ │ Thinking... │\n      ┆                       ┆ └─────────────┘\n      ┆ Hi there!             ┆\n      ◄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄\n      ┆                       ┆\n    ┌──────────────────────────┐\n    │   Conversation started   │\n    └──────────────────────────┘\n      ┆                       ┆"
+    },
+    {
+      "title": "Alt and loop frames",
+      "desc": "Conditional branches and repeated blocks drawn as scope frames",
+      "source": "sequenceDiagram\n    participant U as User\n    participant A as App\n    participant S as Server\n    U->>A: Login\n    A->>S: POST /auth\n    alt valid credentials\n        S-->>A: 200 token\n        A-->>U: Welcome\n    else invalid\n        S-->>A: 401\n        A-->>U: Try again\n    end\n    loop every 5 min\n        A->>S: refresh token\n        S-->>A: new token\n    end",
+      "output": " ┌────────┐       ┌───────┐        ┌──────────┐\n │  User  │       │  App  │        │  Server  │\n └────────┘       └───────┘        └──────────┘\n      ┆ Login         ┆                  ┆\n      ────────────────►                  ┆\n      ┆               ┆ POST /auth       ┆\n      ┆               ───────────────────►\n      ┆               ┆                  ┆\n    ┌──────────────────────────────────────┐\n    │[alt] valid credentials               │\n    │ ┆               ┆ 200 token        ┆ │\n    │ ┆               ◄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄ │\n    │ ┆ Welcome       ┆                  ┆ │\n    │ ◄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄                  ┆ │\n    │ ┆               ┆                  ┆ │\n    │┄[invalid]┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄│\n    │ ┆               ┆ 401              ┆ │\n    │ ┆               ◄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄ │\n    │ ┆ Try again     ┆                  ┆ │\n    │ ◄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄                  ┆ │\n    │ ┆               ┆                  ┆ │\n    └──────────────────────────────────────┘\n      ┆               ┆                  ┆\n      ┆             ┌──────────────────────┐\n      ┆             │[loop] every 5 min    │\n      ┆             │ ┆ refresh token    ┆ │\n      ┆             │ ───────────────────► │\n      ┆             │ ┆ new token        ┆ │\n      ┆             │ ◄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄ │\n      ┆             │ ┆                  ┆ │\n      ┆             └──────────────────────┘\n      ┆               ┆                  ┆"
     },
     {
       "title": "OAuth 2.0 flow",
       "desc": "Authorization code grant with token exchange",
       "source": "sequenceDiagram\n    participant U as User\n    participant C as Client\n    participant A as Auth Server\n    participant R as Resource\n    U->>C: Login\n    C->>A: Authorization Request\n    A->>U: Login Prompt\n    U->>A: Credentials\n    A-->>C: Auth Code\n    C->>A: Exchange Code\n    A-->>C: Access Token\n    C->>R: Request + Token\n    R-->>C: Protected Data\n    C-->>U: Dashboard",
-      "output": " ┌──────────┐    ┌──────────┐              ┌─────────────┐  ┌──────────┐\n │   User   │    │  Client  │              │ Auth Server │  │ Resource │\n └──────────┘    └──────────┘              └─────────────┘  └──────────┘\n       ┆ Login         ┆                          ┆               ┆\n       ────────────────►                          ┆               ┆\n       ┆               ┆ Authorization Request    ┆               ┆\n       ┆               ───────────────────────────►               ┆\n       ┆ Login Prompt  ┆                          ┆               ┆\n       ◄───────────────────────────────────────────               ┆\n       ┆ Credentials   ┆                          ┆               ┆\n       ───────────────────────────────────────────►               ┆\n       ┆               ┆ Auth Code                ┆               ┆\n       ┆               ◄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄               ┆\n       ┆               ┆ Exchange Code            ┆               ┆\n       ┆               ───────────────────────────►               ┆\n       ┆               ┆ Access Token             ┆               ┆\n       ┆               ◄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄               ┆\n       ┆               ┆ Request + Token          ┆               ┆\n       ┆               ───────────────────────────────────────────►\n       ┆               ┆ Protected Data           ┆               ┆\n       ┆               ◄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄\n       ┆ Dashboard     ┆                          ┆               ┆\n       ◄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄                          ┆               ┆\n       ┆               ┆                          ┆               ┆"
+      "output": " ┌────────┐     ┌──────────┐             ┌───────────────┐ ┌────────────┐\n │  User  │     │  Client  │             │  Auth Server  │ │  Resource  │\n └────────┘     └──────────┘             └───────────────┘ └────────────┘\n      ┆ Login         ┆                          ┆                ┆\n      ────────────────►                          ┆                ┆\n      ┆               ┆ Authorization Request    ┆                ┆\n      ┆               ───────────────────────────►                ┆\n      ┆ Login Prompt  ┆                          ┆                ┆\n      ◄───────────────────────────────────────────                ┆\n      ┆ Credentials   ┆                          ┆                ┆\n      ───────────────────────────────────────────►                ┆\n      ┆               ┆ Auth Code                ┆                ┆\n      ┆               ◄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄                ┆\n      ┆               ┆ Exchange Code            ┆                ┆\n      ┆               ───────────────────────────►                ┆\n      ┆               ┆ Access Token             ┆                ┆\n      ┆               ◄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄                ┆\n      ┆               ┆ Request + Token          ┆                ┆\n      ┆               ────────────────────────────────────────────►\n      ┆               ┆ Protected Data           ┆                ┆\n      ┆               ◄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄\n      ┆ Dashboard     ┆                          ┆                ┆\n      ◄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄                          ┆                ┆\n      ┆               ┆                          ┆                ┆"
     }
   ],
   "class": [
@@ -74,7 +101,7 @@
       "title": "Basic class",
       "desc": "Class with attributes and methods",
       "source": "classDiagram\n    class Animal {\n        +String name\n        +int age\n        +makeSound()\n    }\n    class Dog {\n        +fetch()\n    }\n    class Cat {\n        +purr()\n    }\n    Animal <|-- Dog\n    Animal <|-- Cat",
-      "output": "\n\n            ┌──────────────┐\n            │    Animal    │\n            ├──────────────┤\n            │ +String name │\n            │ +int age     │\n            ├──────────────┤\n            │ +makeSound() │\n            └──────────────┘\n                   △ △\n          ┼────────┼ ┼────────┼\n          │                   │\n          │                   │\n  ┌──────────────┐    ┌──────────────┐\n  │     Dog      │    │     Cat      │\n  ├──────────────┤    ├──────────────┤\n  │ +fetch()     │    │ +purr()      │\n  └──────────────┘    └──────────────┘"
+      "output": "\n\n            ┌──────────────┐\n            │    Animal    │\n            ├──────────────┤\n            │ +String name │\n            │ +int age     │\n            ├──────────────┤\n            │ +makeSound() │\n            └──────────────┘\n                  △   △\n          ┌───────┘   └───────┐\n          │                   │\n          │                   │\n  ┌──────────────┐    ┌──────────────┐\n  │     Dog      │    │     Cat      │\n  ├──────────────┤    ├──────────────┤\n  │ +fetch()     │    │ +purr()      │\n  └──────────────┘    └──────────────┘"
     },
     {
       "title": "Relationship types",
@@ -86,7 +113,7 @@
       "title": "MVC pattern",
       "desc": "Model-View-Controller with dependencies",
       "source": "classDiagram\n    class Model {\n        -data: Map\n        +getData()\n        +setData()\n    }\n    class View {\n        +render()\n        +update()\n    }\n    class Controller {\n        +handleInput()\n        +validate()\n    }\n    Controller --> Model\n    Controller --> View\n    View --> Model",
-      "output": "\n\n           ┌────────────────┐\n           │   Controller   │\n           ├────────────────┤\n           │ +handleInput() │\n           │ +validate()    │\n           └────────────────┘\n                   │ │\n          ┼────────┼ │\n          │          ┼────────┼\n          ▼                   │\n  ┌──────────────┐            ▼\n  │    Model     │    ┌──────────────┐\n  ├──────────────┤    │     View     │\n  │ -data: Map   │    ├──────────────┤\n  ├──────────────┤◄───│ +render()    │\n  │ +getData()   │    │ +update()    │\n  │ +setData()   │    └──────────────┘\n  └──────────────┘"
+      "output": "\n\n           ┌────────────────┐\n           │   Controller   │\n           ├────────────────┤\n           │ +handleInput() │\n           │ +validate()    │\n           └────────────────┘\n                  │   │\n          ┌───────┘   └───────┐\n          │                   │\n          ▼                   │\n  ┌──────────────┐            ▼\n  │    Model     │    ┌──────────────┐\n  ├──────────────┤    │     View     │\n  │ -data: Map   │    ├──────────────┤\n  ├──────────────┤◄───│ +render()    │\n  │ +getData()   │    │ +update()    │\n  │ +setData()   │    └──────────────┘\n  └──────────────┘"
     }
   ],
   "er": [
@@ -94,7 +121,7 @@
       "title": "Basic relationships",
       "desc": "Entities with cardinality markers",
       "source": "erDiagram\n    CUSTOMER ||--o{ ORDER : places\n    ORDER ||--|{ LINE_ITEM : contains\n    PRODUCT ||--o{ LINE_ITEM : includes",
-      "output": "\n\n      ┌──────────────┐    ┌──────────────┐\n      │   CUSTOMER   │    │   PRODUCT    │\n      └──────────────┘    └──────────────┘\n              │1                  │1\n          ┼───┼ places            ┼─includes\n          │                           │\n          │0..*                       │0..*\n  ┌──────────────┐ 1     1..* ┌──────────────┐\n  │    ORDER     │────────────│  LINE_ITEM   │\n  └──────────────┘ contains   └──────────────┘"
+      "output": "\n\n      ┌──────────────┐    ┌──────────────┐\n      │   CUSTOMER   │    │   PRODUCT    │\n      └──────────────┘    └──────────────┘\n              │1                  │1\n          ┌───┘                   └───┐\n          │ places                    │ includes\n          │0..*                       │0..*\n  ┌──────────────┐ 1     1..* ┌──────────────┐\n  │    ORDER     │────────────│  LINE_ITEM   │\n  └──────────────┘ contains   └──────────────┘"
     },
     {
       "title": "All cardinality types",
@@ -106,7 +133,7 @@
       "title": "E-commerce schema",
       "desc": "Users, orders, products, and reviews",
       "source": "erDiagram\n    USER ||--o{ ORDER : places\n    USER ||--o{ REVIEW : writes\n    ORDER ||--|{ ORDER_ITEM : contains\n    PRODUCT ||--o{ ORDER_ITEM : includes\n    PRODUCT ||--o{ REVIEW : receives",
-      "output": "\n\n            ┌──────────────┐    ┌──────────────┐\n            │     USER     │    │   PRODUCT    │\n            └──────────────┘    └──────────────┘\n                   │1│1                │1│1\n          ┼────────┼ ┼─writes─┼────────┼─┼nreceives\n          │                   │                   │\n          │0..*               │0..*               │0..*\n  ┌──────────────┐ 1  ┌──────────────┐..* ┌──────────────┐\n  │    ORDER     │────┼────REVIEW────┼────│  ORDER_ITEM  │\n  └──────────────┘    └──────────────┘    └──────────────┘"
+      "output": "\n\n            ┌──────────────┐    ┌──────────────┐\n            │     USER     │    │   PRODUCT    │\n            └──────────────┘    └──────────────┘\n                  │1  │1              │1  │1\n          ┌─places┘   └────┐          └─includes──┐\n          │                │ writes       │       │\n          │                │     ┌────────┘       │\n          │                │     │ receives       │\n          │0..*            │0..* │0..*            │0..*\n  ┌──────────────┐ 1  ┌──────────────┐..* ┌──────────────┐\n  │    ORDER     │────┼────REVIEW────┼────│  ORDER_ITEM  │\n  └──────────────┘    └──────────────┘    └──────────────┘"
     }
   ],
   "state": [
@@ -121,6 +148,18 @@
       "desc": "Connection states from open to close",
       "source": "stateDiagram-v2\n    [*] --> Closed\n    Closed --> Connecting : connect()\n    Connecting --> Open : connected\n    Connecting --> Closed : timeout\n    Open --> Closing : close()\n    Open --> Open : send/receive\n    Closing --> Closed : done\n    Closed --> [*]",
       "output": "╭───────◯──────╮\n│              │\n│      ●       │\n│              │\n╰───────◯──────╯\n        │\n        │\n        ▼\n╭──────────────╮\n│              │◄────╮\n│    Closed    │done\n│              │◄────┤\n╰───────┬──────╯     │\n        │            │timeout\n        ├connect()───┼────────────╮\n        ▼            │            ▼\n╭──────────────╮     │    ╭───────◯──────╮\n│              │     │    │              │\n│  Connecting  ├─────┤    │      ◉       │\n│              │     │    │              │\n╰───────┬──────╯     │    ╰───────◯──────╯\n        │            │\n        │            │\n        ├────────────┤\n        │connected   │\n        ▼            │send/receive\n╭───────┴──────╮     │\n│              │     │\n│     Open     │◄────┤\n│              │     │\n╰───────┬──────╯     │\n        │            │\n        │            │\n        │            │\n close()│            │\n        ▼            │\n╭──────────────╮     │\n│              │     │\n│   Closing    ├─────╯\n│              │\n╰──────────────╯"
+    },
+    {
+      "title": "Composite state",
+      "desc": "Nested states inside a parent state with outer transitions",
+      "source": "stateDiagram-v2\n    [*] --> Off\n    Off --> On : power\n    state On {\n        [*] --> Idle\n        Idle --> Playing : play\n        Playing --> Paused : pause\n        Paused --> Playing : play\n    }\n    On --> Off : power",
+      "output": "   ╭─────◯─────╮\n   │           │\n   │     ●     │\n   │           │\n   ╰─────◯─────╯\n         │\n         │\n         ▼\n   ╭───────────╮\n   │           │\n   │    Off    │◄─╮\n   │           │  │\n   ╰─────┬─────╯  │power\n    power▼        │\n ┌────────────────┴─────────────────────────────────────────────────┐\n │ On                                                               │\n │                                                                  │\n │                                                                  │\n │ ╭─────◯─────╮    ╭───────────╮    ╭───────────╮    ╭───────────╮ │\n │ │           │    │           │    │play       │play│pause      │ │\n │ │     ●     ├───►│   Idle    ├───►│  Playing  ├◄──►┤  Paused   │ │\n │ │           │    │           │    │           │    │           │ │\n │ ╰─────◯─────╯    ╰───────────╯    ╰───────────╯    ╰───────────╯ │\n │                                                                  │\n └──────────────────────────────────────────────────────────────────┘"
+    },
+    {
+      "title": "Choice, fork and join",
+      "desc": "Pseudo-states for branching and parallel paths",
+      "source": "stateDiagram-v2\n    state check <<choice>>\n    state fork_state <<fork>>\n    state join_state <<join>>\n    [*] --> Validate\n    Validate --> check\n    check --> Rejected : invalid\n    check --> fork_state : valid\n    fork_state --> Index\n    fork_state --> Notify\n    Index --> join_state\n    Notify --> join_state\n    join_state --> [*]\n    Rejected --> [*]",
+      "output": "╭───────◯──────╮\n│              │\n│      ●       │\n│              │\n╰───────◯──────╯\n        │\n        │\n        ▼\n╭──────────────╮\n│              │\n│   Validate   │\n│              │\n╰───────┬──────╯\n        │\n        │\n        ▼\n┌───────◇──────┐\n│              │\n│    check     │\n│              │\n└───────◇──────┘\n        │\n        │\n   valid├───────────────────────╮\n        │                       │invalid\n        ▼                       ▼\n━━━━━━━━━━━━━━━━        ╭──────────────╮\n━━━━━━━━━━━━━━━━        │              │\n━━━━━━━━━━━━━━━━        │   Rejected   │\n━━━━━━━━━━━━━━━━        │              │\n━━━━━━━━┬━━━━━━━        ╰───────┬──────╯\n        │                       │\n        ├───────────────────────┼───────────────────╮\n        │                       │                   │\n        │                       │                   │\n        │                       │                   │\n        ▼                       ▼                   ▼\n╭──────────────╮        ╭──────────────╮    ╭───────◯──────╮\n│              │        │              │    │              │\n│    Index     │        │    Notify    │    │      ◉       │\n│              │        │              │    │              │\n╰──────┬───────╯        ╰───────┬──────╯    ╰───────◯──────╯\n       │                        │\n       │ ╭──────────────────────╯\n       ▼ ▼\n━━━━━━━━━━━━━━━━\n━━━━━━━━━━━━━━━━\n━━━━━━━━━━━━━━━━\n━━━━━━━━━━━━━━━━\n━━━━━━━━┬━━━━━━━\n        │\n        │\n        ▼\n╭───────◯──────╮\n│              │\n│      ◉       │\n│              │\n╰───────◯──────╯"
     }
   ],
   "gantt": [
@@ -128,19 +167,25 @@
       "title": "Basic",
       "desc": "Simple project timeline with sections",
       "source": "gantt\n    title Sprint 1\n    dateFormat YYYY-MM-DD\n    section Backend\n        API design     :a1, 2024-01-01, 7d\n        Implementation :a2, after a1, 14d\n    section Frontend\n        Mockups        :b1, 2024-01-01, 5d\n        Build UI       :b2, after b1, 10d",
-      "output": "                                           Sprint 1\n\n Backend        │\n   API design   │████████████████████\n   Implementat. │                    ██████████████████████████████████████████\n Frontend       │\n   Mockups      │██████████████\n   Build UI     │              ██████████████████████████████\n                └┬─────────┬─────────┬─────────┬─────────┬─────────┬──────────┬\n              Jan 01    Jan 04    Jan 08    Jan 11    Jan 15    Jan 18     Jan 22"
+      "output": "                                            Sprint 1\n\n Backend          │\n   API design     │████████████████████\n   Implementation │                    ████████████████████████████████████████\n Frontend         │\n   Mockups        │██████████████\n   Build UI       │              ████████████████████████████\n                  └┬────────┬─────────┬─────────┬─────────┬─────────┬─────────┬\n                Jan 01   Jan 04    Jan 08    Jan 11    Jan 15    Jan 18    Jan 22"
     },
     {
       "title": "Task status tags",
       "desc": "Tasks marked as done, active, or critical using tag keywords",
       "source": "gantt\n    title Release Plan\n    dateFormat YYYY-MM-DD\n    section Design\n        Wireframes     :done, des1, 2024-01-01, 2024-01-14\n        Prototypes     :active, des2, 2024-01-08, 2024-01-21\n    section Development\n        Frontend       :dev1, after des2, 30d\n        Backend        :crit, dev2, 2024-01-15, 2024-03-01\n    section Testing\n        QA             :test1, after dev1, 14d",
-      "output": "                                         Release Plan\n\n Design        │\n   Wireframes  │░░░░░░░░░░░░\n   Prototypes  │      ▓▓▓▓▓▓▓▓▓▓▓▓▓\n Development   │\n   Frontend    │                   ██████████████████████████████\n   Backend     │             ██████████████████████████████████████████████\n Testing       │\n   QA          │                                                 ██████████████\n               └┬─────────┬─────────┬──────────┬─────────┬─────────┬──────────┬\n             Jan 01    Jan 11    Jan 22     Feb 02    Feb 12    Feb 23     Mar 05"
+      "output": "                                          Release Plan\n\n Design          │\n   Wireframes    │░░░░░░░░░░░░\n   Prototypes    │      ▓▓▓▓▓▓▓▓▓▓▓▓▓\n Development     │\n   Frontend      │                   ████████████████████████████\n   Backend       │             ████████████████████████████████████████████\n Testing         │\n   QA            │                                               ██████████████\n                 └┬─────────┬─────────┬─────────┬─────────┬─────────┬─────────┬\n               Jan 01    Jan 11    Jan 22    Feb 02    Feb 12    Feb 23    Mar 05"
     },
     {
       "title": "Milestones",
       "desc": "Diamond markers for key dates using the milestone keyword",
       "source": "gantt\n    title Launch Timeline\n    dateFormat YYYY-MM-DD\n    section Planning\n        Requirements   :a1, 2024-01-01, 10d\n        Kickoff        :milestone, m1, 2024-01-11, 0d\n    section Build\n        Development    :a2, after m1, 30d\n        Code freeze    :milestone, m2, after a2, 0d\n    section Release\n        QA             :a3, after m2, 14d\n        Launch         :milestone, m3, after a3, 0d",
-      "output": "                                       Launch Timeline\n\n Planning     │\n   Requireme. │███████████\n   Kickoff    │           ◆\n Build        │\n   Developme. │           ████████████████████████████████████\n   Code free. │                                               ◆\n Release      │\n   QA         │                                               █████████████████\n   Launch     │                                                                ◆\n              └┬─────────┬──────────┬─────────┬──────────┬─────────┬──────────┬\n            Jan 01    Jan 10     Jan 19    Jan 28     Feb 06    Feb 15     Feb 24"
+      "output": "                                        Launch Timeline\n\n Planning       │\n   Requirements │███████████\n   Kickoff      │           ◆\n Build          │\n   Development  │           ██████████████████████████████████\n   Code freeze  │                                             ◆\n Release        │\n   QA           │                                             █████████████████\n   Launch       │                                                              ◆\n                └┬─────────┬─────────┬─────────┬─────────┬─────────┬──────────┬\n              Jan 01    Jan 10    Jan 19    Jan 28    Feb 06    Feb 15     Feb 24"
+    },
+    {
+      "title": "Custom date format",
+      "desc": "The dateFormat directive is honored for non-ISO dates",
+      "source": "gantt\n    title Sprint 42\n    dateFormat DD-MM-YYYY\n    section Backend\n        Schema        :done, s1, 01-09-2026, 3d\n        Endpoints     :active, s2, after s1, 5d\n    section Frontend\n        Components    :s3, 03-09-2026, 4d\n        Integration   :crit, s4, after s2, 3d\n    section Release\n        Ship          :milestone, m1, after s4, 0d",
+      "output": "                                          Sprint 42\n\n Backend       │\n   Schema      │░░░░░░░░░░░░░░░░░\n   Endpoints   │                 ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓\n Frontend      │\n   Components  │           ███████████████████████\n   Integration │                                             ██████████████████\n Release       │\n   Ship        │                                                               ◆\n               └┬─────────┬─────────┬──────────┬─────────┬─────────┬──────────┬\n             Sep 01    Sep 02    Sep 04     Sep 06    Sep 08    Sep 10     Sep 12"
     }
   ],
   "pie": [
@@ -148,13 +193,13 @@
       "title": "Basic",
       "desc": "Proportional slices with labels and percentages",
       "source": "pie title Languages\n    \"Python\" : 40\n    \"JavaScript\" : 30\n    \"Go\" : 20\n    \"Rust\" : 10",
-      "output": "\n\n      Python┃████████████████  40.0%\n  JavaScript┃▓▓▓▓▓▓▓▓▓▓▓▓  30.0%\n          Go┃░░░░░░░░  20.0%\n        Rust┃▒▒▒▒  10.0%"
+      "output": "\n\n             ████████████████░░░░░░░░░░░░▒▒▒▒▒▒▒▒▚▚▚▚\n                Python 40%       30%      Go 20% 10%\n\n\n      Python┃████████████████  40.0%\n  JavaScript┃░░░░░░░░░░░░  30.0%\n          Go┃▒▒▒▒▒▒▒▒  20.0%\n        Rust┃▚▚▚▚  10.0%"
     },
     {
       "title": "Budget breakdown",
       "desc": "Real-world usage showing team budget allocation",
       "source": "pie title Q4 Budget\n    \"Engineering\" : 45\n    \"Marketing\" : 25\n    \"Operations\" : 15\n    \"Support\" : 10\n    \"Other\" : 5",
-      "output": "\n\n  Engineering┃██████████████████  45.0%\n    Marketing┃▓▓▓▓▓▓▓▓▓▓  25.0%\n   Operations┃░░░░░░  15.0%\n      Support┃▒▒▒▒  10.0%\n        Other┃▞▞   5.0%"
+      "output": "\n\n              ██████████████████░░░░░░░░░░▒▒▒▒▒▒▚▚▚▚▞▞\n               Engineering 45%     25%     15%  10%\n\n\n  Engineering┃██████████████████  45.0%\n    Marketing┃░░░░░░░░░░  25.0%\n   Operations┃▒▒▒▒▒▒  15.0%\n      Support┃▚▚▚▚  10.0%\n        Other┃▞▞   5.0%"
     }
   ],
   "xychart": [
@@ -162,19 +207,19 @@
       "title": "Bar chart",
       "desc": "Vertical bars with axis labels",
       "source": "xychart-beta\n    title \"Quarterly Sales\"\n    x-axis [Q1, Q2, Q3, Q4]\n    y-axis \"Revenue (k)\" 0 --> 120\n    bar [45, 78, 62, 105]",
-      "output": "           Quarterly Sales\n\n    120 │\n        │\n        │                  ████\n     96 │                  ████\n        │                  ████\n        │      ▄▄▄▄        ████\n     72 │      ████        ████\n        │      ████  ▄▄▄▄  ████\n        │      ████  ████  ████\n     48 │▄▄▄▄  ████  ████  ████\n        │████  ████  ████  ████\n        │████  ████  ████  ████\n     24 │████  ████  ████  ████\n        │████  ████  ████  ████\n        │████  ████  ████  ████\n      0 └──┬─────┬─────┬─────┬─\n          Q1    Q2    Q3    Q4"
+      "output": "           Quarterly Sales\n Revenue (k)\n    120 │\n        │\n        │                  ████\n     96 │                  ████\n        │                  ████\n        │      ▄▄▄▄        ████\n     72 │      ████        ████\n        │      ████  ▄▄▄▄  ████\n        │      ████  ████  ████\n     48 │▄▄▄▄  ████  ████  ████\n        │████  ████  ████  ████\n        │████  ████  ████  ████\n     24 │████  ████  ████  ████\n        │████  ████  ████  ████\n        │████  ████  ████  ████\n      0 └──┬─────┬─────┬─────┬─\n          Q1    Q2    Q3    Q4"
     },
     {
       "title": "Line chart",
       "desc": "Trend line connecting data points",
       "source": "xychart-beta\n    title \"Temperature\"\n    x-axis [Mon, Tue, Wed, Thu, Fri]\n    y-axis \"Celsius\" 0 --> 40\n    line [18, 22, 25, 21, 19]",
-      "output": "                Temperature\n\n     40 │\n        │\n        │\n     32 │\n        │\n        │\n     24 │           ╭─────╮\n        │     ╭─────╯     │\n        │     │           ╰─────────\n     16 │  ───╯\n        │\n        │\n      8 │\n        │\n        │\n      0 └──┬─────┬─────┬─────┬─────┬─\n          Mon   Tue   Wed   Thu   Fri"
+      "output": "                Temperature\n Celsius\n     40 │\n        │\n        │\n     32 │\n        │\n        │\n     24 │           ╭─────╮\n        │     ╭─────╯     │\n        │     │           ╰─────────\n     16 │  ───╯\n        │\n        │\n      8 │\n        │\n        │\n      0 └──┬─────┬─────┬─────┬─────┬─\n          Mon   Tue   Wed   Thu   Fri"
     },
     {
       "title": "Bar + line combo",
       "desc": "Bars and line overlaid on the same axes",
       "source": "xychart-beta\n    title \"Monthly Revenue\"\n    x-axis [Jan, Feb, Mar, Apr, May, Jun]\n    y-axis \"Revenue (k)\" 0 --> 100\n    bar [30, 45, 62, 55, 78, 91]\n    line [30, 45, 62, 55, 78, 91]",
-      "output": "                 Monthly Revenue\n\n    100 │\n        │                              ▄▄▄▄\n        │                             ╭───█\n     80 │                        ▄▄▄▄ │████\n        │                       ╭─────╯████\n        │            ▄▄▄▄       │████  ████\n     60 │           ╭─────╮     │████  ████\n        │           │████ ╰─────╯████  ████\n        │      ▄▄▄▄ │████  ████  ████  ████\n     40 │     ╭─────╯████  ████  ████  ████\n        │▄▄▄▄ │████  ████  ████  ████  ████\n        │██───╯████  ████  ████  ████  ████\n     20 │████  ████  ████  ████  ████  ████\n        │████  ████  ████  ████  ████  ████\n        │████  ████  ████  ████  ████  ████\n      0 └──┬─────┬─────┬─────┬─────┬─────┬─\n          Jan   Feb   Mar   Apr   May   Jun"
+      "output": "                 Monthly Revenue\n Revenue (k)\n    100 │\n        │                              ▄▄▄▄\n        │                             ╭───█\n     80 │                        ▄▄▄▄ │████\n        │                       ╭─────╯████\n        │            ▄▄▄▄       │████  ████\n     60 │           ╭─────╮     │████  ████\n        │           │████ ╰─────╯████  ████\n        │      ▄▄▄▄ │████  ████  ████  ████\n     40 │     ╭─────╯████  ████  ████  ████\n        │▄▄▄▄ │████  ████  ████  ████  ████\n        │██───╯████  ████  ████  ████  ████\n     20 │████  ████  ████  ████  ████  ████\n        │████  ████  ████  ████  ████  ████\n        │████  ████  ████  ████  ████  ████\n      0 └──┬─────┬─────┬─────┬─────┬─────┬─\n          Jan   Feb   Mar   Apr   May   Jun"
     },
     {
       "title": "Horizontal",
@@ -189,6 +234,12 @@
       "desc": "2x2 grid with labeled quadrants and data points",
       "source": "quadrantChart\n    title Tech Evaluation\n    x-axis Low Effort --> High Effort\n    y-axis Low Impact --> High Impact\n    quadrant-1 Do First\n    quadrant-2 Plan\n    quadrant-3 Delegate\n    quadrant-4 Eliminate\n    Cache: [0.3, 0.85]\n    Auth: [0.8, 0.75]\n    Typos: [0.15, 0.15]\n    Migrate DB: [0.75, 0.25]",
       "output": "                       Tech Evaluation\n\n                                │\n                                │\n                   ● Cache      │\n                                │\n                                │                ● Auth\n               Plan             │          Do First\n                                │\n                                │\n                                │\n                                │\n  ──────────────────────────────┼─────────────────────────────\n                                │\n                                │\n                                │\n                                │             ● Migrate DB\n             Delegate           │          Eliminate\n          ● Typos               │\n                                │\n                                │\n                                │\n\n                   Low Effort -> High Effort"
+    },
+    {
+      "title": "Product portfolio",
+      "desc": "Growth-share matrix with five plotted products",
+      "source": "quadrantChart\n    title Product Portfolio\n    x-axis Low Market Share --> High Market Share\n    y-axis Low Growth --> High Growth\n    quadrant-1 Stars\n    quadrant-2 Question Marks\n    quadrant-3 Dogs\n    quadrant-4 Cash Cows\n    Analytics: [0.78, 0.82]\n    Mobile App: [0.35, 0.9]\n    Legacy CRM: [0.2, 0.15]\n    Billing: [0.85, 0.25]\n    Chat: [0.5, 0.6]",
+      "output": "                      Product Portfolio\n\n                                │\n                      ● Mobile App\n                                │\n                                │               ● Analytics\n                                │\n          Question Marks        │            Stars\n                                │\n                               ● Chat\n                                │\n                                │\n  ──────────────────────────────┼─────────────────────────────\n                                │\n                                │\n                                │\n                                │                   ● Billing\n               Dogs             │          Cash Cows\n             ● Legacy CRM       │\n                                │\n                                │\n                                │\n\n             Low Market Share -> High Market Share"
     }
   ],
   "architecture": [
@@ -211,6 +262,12 @@
       "desc": "Columns keyword controls the number of items per row",
       "source": "block-beta\n    columns 3\n    A[\"Frontend\"] B[\"API Gateway\"] C[\"Backend\"]\n    D[\"React\"] E[\"Auth\"] F[\"Database\"]",
       "output": "\n\n  ┌──────────┐    ┌─────────────┐    ┌──────────┐\n  │          │    │             │    │          │\n  │ Frontend │    │ API Gateway │    │ Backend  │\n  │          │    │             │    │          │\n  └──────────┘    └─────────────┘    └──────────┘\n\n\n  ┌──────────┐    ┌─────────────┐    ┌──────────┐\n  │          │    │             │    │          │\n  │  React   │    │    Auth     │    │ Database │\n  │          │    │             │    │          │\n  └──────────┘    └─────────────┘    └──────────┘"
+    },
+    {
+      "title": "Nested groups",
+      "desc": "Blocks inside named groups with edges between the groups",
+      "source": "block-beta\n    columns 3\n    block:frontend:1\n        columns 1\n        web[\"Web\"]\n        mobile[\"Mobile\"]\n    end\n    gateway[\"API Gateway\"]\n    block:backend:1\n        columns 1\n        auth[\"Auth\"]\n        orders[\"Orders\"]\n    end\n    frontend --> gateway\n    gateway --> backend",
+      "output": "\n\n  ┌────────────────┐    ┌─────────────┐    ┌────────────────┐\n  │    frontend    │    │             │    │    backend     │\n  │                │    │             │    │                │\n  │                │    │             │    │                │\n  │  ┌──────────┐  │    │             │    │  ┌──────────┐  │\n  │  │          │  │    │             │    │  │          │  │\n  │  │   Web    │  │    │             │    │  │   Auth   │  │\n  │  │          │  │    │             │    │  │          │  │\n  │  └──────────┘  │    │             │    │  └──────────┘  │\n  │                │───►│ API Gateway │───►│                │\n  │                │    │             │    │                │\n  │  ┌──────────┐  │    │             │    │  ┌──────────┐  │\n  │  │          │  │    │             │    │  │          │  │\n  │  │  Mobile  │  │    │             │    │  │  Orders  │  │\n  │  │          │  │    │             │    │  │          │  │\n  │  └──────────┘  │    │             │    │  └──────────┘  │\n  │                │    │             │    │                │\n  │                │    │             │    │                │\n  └────────────────┘    └─────────────┘    └────────────────┘"
     }
   ],
   "git": [
@@ -233,6 +290,12 @@
       "desc": "Nested rectangles showing hierarchy and proportion",
       "source": "treemap-beta\n    \"Engineering\"\n        \"Backend\": 45\n        \"Frontend\": 40\n        \"Infra\": 35\n    \"Product\"\n        \"PM\": 20\n        \"Analytics\": 10\n    \"Design\"\n        \"UX\": 15\n        \"Visual\": 10",
       "output": "┌┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┐ ┌┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┐ ┌┄┄┄┄┄┄┄┄┄┄┄┄┄┐\n┆                            Engineering                            ┆ ┆    Product     ┆ ┆   Design    ┆\n┆┌──────────────────────┐ ┌────────────────────┐ ┌─────────────────┐┆ ┆┌────────┐ ┌───┐┆ ┆┌─────┐ ┌───┐┆\n┆│       Backend        │ │      Frontend      │ │      Infra      │┆ ┆│   PM   │ │An…│┆ ┆│ UX  │ │Vi…│┆\n┆│          45          │ │         40         │ │       35        │┆ ┆│   20   │ │10 │┆ ┆│ 15  │ │10 │┆\n┆│                      │ │                    │ │                 │┆ ┆│        │ │   │┆ ┆│     │ │   │┆\n┆└──────────────────────┘ └────────────────────┘ └─────────────────┘┆ ┆└────────┘ └───┘┆ ┆└─────┘ └───┘┆\n└┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┘ └┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┘ └┄┄┄┄┄┄┄┄┄┄┄┄┄┘"
+    },
+    {
+      "title": "Nested sections",
+      "desc": "Three levels of hierarchy with sizes summed per section",
+      "source": "treemap-beta\n    \"Company\"\n        \"Engineering\"\n            \"Platform\": 30\n            \"Mobile\": 20\n            \"Web\": 25\n        \"Sales\"\n            \"EMEA\": 15\n            \"US\": 20\n        \"Ops\": 10",
+      "output": "┌┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┐\n┆                                  Company                                   ┆\n┆┌┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┐ ┌┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┐ ┌────┐┆\n┆┆                Engineering                 ┆ ┆       Sales        ┆ │Ops │┆\n┆┆┌───────────────┐ ┌────────────┐ ┌─────────┐┆ ┆┌─────────┐ ┌──────┐┆ │ 10 │┆\n┆┆│   Platform    │ │    Web     │ │ Mobile  │┆ ┆│   US    │ │ EMEA │┆ │    │┆\n┆┆│      30       │ │     25     │ │   20    │┆ ┆│   20    │ │  15  │┆ │    │┆\n┆┆│               │ │            │ │         │┆ ┆│         │ │      │┆ │    │┆\n┆┆│               │ │            │ │         │┆ ┆│         │ │      │┆ │    │┆\n┆┆└───────────────┘ └────────────┘ └─────────┘┆ ┆└─────────┘ └──────┘┆ │    │┆\n┆└┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┘ └┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┘ └────┘┆\n└┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┘"
     }
   ],
   "mindmap": [
@@ -263,6 +326,12 @@
       "desc": "Simple 32-bit aligned packet fields",
       "source": "packet-beta\n    0-15: \"Source Port\"\n    16-31: \"Destination Port\"\n    32-47: \"Length\"\n    48-63: \"Checksum\"\n    64-95: \"Data\"",
       "output": " 0                                             15 16                                           31\n ╭───────────────────────────────────────────────┬───────────────────────────────────────────────╮\n │                 Source Port                   │               Destination Port                │\n ╰───────────────────────────────────────────────┴───────────────────────────────────────────────╯\n 32                                            47 48                                           63\n ╭───────────────────────────────────────────────┬───────────────────────────────────────────────╮\n │                    Length                     │                   Checksum                    │\n ╰───────────────────────────────────────────────┴───────────────────────────────────────────────╯\n 64                                                                                            95\n ╭───────────────────────────────────────────────────────────────────────────────────────────────╮\n │                                             Data                                              │\n ╰───────────────────────────────────────────────────────────────────────────────────────────────╯"
+    },
+    {
+      "title": "Auto-increment fields",
+      "desc": "ICMP header using +N widths instead of explicit bit ranges",
+      "source": "packet\n    +8: \"Type\"\n    +8: \"Code\"\n    +16: \"Checksum\"\n    +32: \"Rest of Header\"",
+      "output": " 0                      7 8                    15 16                                           31\n ╭───────────────────────┬───────────────────────┬───────────────────────────────────────────────╮\n │         Type          │         Code          │                   Checksum                    │\n ╰───────────────────────┴───────────────────────┴───────────────────────────────────────────────╯\n 32                                                                                            63\n ╭───────────────────────────────────────────────────────────────────────────────────────────────╮\n │                                        Rest of Header                                         │\n ╰───────────────────────────────────────────────────────────────────────────────────────────────╯"
     }
   ],
   "timeline": [
@@ -271,6 +340,12 @@
       "desc": "Chronological events grouped by section",
       "source": "timeline\n    title Project History\n    section 2023\n        January : Kickoff meeting\n        March : Alpha release\n        June : Beta testing\n    section 2024\n        January : v1.0 launch\n        June : 10k users",
       "output": "Project History\n\n ══ 2023 ══\n │\n ●── January\n │   Kickoff meeting\n │\n ●── March\n │   Alpha release\n │\n ●── June\n │   Beta testing\n │\n ══ 2024 ══\n │\n ●── January\n │   v1.0 launch\n │\n ●── June\n │   10k users"
+    },
+    {
+      "title": "Multiple details per event",
+      "desc": "Comma-separated details listed under each event",
+      "source": "timeline\n    title Web Platform Releases\n    section 2025\n        Q1 : v1.0 public launch, Docs site\n        Q3 : v1.5 plugin API\n    section 2026\n        Q1 : v2.0 rewrite, Dark mode, CLI\n        Q3 : v2.2 offline support",
+      "output": "Web Platform Releases\n\n ══ 2025 ══\n │\n ●── Q1\n │   v1.0 public launch\n │   Docs site\n │\n ●── Q3\n │   v1.5 plugin API\n │\n ══ 2026 ══\n │\n ●── Q1\n │   v2.0 rewrite\n │   Dark mode\n │   CLI\n │\n ●── Q3\n │   v2.2 offline support"
     }
   ],
   "kanban": [
@@ -278,7 +353,13 @@
       "title": "Basic",
       "desc": "Columns with task cards",
       "source": "kanban\n    Todo\n        Design landing page\n        Write API docs\n    In Progress\n        Build auth flow\n        Setup CI/CD\n    Done\n        Project setup\n        Database schema",
-      "output": "╭─────────────────────╮  ╭─────────────────╮  ╭─────────────────╮\n│        Todo         │  │   In Progress   │  │      Done       │\n│─────────────────────│  │─────────────────│  │─────────────────│\n│ ┌─────────────────┐ │  │ ┌─────────────┐ │  │ ┌─────────────┐ │\n│ │Design landing p.│ │  │ │Build auth f.│ │  │ │Project setup│ │\n│ └─────────────────┘ │  │ └─────────────┘ │  │ └─────────────┘ │\n│                     │  │                 │  │                 │\n│ ┌─────────────────┐ │  │ ┌─────────────┐ │  │ ┌─────────────┐ │\n│ │Write API docs   │ │  │ │Setup CI/CD  │ │  │ │Database sch.│ │\n│ └─────────────────┘ │  │ └─────────────┘ │  │ └─────────────┘ │\n╰─────────────────────╯  ╰─────────────────╯  ╰─────────────────╯"
+      "output": "╭───────────────────────╮  ╭───────────────────╮  ╭───────────────────╮\n│         Todo          │  │    In Progress    │  │       Done        │\n│───────────────────────│  │───────────────────│  │───────────────────│\n│ ┌───────────────────┐ │  │ ┌───────────────┐ │  │ ┌───────────────┐ │\n│ │Design landing page│ │  │ │Build auth flow│ │  │ │Project setup  │ │\n│ └───────────────────┘ │  │ └───────────────┘ │  │ └───────────────┘ │\n│                       │  │                   │  │                   │\n│ ┌───────────────────┐ │  │ ┌───────────────┐ │  │ ┌───────────────┐ │\n│ │Write API docs     │ │  │ │Setup CI/CD    │ │  │ │Database schema│ │\n│ └───────────────────┘ │  │ └───────────────┘ │  │ └───────────────┘ │\n╰───────────────────────╯  ╰───────────────────╯  ╰───────────────────╯"
+    },
+    {
+      "title": "Column and card ids",
+      "desc": "id[Title] syntax for columns and cards",
+      "source": "kanban\n    backlog[Backlog]\n        b1[Refactor auth module]\n        b2[Add rate limiting]\n    review[In Review]\n        r1[Fix pagination bug]\n    shipped[Shipped]\n        s1[Dark mode]\n        s2[CSV export]",
+      "output": "╭────────────────────────╮  ╭──────────────────────╮  ╭──────────────╮\n│        Backlog         │  │      In Review       │  │   Shipped    │\n│────────────────────────│  │──────────────────────│  │──────────────│\n│ ┌────────────────────┐ │  │ ┌──────────────────┐ │  │ ┌──────────┐ │\n│ │Refactor auth module│ │  │ │Fix pagination bug│ │  │ │Dark mode │ │\n│ └────────────────────┘ │  │ └──────────────────┘ │  │ └──────────┘ │\n│                        │  │                      │  │              │\n│ ┌────────────────────┐ │  │                      │  │ ┌──────────┐ │\n│ │Add rate limiting   │ │  │                      │  │ │CSV export│ │\n│ └────────────────────┘ │  │                      │  │ └──────────┘ │\n╰────────────────────────╯  ╰──────────────────────╯  ╰──────────────╯"
     }
   ]
 }

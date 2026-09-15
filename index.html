@@ -717,6 +717,12 @@
                 <input type="checkbox" id="rounded-edges" checked>
                 <span class="option-info">?<span class="tooltip">Rounded corners on edge turns</span></span>
             </div>
+            <div class="option-gap"></div>
+            <div class="option">
+                <label for="inline-labels">Inline labels</label>
+                <input type="checkbox" id="inline-labels">
+                <span class="option-info">?<span class="tooltip">Attach flowchart edge labels directly to their edges</span></span>
+            </div>
         </div>
     </div>
 
@@ -786,12 +792,13 @@
     <footer>
         <a href="https://github.com/fasouto/termaid">termaid</a> &middot;
         <a href="https://pypi.org/project/termaid/">PyPI</a> &middot;
-        Built by <a href="https://github.com/fasouto">fasouto</a>
+        Built by <a href="https://fabiosouto.me/">Fabio Souto</a>
     </footer>
 
     <script>
         let pyodide = null;
         let pyodideLoading = false;
+        let supportsInlineLabels = false;
         let examples = {};
         let currentExample = null;
 
@@ -928,6 +935,15 @@
             const micropip = pyodide.pyimport('micropip');
             await micropip.install('termaid');
             pyodide.runPython('from termaid import render as _termaid_render');
+            supportsInlineLabels = pyodide.runPython(
+                'import inspect; "inline_edge_labels" in inspect.signature(_termaid_render).parameters'
+            );
+            if (!supportsInlineLabels) {
+                const cb = document.getElementById('inline-labels');
+                cb.checked = false;
+                cb.disabled = true;
+                cb.parentElement.querySelector('.tooltip').textContent = 'Needs a newer termaid release';
+            }
 
             setStatus('Ready', 'ready');
             return pyodide;
@@ -947,6 +963,7 @@
                 const gap = parseInt(document.getElementById('gap').value) || 4;
                 const ascii = document.getElementById('ascii-mode').checked;
                 const rounded = document.getElementById('rounded-edges').checked;
+                const inlineLabels = supportsInlineLabels && document.getElementById('inline-labels').checked;
 
                 py.globals.set('_input', input);
                 py.globals.set('_pad_x', padX);
@@ -954,7 +971,9 @@
                 py.globals.set('_gap', gap);
                 py.globals.set('_ascii', ascii);
                 py.globals.set('_rounded', rounded);
-                const result = py.runPython('_termaid_render(_input, padding_x=_pad_x, padding_y=_pad_y, gap=_gap, use_ascii=_ascii, rounded_edges=_rounded)');
+                py.globals.set('_inline_labels', inlineLabels);
+                const extra = inlineLabels ? ', inline_edge_labels=_inline_labels' : '';
+                const result = py.runPython('_termaid_render(_input, padding_x=_pad_x, padding_y=_pad_y, gap=_gap, use_ascii=_ascii, rounded_edges=_rounded' + extra + ')');
                 document.getElementById('output').textContent = result;
                 setStatus('Rendered', 'ready');
                 setTimeout(() => setStatus('', ''), 2000);
