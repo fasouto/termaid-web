@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>termaid | Mermaid diagrams as Unicode art</title>
-    <meta name="description" content="Render Mermaid diagrams as Unicode. Try it live in the browser.">
+    <meta name="description" content="Render Mermaid diagrams as Unicode text in your terminal, in Claude Code, or in Python. Try it in your browser.">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -709,7 +709,7 @@
             <div class="option">
                 <label for="ascii-mode">ASCII</label>
                 <input type="checkbox" id="ascii-mode">
-                <span class="option-info">?<span class="tooltip">Use ASCII instead of Unicode box-drawing</span></span>
+                <span class="option-info">?<span class="tooltip">Use ASCII instead of Unicode box-drawing characters</span></span>
             </div>
             <div class="option-gap"></div>
             <div class="option">
@@ -721,7 +721,7 @@
             <div class="option">
                 <label for="inline-labels">Inline labels</label>
                 <input type="checkbox" id="inline-labels">
-                <span class="option-info">?<span class="tooltip">Attach flowchart edge labels directly to their edges</span></span>
+                <span class="option-info">?<span class="tooltip">Draw flowchart edge labels on the edge line</span></span>
             </div>
         </div>
     </div>
@@ -758,22 +758,29 @@
     <div class="about">
         <h2>What is termaid?</h2>
         <p>
-            <a href="https://github.com/fasouto/termaid">termaid</a> is an open source Python package that renders
-            <a href="https://mermaid.js.org/">Mermaid</a> diagram syntax as Unicode text art.
-            Run it directly with <code>uvx termaid</code> or install with <code>pip install termaid</code>
+            <a href="https://github.com/fasouto/termaid">termaid</a> is an open source Python package that draws
+            <a href="https://mermaid.js.org/">Mermaid</a> diagrams as Unicode text.
+            Run it with <code>uvx termaid</code>, or install it with <code>pip install termaid</code>
             to use it as a Python library.
         </p>
         <p>
-            This page runs termaid directly in your browser using
-            <a href="https://pyodide.org/">Pyodide</a> (Python compiled to WebAssembly).
-            Click an example to see a pre-rendered preview, or hit <strong>Render</strong> to run
-            your own Mermaid code live. The first render may take a few seconds to load the Python runtime.
+            It works in <a href="https://github.com/fasouto/termaid#claude-code">Claude Code</a> too.
+            With the termaid plugin, Claude Code draws the Mermaid diagrams in Claude's replies as they stream,
+            and Claude still sees the Mermaid source. Install <code>termaid</code> with
+            <code>brew install termaid</code> or <code>uv tool install termaid</code>, then run
+            <code>/plugin install termaid --marketplace fasouto/termaid</code> in Claude Code.
         </p>
         <p>
-            Output is designed for monospace fonts.
+            This page runs termaid in your browser with <a href="https://pyodide.org/">Pyodide</a>,
+            a build of Python for WebAssembly. Click an example to see a preview drawn ahead of time,
+            or press <strong>Render</strong> to run your own Mermaid code. The first render takes a few
+            seconds while Python loads.
+        </p>
+        <p>
+            The output needs a monospace font.
         </p>
         <p class="about-supported">
-            Supports 18 of Mermaid's diagram types: flowcharts, sequence diagrams, class diagrams, ER diagrams,
+            termaid supports 18 of Mermaid's diagram types: flowcharts, sequence diagrams, class diagrams, ER diagrams,
             state diagrams, block diagrams, git graphs, gantt charts, architecture diagrams, pie charts, treemaps, mindmaps,
             XY charts, user journeys, packet diagrams, timelines, kanban boards, and quadrant charts.
         </p>

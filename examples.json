@@ -25,7 +25,7 @@
   },
   "git": {
     "source": "gitGraph\n    commit\n    branch develop\n    commit\n    commit\n    checkout main\n    merge develop\n    commit",
-    "output": "\n\n  main    ──●─────┼───────────●─────●─\n            0     │           3     4\n                  │           │\n  develop         ●─────●─────┼\n                  1     2"
+    "output": "\n\n  main    ──●─────┼───────────●─────●─\n            0     │           │     4\n                  │           │\n  develop         ●─────●─────┼\n                  1     2"
   },
   "gantt": {
     "source": "gantt\n    title Project Plan\n    dateFormat YYYY-MM-DD\n    section Design\n        Wireframes     :done, des1, 2024-01-01, 2024-01-14\n        Prototypes     :active, des2, 2024-01-08, 2024-01-21\n    section Development\n        Frontend       :dev1, after des2, 30d\n        Backend        :crit, dev2, 2024-01-15, 2024-03-01\n    section Testing\n        QA             :test1, after dev1, 14d",
@@ -37,7 +37,7 @@
   },
   "pie": {
     "source": "pie title Project Languages\n    \"Python\" : 45\n    \"JavaScript\" : 30\n    \"Go\" : 15\n    \"Rust\" : 10",
-    "output": "\n\n             ██████████████████░░░░░░░░░░░░▒▒▒▒▒▒▚▚▚▚\n                 Python 45%        30%     Go 15%10%\n\n\n      Python┃██████████████████  45.0%\n  JavaScript┃░░░░░░░░░░░░  30.0%\n          Go┃▒▒▒▒▒▒  15.0%\n        Rust┃▚▚▚▚  10.0%"
+    "output": "\n\n                      Project Languages\n\n             ██████████████████░░░░░░░░░░░░▒▒▒▒▒▒▚▚▚▚\n                    45%            30%      15%  10%\n\n\n      Python┃██████████████████  45.0%\n  JavaScript┃░░░░░░░░░░░░  30.0%\n          Go┃▒▒▒▒▒▒  15.0%\n        Rust┃▚▚▚▚  10.0%"
   },
   "treemap": {
     "source": "treemap-beta\n    \"Backend\"\n        \"API\": 35\n        \"Auth\": 15\n    \"Frontend\"\n        \"React\": 30\n        \"CSS\": 10\n    \"Infra\"\n        \"Docker\": 10",
