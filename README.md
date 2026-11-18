@@ -21,3 +21,14 @@ The playground installs the latest termaid from PyPI at runtime, but the example
 pip install -U termaid
 python regen.py
 ```
+
+## Recording the Claude Code GIFs
+
+The GIFs on `claude-code.html` are real Claude Code sessions recorded with [VHS](https://github.com/charmbracelet/vhs). They need `termaid` on your PATH and the termaid plugin installed. Each run talks to Claude, so the output changes between recordings.
+
+```bash
+cd demo
+vhs claude-sequence.tape   # writes ../img/claude-sequence.gif
+```
+
+Record one tape at a time. When several sessions run at once, the termaid hook can time out and Claude Code shows the Mermaid source instead of the drawing. Check the last frame of each GIF before committing it.

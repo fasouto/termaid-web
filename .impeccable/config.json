@@ -1,0 +1,23 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "overused-font",
+        "value": "inter",
+        "createdAt": "2026-11-18T22:11:48.181Z",
+        "reason": "agent: Inter is the existing site-wide font in index.html and examples.html; new page matches them"
+      },
+      {
+        "rule": "tight-leading",
+        "value": "*",
+        "files": [
+          "claude-code.html"
+        ],
+        "createdAt": "2026-11-18T22:11:48.235Z",
+        "reason": "agent: only sub-1.3 line heights are the ASCII-art logo (1.15, copied from the other pages) and the h1 heading (1.2); body text is 1.65"
+      }
+    ]
+  }
+}

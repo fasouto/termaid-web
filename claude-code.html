@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mermaid diagrams in Claude Code | termaid</title>
+    <meta name="description" content="Install the termaid plugin and Claude Code draws Mermaid diagrams in your terminal as Unicode text: sequence diagrams, flowcharts, state diagrams and more, while Claude keeps the Mermaid source.">
+    <link rel="canonical" href="https://termaid.com/claude-code.html">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Mermaid diagrams in Claude Code">
+    <meta property="og:description" content="The termaid plugin draws the Mermaid diagrams in Claude Code's replies as Unicode text in your terminal.">
+    <meta property="og:url" content="https://termaid.com/claude-code.html">
+    <meta property="og:image" content="https://termaid.com/img/claude-sequence.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "SoftwareApplication",
+                "name": "termaid",
+                "applicationCategory": "DeveloperApplication",
+                "operatingSystem": "macOS, Linux, Windows",
+                "url": "https://termaid.com/",
+                "downloadUrl": "https://pypi.org/project/termaid/",
+                "codeRepository": "https://github.com/fasouto/termaid",
+                "license": "https://opensource.org/licenses/MIT",
+                "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+                "description": "Renders Mermaid diagrams as Unicode text in the terminal, in Claude Code, or from Python."
+            },
+            {
+                "@type": "FAQPage",
+                "mainEntity": [
+                    {
+                        "@type": "Question",
+                        "name": "Can Claude Code show Mermaid diagrams in the terminal?",
+                        "acceptedAnswer": { "@type": "Answer", "text": "Yes. Install termaid and the termaid plugin. The plugin's hook draws each mermaid code block in Claude's replies as a Unicode diagram while the reply streams." }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Does Claude still see the Mermaid source?",
+                        "acceptedAnswer": { "@type": "Answer", "text": "Yes. The hook only changes what you see. The transcript keeps the Mermaid source, so Claude can edit the diagram later." }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "What happens if termaid is missing or a diagram fails to draw?",
+                        "acceptedAnswer": { "@type": "Answer", "text": "Claude Code shows the original mermaid code block." }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Which diagram types work?",
+                        "acceptedAnswer": { "@type": "Answer", "text": "termaid draws 18 Mermaid diagram types, including flowcharts, sequence, class, state, ER, gantt, pie, mindmap, git graph and architecture diagrams." }
+                    }
+                ]
+            }
+        ]
+    }
+    </script>
+    <style>
+        :root {
+            --bg: #fdfcf8;
+            --surface: #ffffff;
+            --border: #d6d3cd;
+            --text: #1c1917;
+            --subtext: #57534e;
+            --muted: #78716c;
+            --link: #44403c;
+            --link-hover: #1c1917;
+            --code-bg: #f3f1ec;
+            --terminal-bg: #1a1a2e;
+            --terminal-text: #cdd6f4;
+            --shadow: 0 1px 3px rgba(28,25,23,0.08), 0 1px 2px rgba(28,25,23,0.05);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0f0f14;
+                --surface: #1a1a24;
+                --border: #333346;
+                --text: #e2e8f0;
+                --subtext: #b0b8c8;
+                --muted: #8892a4;
+                --link: #94a3b8;
+                --link-hover: #e2e8f0;
+                --code-bg: #1a1a24;
+                --terminal-bg: #0a0a12;
+                --terminal-text: #cdd6f4;
+                --shadow: 0 1px 3px rgba(0,0,0,0.3), 0 1px 2px rgba(0,0,0,0.2);
+            }
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .page {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        header {
+            padding: 1.25rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1.5rem;
+        }
+
+        .header-left a { text-decoration: none; color: var(--text); }
+
+        .ascii-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.6rem;
+            line-height: 1.15;
+            color: var(--text);
+            display: block;
+            margin-bottom: 0.4rem;
+        }
+
+        header .tagline { color: var(--subtext); font-size: 1rem; }
+
+        .header-nav { display: flex; align-items: center; gap: 1.25rem; }
+
+        .header-nav a {
+            color: var(--link);
+            text-decoration: none;
+            font-size: 0.88rem;
+            font-weight: 500;
+            transition: color 0.15s;
+        }
+
+        .header-nav a:hover { color: var(--link-hover); }
+        .header-nav a.active { color: var(--text); font-weight: 600; }
+
+        article {
+            max-width: 820px;
+            margin: 0 auto;
+            padding: 2rem 0 3rem;
+            line-height: 1.65;
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+            margin-bottom: 0.75rem;
+        }
+
+        .lede { font-size: 1.1rem; color: var(--subtext); margin-bottom: 2rem; }
+
+        h2 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            margin: 2.75rem 0 0.6rem;
+        }
+
+        h3 { font-size: 1rem; font-weight: 600; margin: 1.5rem 0 0.4rem; }
+
+        p { color: var(--subtext); margin-bottom: 0.9rem; }
+        p strong, li strong { color: var(--text); }
+
+        ul { color: var(--subtext); margin: 0 0 0.9rem 1.25rem; }
+        li { margin-bottom: 0.35rem; }
+
+        a { color: var(--link); }
+        a:hover { color: var(--link-hover); }
+
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85em;
+            background: var(--code-bg);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 0.05em 0.3em;
+        }
+
+        pre.cmd {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.82rem;
+            line-height: 1.5;
+            background: var(--terminal-bg);
+            color: var(--terminal-text);
+            border-radius: 8px;
+            padding: 0.85rem 1rem;
+            overflow-x: auto;
+            margin-bottom: 1rem;
+        }
+
+        figure { margin: 1rem 0 1.5rem; }
+
+        figure img {
+            display: block;
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+        }
+
+        figcaption { font-size: 0.82rem; color: var(--muted); margin-top: 0.5rem; }
+
+        .steps { counter-reset: step; list-style: none; margin-left: 0; }
+
+        .steps > li {
+            counter-increment: step;
+            position: relative;
+            padding-left: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .steps > li::before {
+            content: counter(step);
+            position: absolute;
+            left: 0;
+            top: 0.1rem;
+            width: 1.35rem;
+            height: 1.35rem;
+            border-radius: 50%;
+            background: var(--text);
+            color: var(--bg);
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-align: center;
+            line-height: 1.35rem;
+        }
+
+        .steps pre.cmd { margin: 0.4rem 0 0; }
+
+        footer {
+            text-align: center;
+            padding: 1.5rem 0 2rem;
+            color: var(--muted);
+            font-size: 0.78rem;
+            border-top: 1px solid var(--border);
+        }
+
+        footer a { color: var(--link); text-decoration: none; }
+        footer a:hover { color: var(--link-hover); }
+
+        @media (max-width: 768px) {
+            header { flex-wrap: wrap; }
+            .ascii-title { font-size: 0.4rem; }
+            .header-nav { gap: 0.75rem; flex-wrap: wrap; }
+            .page { padding: 0 1rem; }
+            h1 { font-size: 1.6rem; }
+            article { padding-top: 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <header>
+            <div class="header-left">
+                <a href="/">
+                    <pre class="ascii-title"> _                            _     _
+| |_ ___ _ __ _ __ ___   __ _(_) __| |
+| __/ _ \ '__| '_ ` _ \ / _` | |/ _` |
+| ||  __/ |  | | | | | | (_| | | (_| |
+ \__\___|_|  |_| |_| |_|\__,_|_|\__,_|</pre>
+                <p class="tagline">Render Mermaid diagrams as Unicode</p>
+                </a>
+            </div>
+            <nav class="header-nav">
+                <a href="/">Playground</a>
+                <a href="examples.html">Examples</a>
+                <a class="active" href="claude-code.html">Claude Code</a>
+                <a href="https://github.com/fasouto/termaid">GitHub</a>
+                <a href="https://pypi.org/project/termaid/">PyPI</a>
+            </nav>
+        </header>
+
+        <article>
+            <h1>Mermaid diagrams in Claude Code</h1>
+            <p class="lede">
+                Claude writes Mermaid diagrams all the time, but Claude Code shows them as code blocks.
+                With the termaid plugin, Claude Code draws them in your terminal as diagrams, while the reply streams.
+            </p>
+
+            <figure>
+                <img src="img/claude-sequence.gif" width="1100" height="820"
+                     alt="Claude Code drawing an OAuth login sequence diagram as Unicode text in the terminal">
+                <figcaption>Ask for a sequence diagram and Claude Code draws it in place.</figcaption>
+            </figure>
+
+            <h2 id="install">Install the plugin</h2>
+            <ol class="steps">
+                <li>
+                    Install the <code>termaid</code> command. The plugin runs it to draw each diagram.
+                    <pre class="cmd">brew install termaid
+# or
+uv tool install termaid</pre>
+                </li>
+                <li>
+                    In Claude Code 2.1.275 or later, install the plugin:
+                    <pre class="cmd">/plugin install termaid --marketplace fasouto/termaid</pre>
+                </li>
+                <li>
+                    On older versions, add the marketplace first:
+                    <pre class="cmd">/plugin marketplace add fasouto/termaid
+/plugin install termaid@termaid</pre>
+                </li>
+            </ol>
+            <p>
+                The plugin adds a <code>MessageDisplay</code> hook that runs <code>termaid --claude-hook</code> on
+                each reply, and a <code>/termaid:mermaid</code> skill.
+            </p>
+
+            <h2 id="before-after">Before and after</h2>
+            <p>
+                Claude Code doesn't draw Mermaid on its own. Here is the same request with the plugin turned off:
+                you get the Mermaid source as text.
+            </p>
+            <figure>
+                <img src="img/claude-without.gif" width="1100" height="820" loading="lazy"
+                     alt="Claude Code without the termaid plugin, showing the raw Mermaid source of a sequence diagram">
+                <figcaption>Without the plugin, the reply is Mermaid source.</figcaption>
+            </figure>
+
+            <h2 id="ask">Ask Claude for a diagram</h2>
+            <p>
+                Ask for any Mermaid diagram in plain words. The hook holds back a <code>mermaid</code> code block
+                until it closes, then draws the diagram where the code was. Text before and after it stays as Claude wrote it.
+            </p>
+            <p>
+                The hook only changes what you see. The transcript keeps the Mermaid source, so you can ask Claude
+                to change the diagram in the next message and it redraws.
+            </p>
+            <figure>
+                <img src="img/claude-edit.gif" width="1100" height="820" loading="lazy"
+                     alt="Claude Code draws a checkout flowchart, then redraws it with a payment retry step after a follow-up request">
+                <figcaption>A checkout flowchart, then a follow-up: "Add a step that retries a failed payment once."</figcaption>
+            </figure>
+
+            <h2 id="explain">Explain your code with a diagram</h2>
+            <p>
+                Diagrams help most when Claude explains code you haven't read yet. Ask how something works and
+                ask for the answer as a flowchart or sequence diagram.
+            </p>
+            <figure>
+                <img src="img/claude-repo.gif" width="1100" height="820" loading="lazy"
+                     alt="Claude Code reads a source file and answers with a flowchart drawn as Unicode text">
+                <figcaption>Claude reads the hook's source in the termaid repo and answers with a flowchart.</figcaption>
+            </figure>
+
+            <h3>A database schema as an ER diagram</h3>
+            <figure>
+                <img src="img/claude-er.gif" width="1100" height="820" loading="lazy"
+                     alt="Claude Code reads schema.sql and draws an entity-relationship diagram with keys and cardinality">
+                <figcaption>"Draw an ER diagram of schema.sql." Tables, keys and cardinality from four <code>CREATE TABLE</code> statements.</figcaption>
+            </figure>
+
+            <h3>Python classes as a class diagram</h3>
+            <figure>
+                <img src="img/claude-class.gif" width="1100" height="820" loading="lazy"
+                     alt="Claude Code reads models.py and draws a class diagram with fields, methods and an enumeration">
+                <figcaption>"Draw a class diagram of models.py." Dataclasses, an enum and their relationships.</figcaption>
+            </figure>
+
+            <h2 id="plan">Plan work as a gantt chart</h2>
+            <p>
+                Ask Claude to plan a release or a migration as a gantt chart and read the schedule in the terminal.
+            </p>
+            <figure>
+                <img src="img/claude-gantt.gif" width="1100" height="820" loading="lazy"
+                     alt="Claude Code drawing a six-week launch plan as a gantt chart with build, test and release sections">
+                <figcaption>A six-week launch plan with build, test and release sections.</figcaption>
+            </figure>
+
+            <h2 id="skill">Draw the diagrams in a file</h2>
+            <p>
+                For diagrams that already exist, such as the ones in a README, a <code>.mmd</code> file or a pull
+                request description, use the <code>/termaid:mermaid</code> skill.
+            </p>
+            <figure>
+                <img src="img/claude-skill.gif" width="1100" height="820" loading="lazy"
+                     alt="The /termaid:mermaid skill drawing the flowchart and state diagram from a README in Claude Code">
+                <figcaption><code>/termaid:mermaid show the diagrams in README.md</code> draws a flowchart and a state diagram.</figcaption>
+            </figure>
+
+            <h2 id="without-plugin">Without the plugin</h2>
+            <p>
+                The same hook works from <code>.claude/settings.json</code>, for a project that shouldn't depend
+                on a plugin:
+            </p>
+            <pre class="cmd">{
+  "hooks": {
+    "MessageDisplay": [
+      { "hooks": [ { "type": "command", "command": "termaid --claude-hook", "timeout": 10 } ] }
+    ]
+  }
+}</pre>
+            <p>
+                In scripts, pipe the output of <code>claude -p</code> through <code>termaid --markdown</code>,
+                which draws every mermaid block in a Markdown document:
+            </p>
+            <pre class="cmd">claude -p "draw the login flow as a mermaid sequence diagram" | termaid --markdown</pre>
+
+            <h2 id="faq">Questions</h2>
+            <h3>What if termaid is missing or a diagram fails to draw?</h3>
+            <p>Claude Code shows the original mermaid code block.</p>
+            <h3>Which diagram types work?</h3>
+            <p>
+                termaid draws 18 Mermaid diagram types: flowcharts, sequence, class, ER, state, block,
+                git graph, gantt, architecture, pie, treemap, mindmap, XY chart, user journey, packet,
+                timeline, kanban and quadrant charts. See them all on the <a href="examples.html">examples page</a>,
+                or try your own in the <a href="/">playground</a>.
+            </p>
+            <h3>Does it work outside Claude Code?</h3>
+            <p>
+                Yes. termaid is a command line tool and a Python library. Run <code>uvx termaid diagram.mmd</code>,
+                or read the <a href="https://github.com/fasouto/termaid">README on GitHub</a> for the Python API,
+                themes and editor integration.
+            </p>
+        </article>
+
+        <footer>
+            <a href="https://github.com/fasouto/termaid">termaid</a> &middot;
+            <a href="https://pypi.org/project/termaid/">PyPI</a> &middot;
+            Built by <a href="https://fabiosouto.me/">Fabio Souto</a>
+        </footer>
+    </div>
+</body>
+</html>
