@@ -52,8 +52,8 @@
       "output": "\n ┌─────────────────┐\n │ Ingest          │\n │                 │\n │                 │\n │ ┌─────────────┐ │\n │ │             │ │\n │ │  Collector  │ │\n │ │             │ │\n │ └─────────────┘ │\n │                 │\n └────────┬────────┘\n          │\n          │\n          │\n          ▼\n ┌────────────────────────────────────────┐\n │ Process                                │\n │                                        │\n │                                        │\n │ ┌─────────────┐        ┌─────────────┐ │\n │ │             │        │             │ │\n │ │   Parser    ├───────►│  Enricher   │ │\n │ │             │        │             │ │\n │ └─────────────┘        └─────────────┘ │\n │                                        │\n └────────┬───────────────────────────────┘\n          │\n          │\n          │\n          ▼\n ┌─────────────────┐\n │ Store           │\n │                 │\n │                 │\n │ ╭─────────────╮ │\n │ │╰───────────╯│ │\n │ │  Warehouse  │ │\n │ │             │ │\n │ ╰─────────────╯ │\n │                 │\n └─────────────────┘"
     },
     {
-      "title": "CI/CD Pipeline",
-      "desc": "A continuous delivery pipeline",
+      "title": "CI/CD pipeline",
+      "desc": "Build, test, and a manual approval before deploying to production",
       "source": "graph LR\n    A[Push] --> B[Build]\n    B --> C[Test]\n    C --> D{Pass?}\n    D -->|Yes| E[Deploy Staging]\n    D -->|No| F[Notify]\n    E --> G{Approve?}\n    G -->|Yes| H[Deploy Prod]\n    G -->|No| F",
       "output": "┌────────┐    ┌─────────┐    ┌────────┐    ┌────◇────┐    ┌──────────────────┐    ┌──────◇─────┐    ┌───────────────┐\n│        │    │         │    │        │    │         │Yes │                  │    │            │    │               │\n│  Push  ├───►│  Build  ├───►│  Test  ├───►│  Pass?  ├──┬►│  Deploy Staging  ├───►│  Approve?  ├───►│  Deploy Prod  │\n│        │    │         │    │        │    │         │  │ │                  │    │            │Yes │               │\n└────────┘    └─────────┘    └────────┘    └────◇────┘  │ └──────────────────┘    └──────◇─────┘    └───────────────┘\n                                                        │                                │\n                                                        │No         ╭────────────────────╯\n                                                        │         No▼\n                                                        │ ┌──────────────────┐\n                                                        │ │                  │\n                                                        ╰►│      Notify      │\n                                                          │                  │\n                                                          └──────────────────┘"
     },
@@ -165,7 +165,7 @@
   "gantt": [
     {
       "title": "Basic",
-      "desc": "Simple project timeline with sections",
+      "desc": "Project timeline with sections",
       "source": "gantt\n    title Sprint 1\n    dateFormat YYYY-MM-DD\n    section Backend\n        API design     :a1, 2024-01-01, 7d\n        Implementation :a2, after a1, 14d\n    section Frontend\n        Mockups        :b1, 2024-01-01, 5d\n        Build UI       :b2, after b1, 10d",
       "output": "                                            Sprint 1\n\n Backend          │\n   API design     │████████████████████\n   Implementation │                    ████████████████████████████████████████\n Frontend         │\n   Mockups        │██████████████\n   Build UI       │              ████████████████████████████\n                  └┬────────┬─────────┬─────────┬─────────┬─────────┬─────────┬\n                Jan 01   Jan 04    Jan 08    Jan 11    Jan 15    Jan 18    Jan 22"
     },
@@ -323,7 +323,7 @@
   "packet": [
     {
       "title": "UDP header",
-      "desc": "Simple 32-bit aligned packet fields",
+      "desc": "Header fields aligned to 32-bit rows",
       "source": "packet-beta\n    0-15: \"Source Port\"\n    16-31: \"Destination Port\"\n    32-47: \"Length\"\n    48-63: \"Checksum\"\n    64-95: \"Data\"",
       "output": " 0                                             15 16                                           31\n ╭───────────────────────────────────────────────┬───────────────────────────────────────────────╮\n │                 Source Port                   │               Destination Port                │\n ╰───────────────────────────────────────────────┴───────────────────────────────────────────────╯\n 32                                            47 48                                           63\n ╭───────────────────────────────────────────────┬───────────────────────────────────────────────╮\n │                    Length                     │                   Checksum                    │\n ╰───────────────────────────────────────────────┴───────────────────────────────────────────────╯\n 64                                                                                            95\n ╭───────────────────────────────────────────────────────────────────────────────────────────────╮\n │                                             Data                                              │\n ╰───────────────────────────────────────────────────────────────────────────────────────────────╯"
     },
@@ -351,7 +351,7 @@
   "kanban": [
     {
       "title": "Basic",
-      "desc": "Columns with task cards",
+      "desc": "Columns of task cards",
       "source": "kanban\n    Todo\n        Design landing page\n        Write API docs\n    In Progress\n        Build auth flow\n        Setup CI/CD\n    Done\n        Project setup\n        Database schema",
       "output": "╭───────────────────────╮  ╭───────────────────╮  ╭───────────────────╮\n│         Todo          │  │    In Progress    │  │       Done        │\n│───────────────────────│  │───────────────────│  │───────────────────│\n│ ┌───────────────────┐ │  │ ┌───────────────┐ │  │ ┌───────────────┐ │\n│ │Design landing page│ │  │ │Build auth flow│ │  │ │Project setup  │ │\n│ └───────────────────┘ │  │ └───────────────┘ │  │ └───────────────┘ │\n│                       │  │                   │  │                   │\n│ ┌───────────────────┐ │  │ ┌───────────────┐ │  │ ┌───────────────┐ │\n│ │Write API docs     │ │  │ │Setup CI/CD    │ │  │ │Database schema│ │\n│ └───────────────────┘ │  │ └───────────────┘ │  │ └───────────────┘ │\n╰───────────────────────╯  ╰───────────────────╯  ╰───────────────────╯"
     },
