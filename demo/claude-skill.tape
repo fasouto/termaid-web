@@ -10,5 +10,5 @@ Show
 Type "/termaid:mermaid show the diagrams in README.md"
 Sleep 500ms
 Enter
-Wait+Screen@180s /done \d\d:\d\d/
-Sleep 6s
+Wait+Screen@180s /done \d+:\d\d/
+Sleep 3s

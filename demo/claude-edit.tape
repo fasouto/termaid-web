@@ -10,10 +10,10 @@ Show
 Type "Draw the checkout flow of this service as a mermaid flowchart, at most 6 nodes. Just the diagram."
 Sleep 500ms
 Enter
-Wait+Screen@240s /done \d\d:\d\d/
+Wait+Screen@240s /done \d+:\d\d/
 Sleep 4s
 Type "Add a step that retries a failed payment once. Just the diagram."
 Sleep 500ms
 Enter
 Sleep 30s
-Sleep 4s
+Sleep 3s

@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>termaid | Diagram examples</title>
     <meta name="description" content="Examples of all 18 Mermaid diagram types that termaid draws as Unicode text.">
+    <link rel="canonical" href="https://termaid.com/examples.html">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="termaid diagram examples">
+    <meta property="og:description" content="Examples of all 18 Mermaid diagram types that termaid draws as Unicode text.">
+    <meta property="og:url" content="https://termaid.com/examples.html">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -330,8 +335,1739 @@
         </header>
 
         <div class="layout">
-            <nav class="sidebar" id="sidebar"></nav>
-            <div class="content" id="content"></div>
+<!-- gallery:start -->
+<nav class="sidebar"><div class="sidebar-group"><div class="sidebar-group-title">Core</div><a href="#flowchart">Flowchart</a><a href="#sequence">Sequence</a><a href="#class">Class</a><a href="#er">ER Diagram</a><a href="#state">State Diagram</a></div><div class="sidebar-group"><div class="sidebar-group-title">Charts</div><a href="#gantt">Gantt</a><a href="#pie">Pie Chart</a><a href="#xychart">XY Chart</a><a href="#quadrant">Quadrant Chart</a></div><div class="sidebar-group"><div class="sidebar-group-title">Other</div><a href="#architecture">Architecture</a><a href="#block">Block</a><a href="#git">Git Graph</a><a href="#treemap">Treemap</a><a href="#mindmap">Mindmap</a><a href="#journey">User Journey</a><a href="#packet">Packet</a><a href="#timeline">Timeline</a><a href="#kanban">Kanban</a></div></nav>
+<div class="content">
+<section class="diagram-section" id="flowchart">
+<h2>Flowchart</h2>
+<p class="desc">Decision trees, process flows, and directed graphs</p>
+<h3 class="variation-label">Top to bottom</h3>
+<p class="variation-desc">Default vertical layout with TD direction</p>
+<div class="diagram-card"><div class="diagram-card-inner"><div class="diagram-source"><div class="diagram-source-header"><div class="diagram-source-label">Mermaid</div><a class="try-link" href="/?src=graph%20TD%0A%20%20%20%20A%5BStart%5D%20--%3E%20B%7BDecision%7D%0A%20%20%20%20B%20--%3E%7CYes%7C%20C%5BProcess%5D%0A%20%20%20%20B%20--%3E%7CNo%7C%20D%5BEnd%5D%0A%20%20%20%20C%20--%3E%20D">Try it &rarr;</a></div><pre>
+graph TD
+    A[Start] --&gt; B{Decision}
+    B --&gt;|Yes| C[Process]
+    B --&gt;|No| D[End]
+    C --&gt; D</pre></div><div class="diagram-output"><pre>
+┌────────────┐
+│            │
+│   Start    │
+│            │
+└──────┬─────┘
+       │
+       │
+       ▼
+┌──────◇─────┐
+│            │
+│  Decision  │
+│            │
+└──────◇─────┘
+       │
+       │
+       ├─────────────────╮No
+    Yes│                 │
+       ▼                 ▼
+┌────────────┐    ┌────────────┐
+│            │    │            │
+│  Process   ├───►│    End     │
+│            │    │            │
+└────────────┘    └────────────┘</pre></div></div></div>
+<h3 class="variation-label">Left to right</h3>
+<p class="variation-desc">Horizontal layout using LR direction</p>
+<div class="diagram-card"><div class="diagram-card-inner"><div class="diagram-source"><div class="diagram-source-header"><div class="diagram-source-label">Mermaid</div><a class="try-link" href="/?src=graph%20LR%0A%20%20%20%20A%5BStart%5D%20--%3E%20B%7BDecision%7D%0A%20%20%20%20B%20--%3E%7CYes%7C%20C%5BProcess%5D%0A%20%20%20%20B%20--%3E%7CNo%7C%20D%5BEnd%5D%0A%20%20%20%20C%20--%3E%20D">Try it &rarr;</a></div><pre>
+graph LR
+    A[Start] --&gt; B{Decision}
+    B --&gt;|Yes| C[Process]
+    B --&gt;|No| D[End]
+    C --&gt; D</pre></div><div class="diagram-output"><pre>
+┌─────────┐    ┌──────◇─────┐    ┌───────────┐
+│         │    │            │Yes │           │
+│  Start  ├───►│  Decision  ├──┬►│  Process  │
+│         │    │            │  │ │           │
+└─────────┘    └──────◇─────┘  │ └─────┬─────┘
+                               │       │
+                               │No     │
+                               │       ▼
+                               │ ┌───────────┐
+                               │ │           │
+                               ╰►│    End    │
+                                 │           │
+                                 └───────────┘</pre></div></div></div>
+<h3 class="variation-label">Node shapes</h3>
+<p class="variation-desc">Rectangle, rounded, diamond, stadium, and circle shapes</p>
+<div class="diagram-card"><div class="diagram-card-inner"><div class="diagram-source"><div class="diagram-source-header"><div class="diagram-source-label">Mermaid</div><a class="try-link" href="/?src=graph%20LR%0A%20%20%20%20A%5BRectangle%5D%20--%3E%20B(Rounded)%0A%20%20%20%20B%20--%3E%20C%7BDiamond%7D%0A%20%20%20%20C%20--%3E%20D(%5BStadium%5D)%0A%20%20%20%20D%20--%3E%20E((Circle))">Try it &rarr;</a></div><pre>
+graph LR
+    A[Rectangle] --&gt; B(Rounded)
+    B --&gt; C{Diamond}
+    C --&gt; D([Stadium])
+    D --&gt; E((Circle))</pre></div><div class="diagram-output"><pre>
+┌─────────────┐    ╭───────────╮    ┌─────◇─────┐    ╭───────────╮    ╭─────◯────╮
+│             │    │           │    │           │    (           )    │          │
+│  Rectangle  ├───►│  Rounded  ├───►│  Diamond  ├───►(  Stadium  )───►│  Circle  │
+│             │    │           │    │           │    (           )    │          │
+└─────────────┘    ╰───────────╯    └─────◇─────┘    ╰───────────╯    ╰─────◯────╯</pre></div></div></div>
+<h3 class="variation-label">Edge styles</h3>
+<p class="variation-desc">Solid, dotted, and thick edges with labels</p>
+<div class="diagram-card"><div class="diagram-card-inner"><div class="diagram-source"><div class="diagram-source-header"><div class="diagram-source-label">Mermaid</div><a class="try-link" href="/?src=graph%20TD%0A%20%20%20%20A%20--%3E%20B%0A%20%20%20%20A%20-.-%3E%20C%0A%20%20%20%20A%20%3D%3D%3E%20D%0A%20%20%20%20B%20--%3E%7Clabel%7C%20C">Try it &rarr;</a></div><pre>
+graph TD
+    A --&gt; B
+    A -.-&gt; C
+    A ==&gt; D
+    B --&gt;|label| C</pre></div><div class="diagram-output"><pre>
+             ┌─────┐
+             │     │
+             │  A  │
+             │     │
+             └──┬──┘
+                │
+                │
+                │
+                │
+   ╭────────────┴┬━━━━━━━━━╮
+   ▼             ▼         ▼
+┌─────┐      ┌─────┐    ┌─────┐
+│     │label │     │    │     │
+│  B  ├─────►│  C  │    │  D  │
+│     │      │     │    │     │
+└─────┘      └─────┘    └─────┘</pre></div></div></div>
+<h3 class="variation-label">Inline edge labels</h3>
+<p class="variation-desc">Drawn with inline_edge_labels=True (--inline-edge-labels), which puts each label on its edge</p>
+<div class="diagram-card"><div class="diagram-card-inner"><div class="diagram-source"><div class="diagram-source-header"><div class="diagram-source-label">Mermaid</div><a class="try-link" href="/?src=graph%20LR%0A%20%20%20%20A%5BRequest%5D%20--%3E%7Cvalidate%7C%20B%7BValid%3F%7D%0A%20%20%20%20B%20--%3E%7Cyes%7C%20C%5BProcess%5D%0A%20%20%20%20B%20--%3E%7Cno%7C%20D%5BReject%5D%0A%20%20%20%20C%20--%3E%7Cpersist%7C%20E%5B(Store)%5D">Try it &rarr;</a></div><pre>
+graph LR
+    A[Request] --&gt;|validate| B{Valid?}
+    B --&gt;|yes| C[Process]
+    B --&gt;|no| D[Reject]
+    C --&gt;|persist| E[(Store)]</pre></div><div class="diagram-output"><pre>
+┌───────────┐         ┌─────◇────┐    ┌───────────┐        ╭─────────╮
+│           │         │          │    │           │        │╰───────╯│
+│  Request  ├validate►│  Valid?  ├yes►│  Process  ├persist►│  Store  │
+│           │         │          │  │ │           │        │         │
+└───────────┘         └─────◇────┘  │ └───────────┘        ╰─────────╯
+                                    │
+                                    ├─no
+                                    │
+                                    │ ┌───────────┐
+                                    │ │           │
+                                    ╰►│  Reject   │
+                                      │           │
+                                      └───────────┘</pre></div></div></div>
+<h3 class="variation-label">Subgraphs</h3>
+<p class="variation-desc">Nodes grouped into named subgraphs</p>
+<div class="diagram-card"><div class="diagram-card-inner"><div class="diagram-source"><div class="diagram-source-header"><div class="diagram-source-label">Mermaid</div><a class="try-link" href="/?src=graph%20TD%0A%20%20%20%20subgraph%20Frontend%0A%20%20%20%20%20%20%20%20A%5BReact%20App%5D%20--%3E%20B%5BRouter%5D%0A%20%20%20%20end%0A%20%20%20%20subgraph%20Backend%0A%20%20%20%20%20%20%20%20C%5BAPI%5D%20--%3E%20D%5BDatabase%5D%0A%20%20%20%20end%0A%20%20%20%20B%20--%3E%20C">Try it &rarr;</a></div><pre>
+graph TD
+    subgraph Frontend
+        A[React App] --&gt; B[Router]
+    end
+    subgraph Backend
+        C[API] --&gt; D[Database]
+    end
+    B --&gt; C</pre></div><div class="diagram-output"><pre>
+
+ ┌─────────────────┐
+ │ Frontend        │
+ │                 │
+ │                 │
+ │ ┌─────────────┐ │
+ │ │             │ │
+ │ │  React App  │ │
+ │ │             │ │
+ │ └──────┬──────┘ │
+ │        │        │
+ │        │        │
+ │        ▼        │
+ │ ┌─────────────┐ │
+ │ │             │ │
+ │ │   Router    │ │
+ │ │             │ │
+ │ └──────┬──────┘ │
+ │        │        │
+ └────────┼────────┘
+          │
+          │
+          │
+          │
+ ┌────────┼────────┐
+ │ Backend│        │
+ │        │        │
+ │        ▼        │
+ │ ┌─────────────┐ │
+ │ │             │ │
+ │ │     API     │ │
+ │ │             │ │
+ │ └──────┬──────┘ │
+ │        │        │
+ │        │        │
+ │        ▼        │
+ │ ┌─────────────┐ │
+ │ │             │ │
+ │ │  Database   │ │
+ │ │             │ │
+ │ └─────────────┘ │
+ │                 │
+ └─────────────────┘</pre></div></div></div>
+<h3 class="variation-label">Subgraph links</h3>
+<p class="variation-desc">Edges between subgraphs attach to the group border</p>
+<div class="diagram-card"><div class="diagram-card-inner"><div class="diagram-source"><div class="diagram-source-header"><div class="diagram-source-label">Mermaid</div><a class="try-link" href="/?src=graph%20LR%0A%20%20%20%20subgraph%20Frontend%0A%20%20%20%20%20%20%20%20A%5BWeb%20App%5D%0A%20%20%20%20%20%20%20%20B%5BMobile%20App%5D%0A%20%20%20%20end%0A%20%20%20%20subgraph%20Backend%0A%20%20%20%20%20%20%20%20C%5BAPI%5D%0A%20%20%20%20%20%20%20%20D%5B(Database)%5D%0A%20%20%20%20end%0A%20%20%20%20Frontend%20--%3E%20Backend%0A%20%20%20%20C%20--%3E%20D">Try it &rarr;</a></div><pre>
+graph LR
+    subgraph Frontend
+        A[Web App]
+        B[Mobile App]
+    end
+    subgraph Backend
+        C[API]
+        D[(Database)]
+    end
+    Frontend --&gt; Backend
+    C --&gt; D</pre></div><div class="diagram-output"><pre>
+
+ ┌──────────────────┐      ┌────────────────┐
+ │ Frontend         │      │ Backend        │
+ │                  │      │                │
+ │                  │      │                │
+ │ ┌──────────────┐ │      │ ┌────────────┐ │
+ │ │              │ │      │ │            │ │
+ │ │   Web App    │ ├─────►│ │    API     │ │
+ │ │              │ │      │ │            │ │
+ │ └──────────────┘ │      │ └──────┬─────┘ │
+ │                  │      │        │       │
+ │                  │      │        │       │
+ │                  │      │        ▼       │
+ │ ┌──────────────┐ │      │ ╭────────────╮ │
+ │ │              │ │      │ │╰──────────╯│ │
+ │ │  Mobile App  │ │      │ │  Database  │ │
+ │ │              │ │      │ │            │ │
+ │ └──────────────┘ │      │ ╰────────────╯ │
+ │                  │      │                │
+ └──────────────────┘      └────────────────┘</pre></div></div></div>
+<h3 class="variation-label">Subgraph pipeline</h3>
+<p class="variation-desc">Chained subgraph-to-subgraph edges keep stages stacked in order</p>
+<div class="diagram-card"><div class="diagram-card-inner"><div class="diagram-source"><div class="diagram-source-header"><div class="diagram-source-label">Mermaid</div><a class="try-link" href="/?src=graph%20TD%0A%20%20%20%20subgraph%20Ingest%0A%20%20%20%20%20%20%20%20A%5BCollector%5D%0A%20%20%20%20end%0A%20%20%20%20subgraph%20Process%0A%20%20%20%20%20%20%20%20B%5BParser%5D%20--%3E%20C%5BEnricher%5D%0A%20%20%20%20end%0A%20%20%20%20subgraph%20Store%0A%20%20%20%20%20%20%20%20D%5B(Warehouse)%5D%0A%20%20%20%20end%0A%20%20%20%20Ingest%20--%3E%20Process%0A%20%20%20%20Process%20--%3E%20Store">Try it &rarr;</a></div><pre>
+graph TD
+    subgraph Ingest
+        A[Collector]
+    end
+    subgraph Process
+        B[Parser] --&gt; C[Enricher]
+    end
+    subgraph Store
+        D[(Warehouse)]
+    end
+    Ingest --&gt; Process
+    Process --&gt; Store</pre></div><div class="diagram-output"><pre>
+
+ ┌─────────────────┐
+ │ Ingest          │
+ │                 │
+ │                 │
+ │ ┌─────────────┐ │
+ │ │             │ │
+ │ │  Collector  │ │
+ │ │             │ │
+ │ └─────────────┘ │
+ │                 │
+ └────────┬────────┘
+          │
+          │
+          │
+          ▼
+ ┌────────────────────────────────────────┐
+ │ Process                                │
+ │                                        │
+ │                                        │
+ │ ┌─────────────┐        ┌─────────────┐ │
+ │ │             │        │             │ │
+ │ │   Parser    ├───────►│  Enricher   │ │
+ │ │             │        │             │ │
+ │ └─────────────┘        └─────────────┘ │
+ │                                        │
+ └────────┬───────────────────────────────┘
+          │
+          │
+          │
+          ▼
+ ┌─────────────────┐
+ │ Store           │
+ │                 │
+ │                 │
+ │ ╭─────────────╮ │
+ │ │╰───────────╯│ │
+ │ │  Warehouse  │ │
+ │ │             │ │
+ │ ╰─────────────╯ │
+ │                 │
+ └─────────────────┘</pre></div></div></div>
+<h3 class="variation-label">CI/CD pipeline</h3>
+<p class="variation-desc">Build, test, and a manual approval before deploying to production</p>
+<div class="diagram-card"><div class="diagram-card-inner"><div class="diagram-source"><div class="diagram-source-header"><div class="diagram-source-label">Mermaid</div><a class="try-link" href="/?src=graph%20LR%0A%20%20%20%20A%5BPush%5D%20--%3E%20B%5BBuild%5D%0A%20%20%20%20B%20--%3E%20C%5BTest%5D%0A%20%20%20%20C%20--%3E%20D%7BPass%3F%7D%0A%20%20%20%20D%20--%3E%7CYes%7C%20E%5BDeploy%20Staging%5D%0A%20%20%20%20D%20--%3E%7CNo%7C%20F%5BNotify%5D%0A%20%20%20%20E%20--%3E%20G%7BApprove%3F%7D%0A%20%20%20%20G%20--%3E%7CYes%7C%20H%5BDeploy%20Prod%5D%0A%20%20%20%20G%20--%3E%7CNo%7C%20F">Try it &rarr;</a></div><pre>
+graph LR
+    A[Push] --&gt; B[Build]
+    B --&gt; C[Test]
+    C --&gt; D{Pass?}
+    D --&gt;|Yes| E[Deploy Staging]
+    D --&gt;|No| F[Notify]
+    E --&gt; G{Approve?}
+    G --&gt;|Yes| H[Deploy Prod]
+    G --&gt;|No| F</pre></div><div class="diagram-output"><pre>
+┌────────┐    ┌─────────┐    ┌────────┐    ┌────◇────┐    ┌──────────────────┐    ┌──────◇─────┐    ┌───────────────┐
+│        │    │         │    │        │    │         │Yes │                  │    │            │    │               │
+│  Push  ├───►│  Build  ├───►│  Test  ├───►│  Pass?  ├──┬►│  Deploy Staging  ├───►│  Approve?  ├───►│  Deploy Prod  │
+│        │    │         │    │        │    │         │  │ │                  │    │            │Yes │               │
+└────────┘    └─────────┘    └────────┘    └────◇────┘  │ └──────────────────┘    └──────◇─────┘    └───────────────┘
+                                                        │                                │
+                                                        │No         ╭────────────────────╯
+                                                        │         No▼
+                                                        │ ┌──────────────────┐
+                                                        │ │                  │
+                                                        ╰►│      Notify      │
+                                                          │                  │
+                                                          └──────────────────┘</pre></div></div></div>
+<h3 class="variation-label">System architecture</h3>
+<p class="variation-desc">Multi-tier web application with subgraphs</p>
+<div class="diagram-card"><div class="diagram-card-inner"><div class="diagram-source"><div class="diagram-source-header"><div class="diagram-source-label">Mermaid</div><a class="try-link" href="/?src=graph%20TD%0A%20%20%20%20subgraph%20Client%0A%20%20%20%20%20%20%20%20A%5BBrowser%5D%0A%20%20%20%20end%0A%20%20%20%20subgraph%20Server%0A%20%20%20%20%20%20%20%20B%5BLoad%20Balancer%5D%0A%20%20%20%20%20%20%20%20C%5BApp%20Server%201%5D%0A%20%20%20%20%20%20%20%20D%5BApp%20Server%202%5D%0A%20%20%20%20end%0A%20%20%20%20subgraph%20Data%0A%20%20%20%20%20%20%20%20E%5B(PostgreSQL)%5D%0A%20%20%20%20%20%20%20%20F%5B(Redis)%5D%0A%20%20%20%20end%0A%20%20%20%20A%20--%3E%20B%0A%20%20%20%20B%20--%3E%20C%0A%20%20%20%20B%20--%3E%20D%0A%20%20%20%20C%20--%3E%20E%0A%20%20%20%20D%20--%3E%20E%0A%20%20%20%20C%20--%3E%20F%0A%20%20%20%20D%20--%3E%20F">Try it &rarr;</a></div><pre>
+graph TD
+    subgraph Client
+        A[Browser]
+    end
+    subgraph Server
+        B[Load Balancer]
+        C[App Server 1]
+        D[App Server 2]
+    end
+    subgraph Data
+        E[(PostgreSQL)]
+        F[(Redis)]
+    end
+    A --&gt; B
+    B --&gt; C
+    B --&gt; D
+    C --&gt; E
+    D --&gt; E
+    C --&gt; F
+    D --&gt; F</pre></div><div class="diagram-output"><pre>
+
+ ┌─────────────────────┐
+ │ Client              │
+ │                     │
+ │                     │
+ │ ┌─────────────────┐ │
+ │ │                 │ │
+ │ │     Browser     │ │
+ │ │                 │ │
+ │ └────────┬────────┘ │
+ │          │          │
+ └──────────┼──────────┘
+            │
+            │
+            │
+            │
+ ┌──────────┼─────────────────────────────────────┐
+ │ Server   │                                     │
+ │          │                                     │
+ │          ▼                                     │
+ │ ┌─────────────────┐                            │
+ │ │                 │                            │
+ │ │  Load Balancer  │                            │
+ │ │                 │                            │
+ │ └────────┬────────┘                            │
+ │          │                                     │
+ │          ├──────────────────────────╮          │
+ │          ▼                          ▼          │
+ │ ┌─────────────────┐        ┌─────────────────┐ │
+ │ │                 │        │                 │ │
+ │ │  App Server 1   │        │  App Server 2   │ │
+ │ │                 │        │                 │ │
+ │ └───────┬┬────────┘        └────────┬┬───────┘ │
+ │         ││                          ││         │
+ └─────────┼┼──────────────────────────┼┼─────────┘
+           ││                          ││
+           │╰─────────────────╮        ││
+           │                  │        ││
+           │                  │        ││
+           │                  │        ││
+           │         ╭────────┼────────╯│
+           │         │        │         │
+           │         │        │         │
+           │         │        │         │
+           │         │        │         │
+           │         │        │         │
+           │         │        │         │
+           │ ╭───────╯        ╰───────╮ │
+ ┌─────────┼─┼────────────────────────┼─┼─────────┐
+ │ Data    │ │                        │ │         │
+ │         │ │                        │ │         │
+ │         ▼ ▼                        ▼ ▼         │
+ │ ╭─────────────────╮        ╭─────────────────╮ │
+ │ │╰───────────────╯│        │╰───────────────╯│ │
+ │ │   PostgreSQL    │        │      Redis      │ │
+ │ │                 │        │                 │ │
+ │ ╰─────────────────╯        ╰─────────────────╯ │
+ │                                                │
+ └────────────────────────────────────────────────┘</pre></div></div></div>
+</section>
+<section class="diagram-section" id="sequence">
+<h2>Sequence</h2>
+<p class="desc">Message exchanges between participants over time</p>
+<h3 class="variation-label">Basic messages</h3>
+<p class="variation-desc">Solid and dashed arrows between participants</p>
+<div class="diagram-card"><div class="diagram-card-inner"><div class="diagram-source"><div class="diagram-source-header"><div class="diagram-source-label">Mermaid</div><a class="try-link" href="/?src=sequenceDiagram%0A%20%20%20%20participant%20C%20as%20Client%0A%20%20%20%20participant%20S%20as%20Server%0A%20%20%20%20participant%20D%20as%20Database%0A%20%20%20%20C-%3E%3ES%3A%20GET%20%2Fusers%0A%20%20%20%20S-%3E%3ED%3A%20SELECT%20*%20FROM%20users%0A%20%20%20%20D--%3E%3ES%3A%20Results%0A%20%20%20%20S--%3E%3EC%3A%20200%20JSON">Try it &rarr;</a></div><pre>
+sequenceDiagram
+    participant C as Client
+    participant S as Server
+    participant D as Database
+    C-&gt;&gt;S: GET /users
+    S-&gt;&gt;D: SELECT * FROM users
+    D--&gt;&gt;S: Results
+    S--&gt;&gt;C: 200 JSON</pre></div><div class="diagram-output"><pre>
+ ┌──────────┐    ┌──────────┐            ┌────────────┐
+ │  Client  │    │  Server  │            │  Database  │
+ └──────────┘    └──────────┘            └────────────┘
+       ┆ GET /users    ┆                        ┆
+       ────────────────►                        ┆
+       ┆               ┆ SELECT * FROM users    ┆
+       ┆               ─────────────────────────►
+       ┆               ┆ Results                ┆
+       ┆               ◄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄
+       ┆ 200 JSON      ┆                        ┆
+       ◄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄                        ┆
+       ┆               ┆                        ┆</pre></div></div></div>
+<h3 class="variation-label">Arrow types</h3>
+<p class="variation-desc">Solid, dashed, and cross arrows</p>
+<div class="diagram-card"><div class="diagram-card-inner"><div class="diagram-source"><div class="diagram-source-header"><div class="diagram-source-label">Mermaid</div><a class="try-link" href="/?src=sequenceDiagram%0A%20%20%20%20A-%3E%3EB%3A%20Solid%20arrow%0A%20%20%20%20B--%3E%3EA%3A%20Dashed%20arrow%0A%20%20%20%20A-xB%3A%20Solid%20cross%0A%20%20%20%20B--xA%3A%20Dashed%20cross">Try it &rarr;</a></div><pre>
+sequenceDiagram
+    A-&gt;&gt;B: Solid arrow
+    B--&gt;&gt;A: Dashed arrow
+    A-xB: Solid cross
+    B--xA: Dashed cross</pre></div><div class="diagram-output"><pre>
+ ┌─────┐           ┌─────┐
+ │  A  │           │  B  │
+ └─────┘           └─────┘
+    ┆ Solid arrow     ┆
+    ──────────────────►
+    ┆ Dashed arrow    ┆
+    ◄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄
+    ┆ Solid cross     ┆
+    ──────────────────x
+    ┆ Dashed cross    ┆
+    x┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄
+    ┆                 ┆</pre></div></div></div>
+<h3 class="variation-label">Notes</h3>
+<p class="variation-desc">Notes placed to the right of or over participants</p>
+<div class="diagram-card"><div class="diagram-card-inner"><div class="diagram-source"><div class="diagram-source-header"><div class="diagram-source-label">Mermaid</div><a class="try-link" href="/?src=sequenceDiagram%0A%20%20%20%20participant%20A%20as%20Alice%0A%20%20%20%20participant%20B%20as%20Bob%0A%20%20%20%20A-%3E%3EB%3A%20Hello%0A%20%20%20%20Note%20right%20of%20B%3A%20Thinking...%0A%20%20%20%20B--%3E%3EA%3A%20Hi%20there!%0A%20%20%20%20Note%20over%20A%2CB%3A%20Conversation%20started">Try it &rarr;</a></div><pre>
+sequenceDiagram
+    participant A as Alice
+    participant B as Bob
+    A-&gt;&gt;B: Hello
+    Note right of B: Thinking...
+    B--&gt;&gt;A: Hi there!
+    Note over A,B: Conversation started</pre></div><div class="diagram-output"><pre>
+ ┌─────────┐              ┌───────┐
+ │  Alice  │              │  Bob  │
+ └─────────┘              └───────┘
+      ┆ Hello                 ┆
+      ────────────────────────►
+      ┆                       ┆
+      ┆                       ┆ ┌─────────────┐
+      ┆                       ┆ │ Thinking... │
+      ┆                       ┆ └─────────────┘
+      ┆ Hi there!             ┆
+      ◄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄
+      ┆                       ┆
+    ┌──────────────────────────┐
+    │   Conversation started   │
+    └──────────────────────────┘
+      ┆                       ┆</pre></div></div></div>
+<h3 class="variation-label">Alt and loop frames</h3>
+<p class="variation-desc">Conditional branches and repeated blocks drawn as scope frames</p>
+<div class="diagram-card"><div class="diagram-card-inner"><div class="diagram-source"><div class="diagram-source-header"><div class="diagram-source-label">Mermaid</div><a class="try-link" href="/?src=sequenceDiagram%0A%20%20%20%20participant%20U%20as%20User%0A%20%20%20%20participant%20A%20as%20App%0A%20%20%20%20participant%20S%20as%20Server%0A%20%20%20%20U-%3E%3EA%3A%20Login%0A%20%20%20%20A-%3E%3ES%3A%20POST%20%2Fauth%0A%20%20%20%20alt%20valid%20credentials%0A%20%20%20%20%20%20%20%20S--%3E%3EA%3A%20200%20token%0A%20%20%20%20%20%20%20%20A--%3E%3EU%3A%20Welcome%0A%20%20%20%20else%20invalid%0A%20%20%20%20%20%20%20%20S--%3E%3EA%3A%20401%0A%20%20%20%20%20%20%20%20A--%3E%3EU%3A%20Try%20again%0A%20%20%20%20end%0A%20%20%20%20loop%20every%205%20min%0A%20%20%20%20%20%20%20%20A-%3E%3ES%3A%20refresh%20token%0A%20%20%20%20%20%20%20%20S--%3E%3EA%3A%20new%20token%0A%20%20%20%20end">Try it &rarr;</a></div><pre>
+sequenceDiagram
+    participant U as User
+    participant A as App
+    participant S as Server
+    U-&gt;&gt;A: Login
+    A-&gt;&gt;S: POST /auth
+    alt valid credentials
+        S--&gt;&gt;A: 200 token
+        A--&gt;&gt;U: Welcome
+    else invalid
+        S--&gt;&gt;A: 401
+        A--&gt;&gt;U: Try again
+    end
+    loop every 5 min
+        A-&gt;&gt;S: refresh token
+        S--&gt;&gt;A: new token
+    end</pre></div><div class="diagram-output"><pre>
+ ┌────────┐       ┌───────┐        ┌──────────┐
+ │  User  │       │  App  │        │  Server  │
+ └────────┘       └───────┘        └──────────┘
+      ┆ Login         ┆                  ┆
+      ────────────────►                  ┆
+      ┆               ┆ POST /auth       ┆
+      ┆               ───────────────────►
+      ┆               ┆                  ┆
+    ┌──────────────────────────────────────┐
+    │[alt] valid credentials               │
+    │ ┆               ┆ 200 token        ┆ │
+    │ ┆               ◄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄ │
+    │ ┆ Welcome       ┆                  ┆ │
+    │ ◄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄                  ┆ │
+    │ ┆               ┆                  ┆ │
+    │┄[invalid]┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄│
+    │ ┆               ┆ 401              ┆ │
+    │ ┆               ◄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄ │
+    │ ┆ Try again     ┆                  ┆ │
+    │ ◄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄                  ┆ │
+    │ ┆               ┆                  ┆ │
+    └──────────────────────────────────────┘
+      ┆               ┆                  ┆
+      ┆             ┌──────────────────────┐
+      ┆             │[loop] every 5 min    │
+      ┆             │ ┆ refresh token    ┆ │
+      ┆             │ ───────────────────► │
+      ┆             │ ┆ new token        ┆ │
+      ┆             │ ◄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄ │
+      ┆             │ ┆                  ┆ │
+      ┆             └──────────────────────┘
+      ┆               ┆                  ┆</pre></div></div></div>
+<h3 class="variation-label">OAuth 2.0 flow</h3>
+<p class="variation-desc">Authorization code grant with token exchange</p>
+<div class="diagram-card"><div class="diagram-card-inner"><div class="diagram-source"><div class="diagram-source-header"><div class="diagram-source-label">Mermaid</div><a class="try-link" href="/?src=sequenceDiagram%0A%20%20%20%20participant%20U%20as%20User%0A%20%20%20%20participant%20C%20as%20Client%0A%20%20%20%20participant%20A%20as%20Auth%20Server%0A%20%20%20%20participant%20R%20as%20Resource%0A%20%20%20%20U-%3E%3EC%3A%20Login%0A%20%20%20%20C-%3E%3EA%3A%20Authorization%20Request%0A%20%20%20%20A-%3E%3EU%3A%20Login%20Prompt%0A%20%20%20%20U-%3E%3EA%3A%20Credentials%0A%20%20%20%20A--%3E%3EC%3A%20Auth%20Code%0A%20%20%20%20C-%3E%3EA%3A%20Exchange%20Code%0A%20%20%20%20A--%3E%3EC%3A%20Access%20Token%0A%20%20%20%20C-%3E%3ER%3A%20Request%20%2B%20Token%0A%20%20%20%20R--%3E%3EC%3A%20Protected%20Data%0A%20%20%20%20C--%3E%3EU%3A%20Dashboard">Try it &rarr;</a></div><pre>
+sequenceDiagram
+    participant U as User
+    participant C as Client
+    participant A as Auth Server
+    participant R as Resource
+    U-&gt;&gt;C: Login
+    C-&gt;&gt;A: Authorization Request
+    A-&gt;&gt;U: Login Prompt
+    U-&gt;&gt;A: Credentials
+    A--&gt;&gt;C: Auth Code
+    C-&gt;&gt;A: Exchange Code
+    A--&gt;&gt;C: Access Token
+    C-&gt;&gt;R: Request + Token
+    R--&gt;&gt;C: Protected Data
+    C--&gt;&gt;U: Dashboard</pre></div><div class="diagram-output"><pre>
+ ┌────────┐     ┌──────────┐             ┌───────────────┐ ┌────────────┐
+ │  User  │     │  Client  │             │  Auth Server  │ │  Resource  │
+ └────────┘     └──────────┘             └───────────────┘ └────────────┘
+      ┆ Login         ┆                          ┆                ┆
+      ────────────────►                          ┆                ┆
+      ┆               ┆ Authorization Request    ┆                ┆
+      ┆               ───────────────────────────►                ┆
+      ┆ Login Prompt  ┆                          ┆                ┆
+      ◄───────────────────────────────────────────                ┆
+      ┆ Credentials   ┆                          ┆                ┆
+      ───────────────────────────────────────────►                ┆
+      ┆               ┆ Auth Code                ┆                ┆
+      ┆               ◄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄                ┆
+      ┆               ┆ Exchange Code            ┆                ┆
+      ┆               ───────────────────────────►                ┆
+      ┆               ┆ Access Token             ┆                ┆
+      ┆               ◄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄                ┆
+      ┆               ┆ Request + Token          ┆                ┆
+      ┆               ────────────────────────────────────────────►
+      ┆               ┆ Protected Data           ┆                ┆
+      ┆               ◄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄
+      ┆ Dashboard     ┆                          ┆                ┆
+      ◄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄                          ┆                ┆
+      ┆               ┆                          ┆                ┆</pre></div></div></div>
+</section>
+<section class="diagram-section" id="class">
+<h2>Class</h2>
+<p class="desc">Object-oriented class hierarchies and relationships</p>
+<h3 class="variation-label">Basic class</h3>
+<p class="variation-desc">Class with attributes and methods</p>
+<div class="diagram-card"><div class="diagram-card-inner"><div class="diagram-source"><div class="diagram-source-header"><div class="diagram-source-label">Mermaid</div><a class="try-link" href="/?src=classDiagram%0A%20%20%20%20class%20Animal%20%7B%0A%20%20%20%20%20%20%20%20%2BString%20name%0A%20%20%20%20%20%20%20%20%2Bint%20age%0A%20%20%20%20%20%20%20%20%2BmakeSound()%0A%20%20%20%20%7D%0A%20%20%20%20class%20Dog%20%7B%0A%20%20%20%20%20%20%20%20%2Bfetch()%0A%20%20%20%20%7D%0A%20%20%20%20class%20Cat%20%7B%0A%20%20%20%20%20%20%20%20%2Bpurr()%0A%20%20%20%20%7D%0A%20%20%20%20Animal%20%3C%7C--%20Dog%0A%20%20%20%20Animal%20%3C%7C--%20Cat">Try it &rarr;</a></div><pre>
+classDiagram
+    class Animal {
+        +String name
+        +int age
+        +makeSound()
+    }
+    class Dog {
+        +fetch()
+    }
+    class Cat {
+        +purr()
+    }
+    Animal &lt;|-- Dog
+    Animal &lt;|-- Cat</pre></div><div class="diagram-output"><pre>
+
+
+            ┌──────────────┐
+            │    Animal    │
+            ├──────────────┤
+            │ +String name │
+            │ +int age     │
+            ├──────────────┤
+            │ +makeSound() │
+            └──────────────┘
+                  △   △
+          ┌───────┘   └───────┐
+          │                   │
+          │                   │
+  ┌──────────────┐    ┌──────────────┐
+  │     Dog      │    │     Cat      │
+  ├──────────────┤    ├──────────────┤
+  │ +fetch()     │    │ +purr()      │
+  └──────────────┘    └──────────────┘</pre></div></div></div>
+<h3 class="variation-label">Relationship types</h3>
+<p class="variation-desc">Inheritance, composition, aggregation, and association</p>
+<div class="diagram-card"><div class="diagram-card-inner"><div class="diagram-source"><div class="diagram-source-header"><div class="diagram-source-label">Mermaid</div><a class="try-link" href="/?src=classDiagram%0A%20%20%20%20A%20%3C%7C--%20B%20%3A%20Inheritance%0A%20%20%20%20C%20*--%20D%20%3A%20Composition%0A%20%20%20%20E%20o--%20F%20%3A%20Aggregation%0A%20%20%20%20G%20--%3E%20H%20%3A%20Association">Try it &rarr;</a></div><pre>
+classDiagram
+    A &lt;|-- B : Inheritance
+    C *-- D : Composition
+    E o-- F : Aggregation
+    G --&gt; H : Association</pre></div><div class="diagram-output"><pre>
+
+
+  ┌──────────────┐    ┌──────────────┐    ┌──────────────┐    ┌──────────────┐
+  │      A       │    │      C       │    │      E       │    │      G       │
+  └──────────────┘    └──────────────┘    └──────────────┘    └──────────────┘
+          △                   ◆                   ◇                   │
+          │ Inheritance       │ Composition       │ Aggregation       │ Association
+          │                   │                   │                   │
+          │                   │                   │                   ▼
+  ┌──────────────┐    ┌──────────────┐    ┌──────────────┐    ┌──────────────┐
+  │      B       │    │      D       │    │      F       │    │      H       │
+  └──────────────┘    └──────────────┘    └──────────────┘    └──────────────┘</pre></div></div></div>
+<h3 class="variation-label">MVC pattern</h3>
+<p class="variation-desc">Model-View-Controller with dependencies</p>
+<div class="diagram-card"><div class="diagram-card-inner"><div class="diagram-source"><div class="diagram-source-header"><div class="diagram-source-label">Mermaid</div><a class="try-link" href="/?src=classDiagram%0A%20%20%20%20class%20Model%20%7B%0A%20%20%20%20%20%20%20%20-data%3A%20Map%0A%20%20%20%20%20%20%20%20%2BgetData()%0A%20%20%20%20%20%20%20%20%2BsetData()%0A%20%20%20%20%7D%0A%20%20%20%20class%20View%20%7B%0A%20%20%20%20%20%20%20%20%2Brender()%0A%20%20%20%20%20%20%20%20%2Bupdate()%0A%20%20%20%20%7D%0A%20%20%20%20class%20Controller%20%7B%0A%20%20%20%20%20%20%20%20%2BhandleInput()%0A%20%20%20%20%20%20%20%20%2Bvalidate()%0A%20%20%20%20%7D%0A%20%20%20%20Controller%20--%3E%20Model%0A%20%20%20%20Controller%20--%3E%20View%0A%20%20%20%20View%20--%3E%20Model">Try it &rarr;</a></div><pre>
+classDiagram
+    class Model {
+        -data: Map
+        +getData()
+        +setData()
+    }
+    class View {
+        +render()
+        +update()
+    }
+    class Controller {
+        +handleInput()
+        +validate()
+    }
+    Controller --&gt; Model
+    Controller --&gt; View
+    View --&gt; Model</pre></div><div class="diagram-output"><pre>
+
+
+           ┌────────────────┐
+           │   Controller   │
+           ├────────────────┤
+           │ +handleInput() │
+           │ +validate()    │
+           └────────────────┘
+                  │   │
+          ┌───────┘   └───────┐
+          │                   │
+          ▼                   │
+  ┌──────────────┐            ▼
+  │    Model     │    ┌──────────────┐
+  ├──────────────┤    │     View     │
+  │ -data: Map   │    ├──────────────┤
+  ├──────────────┤◄───│ +render()    │
+  │ +getData()   │    │ +update()    │
+  │ +setData()   │    └──────────────┘
+  └──────────────┘</pre></div></div></div>
+</section>
+<section class="diagram-section" id="er">
+<h2>ER Diagram</h2>
+<p class="desc">Entity-relationship models for databases</p>
+<h3 class="variation-label">Basic relationships</h3>
+<p class="variation-desc">Entities with cardinality markers</p>
+<div class="diagram-card"><div class="diagram-card-inner"><div class="diagram-source"><div class="diagram-source-header"><div class="diagram-source-label">Mermaid</div><a class="try-link" href="/?src=erDiagram%0A%20%20%20%20CUSTOMER%20%7C%7C--o%7B%20ORDER%20%3A%20places%0A%20%20%20%20ORDER%20%7C%7C--%7C%7B%20LINE_ITEM%20%3A%20contains%0A%20%20%20%20PRODUCT%20%7C%7C--o%7B%20LINE_ITEM%20%3A%20includes">Try it &rarr;</a></div><pre>
+erDiagram
+    CUSTOMER ||--o{ ORDER : places
+    ORDER ||--|{ LINE_ITEM : contains
+    PRODUCT ||--o{ LINE_ITEM : includes</pre></div><div class="diagram-output"><pre>
+
+
+      ┌──────────────┐    ┌──────────────┐
+      │   CUSTOMER   │    │   PRODUCT    │
+      └──────────────┘    └──────────────┘
+              │1                  │1
+          ┌───┘                   └───┐
+          │ places                    │ includes
+          │0..*                       │0..*
+  ┌──────────────┐ 1     1..* ┌──────────────┐
+  │    ORDER     │────────────│  LINE_ITEM   │
+  └──────────────┘ contains   └──────────────┘</pre></div></div></div>
+<h3 class="variation-label">All cardinality types</h3>
+<p class="variation-desc">Exactly one, zero or more, one or more, zero or one</p>
+<div class="diagram-card"><div class="diagram-card-inner"><div class="diagram-source"><div class="diagram-source-header"><div class="diagram-source-label">Mermaid</div><a class="try-link" href="/?src=erDiagram%0A%20%20%20%20A%20%7C%7C--%7C%7C%20B%20%3A%20%22one%20to%20one%22%0A%20%20%20%20C%20%7C%7C--o%7B%20D%20%3A%20%22one%20to%20many%22%0A%20%20%20%20E%20%7D%7C--%7C%7B%20F%20%3A%20%22many%20to%20many%22%0A%20%20%20%20G%20%7Co--o%7C%20H%20%3A%20%22zero-or-one%22">Try it &rarr;</a></div><pre>
+erDiagram
+    A ||--|| B : "one to one"
+    C ||--o{ D : "one to many"
+    E }|--|{ F : "many to many"
+    G |o--o| H : "zero-or-one"</pre></div><div class="diagram-output"><pre>
+
+
+  ┌──────────────┐    ┌──────────────┐    ┌──────────────┐    ┌──────────────┐
+  │      A       │    │      C       │    │      E       │    │      G       │
+  └──────────────┘    └──────────────┘    └──────────────┘    └──────────────┘
+          │1                  │1                  │1..*               │0..1
+          │ one to one        │ one to many       │ many to many      │ zero-or-one
+          │                   │                   │                   │
+          │1                  │0..*               │1..*               │0..1
+  ┌──────────────┐    ┌──────────────┐    ┌──────────────┐    ┌──────────────┐
+  │      B       │    │      D       │    │      F       │    │      H       │
+  └──────────────┘    └──────────────┘    └──────────────┘    └──────────────┘</pre></div></div></div>
+<h3 class="variation-label">E-commerce schema</h3>
+<p class="variation-desc">Users, orders, products, and reviews</p>
+<div class="diagram-card"><div class="diagram-card-inner"><div class="diagram-source"><div class="diagram-source-header"><div class="diagram-source-label">Mermaid</div><a class="try-link" href="/?src=erDiagram%0A%20%20%20%20USER%20%7C%7C--o%7B%20ORDER%20%3A%20places%0A%20%20%20%20USER%20%7C%7C--o%7B%20REVIEW%20%3A%20writes%0A%20%20%20%20ORDER%20%7C%7C--%7C%7B%20ORDER_ITEM%20%3A%20contains%0A%20%20%20%20PRODUCT%20%7C%7C--o%7B%20ORDER_ITEM%20%3A%20includes%0A%20%20%20%20PRODUCT%20%7C%7C--o%7B%20REVIEW%20%3A%20receives">Try it &rarr;</a></div><pre>
+erDiagram
+    USER ||--o{ ORDER : places
+    USER ||--o{ REVIEW : writes
+    ORDER ||--|{ ORDER_ITEM : contains
+    PRODUCT ||--o{ ORDER_ITEM : includes
+    PRODUCT ||--o{ REVIEW : receives</pre></div><div class="diagram-output"><pre>
+
+
+            ┌──────────────┐    ┌──────────────┐
+            │     USER     │    │   PRODUCT    │
+            └──────────────┘    └──────────────┘
+                  │1  │1              │1  │1
+          ┌─places┘   └────┐          └─includes──┐
+          │                │ writes       │       │
+          │                │     ┌────────┘       │
+          │                │     │ receives       │
+          │0..*            │0..* │0..*            │0..*
+  ┌──────────────┐ 1  ┌──────────────┐..* ┌──────────────┐
+  │    ORDER     │────┼────REVIEW────┼────│  ORDER_ITEM  │
+  └──────────────┘    └──────────────┘    └──────────────┘</pre></div></div></div>
+</section>
+<section class="diagram-section" id="state">
+<h2>State Diagram</h2>
+<p class="desc">State machines with transitions and conditions</p>
+<h3 class="variation-label">Basic</h3>
+<p class="variation-desc">State machine with transitions and labels</p>
+<div class="diagram-card"><div class="diagram-card-inner"><div class="diagram-source"><div class="diagram-source-header"><div class="diagram-source-label">Mermaid</div><a class="try-link" href="/?src=stateDiagram-v2%0A%20%20%20%20%5B*%5D%20--%3E%20Idle%0A%20%20%20%20Idle%20--%3E%20Processing%20%3A%20submit%0A%20%20%20%20Processing%20--%3E%20Done%20%3A%20success%0A%20%20%20%20Processing%20--%3E%20Error%20%3A%20failure%0A%20%20%20%20Error%20--%3E%20Idle%20%3A%20retry%0A%20%20%20%20Done%20--%3E%20%5B*%5D">Try it &rarr;</a></div><pre>
+stateDiagram-v2
+    [*] --&gt; Idle
+    Idle --&gt; Processing : submit
+    Processing --&gt; Done : success
+    Processing --&gt; Error : failure
+    Error --&gt; Idle : retry
+    Done --&gt; [*]</pre></div><div class="diagram-output"><pre>
+╭───────◯──────╮
+│              │
+│      ●       │
+│              │
+╰───────◯──────╯
+        │
+        │
+        ▼
+╭──────────────╮
+│              │          retry
+│     Idle     │◄─────────────────────────╮
+│              │                          │
+╰───────┬──────╯                          │
+        │                                 │
+  submit│                                 │
+        ▼                                 │
+╭──────────────╮                          │
+│              │                          │
+│  Processing  │                          │
+│              │                          │
+╰───────┬──────╯                          │
+        │                                 │
+        │                                 │
+        ├───────────────────────╮         │
+        │                       │         │
+        │                       │failure  │
+ success│                       │         │
+        │                       │         │
+        ▼                       ▼         │
+╭──────────────╮        ╭──────────────╮  │
+│              │        │              │  │
+│     Done     │        │    Error     ├──╯
+│              │        │              │
+╰───────┬──────╯        ╰──────────────╯
+        │
+        │
+        ▼
+╭───────◯──────╮
+│              │
+│      ◉       │
+│              │
+╰───────◯──────╯</pre></div></div></div>
+<h3 class="variation-label">HTTP connection lifecycle</h3>
+<p class="variation-desc">Connection states from open to close</p>
+<div class="diagram-card"><div class="diagram-card-inner"><div class="diagram-source"><div class="diagram-source-header"><div class="diagram-source-label">Mermaid</div><a class="try-link" href="/?src=stateDiagram-v2%0A%20%20%20%20%5B*%5D%20--%3E%20Closed%0A%20%20%20%20Closed%20--%3E%20Connecting%20%3A%20connect()%0A%20%20%20%20Connecting%20--%3E%20Open%20%3A%20connected%0A%20%20%20%20Connecting%20--%3E%20Closed%20%3A%20timeout%0A%20%20%20%20Open%20--%3E%20Closing%20%3A%20close()%0A%20%20%20%20Open%20--%3E%20Open%20%3A%20send%2Freceive%0A%20%20%20%20Closing%20--%3E%20Closed%20%3A%20done%0A%20%20%20%20Closed%20--%3E%20%5B*%5D">Try it &rarr;</a></div><pre>
+stateDiagram-v2
+    [*] --&gt; Closed
+    Closed --&gt; Connecting : connect()
+    Connecting --&gt; Open : connected
+    Connecting --&gt; Closed : timeout
+    Open --&gt; Closing : close()
+    Open --&gt; Open : send/receive
+    Closing --&gt; Closed : done
+    Closed --&gt; [*]</pre></div><div class="diagram-output"><pre>
+╭───────◯──────╮
+│              │
+│      ●       │
+│              │
+╰───────◯──────╯
+        │
+        │
+        ▼
+╭──────────────╮           done
+│              │◄───────────────────────────╮
+│    Closed    │                            │
+│              │◄────╮                      │
+╰───────┬──────╯     │                      │
+        │connect()   │                      │
+        ├────────────┼────────────╮         │
+        ▼            │timeout     ▼         │
+╭──────────────╮     │    ╭───────◯──────╮  │
+│              │     │    │              │  │
+│  Connecting  ├─────╯    │      ◉       │  │
+│              │          │              │  │
+╰─────┬────────╯          ╰───────◯──────╯  │
+      │                                     │
+      │connected                            │
+      │ ╭────────────╮                      │
+      │ │            │                      │
+      ▼ │            │send/receive          │
+╭───────┴──────╮     │                      │
+│              │     │                      │
+│     Open     │◄────╯                      │
+│              │                            │
+╰───────┬──────╯                            │
+        │                                   │
+        │                                   │
+        │                                   │
+ close()│                                   │
+        ▼                                   │
+╭──────────────╮                            │
+│              │                            │
+│   Closing    ├────────────────────────────╯
+│              │
+╰──────────────╯</pre></div></div></div>
+<h3 class="variation-label">Composite state</h3>
+<p class="variation-desc">Nested states inside a parent state with outer transitions</p>
+<div class="diagram-card"><div class="diagram-card-inner"><div class="diagram-source"><div class="diagram-source-header"><div class="diagram-source-label">Mermaid</div><a class="try-link" href="/?src=stateDiagram-v2%0A%20%20%20%20%5B*%5D%20--%3E%20Off%0A%20%20%20%20Off%20--%3E%20On%20%3A%20power%0A%20%20%20%20state%20On%20%7B%0A%20%20%20%20%20%20%20%20%5B*%5D%20--%3E%20Idle%0A%20%20%20%20%20%20%20%20Idle%20--%3E%20Playing%20%3A%20play%0A%20%20%20%20%20%20%20%20Playing%20--%3E%20Paused%20%3A%20pause%0A%20%20%20%20%20%20%20%20Paused%20--%3E%20Playing%20%3A%20play%0A%20%20%20%20%7D%0A%20%20%20%20On%20--%3E%20Off%20%3A%20power">Try it &rarr;</a></div><pre>
+stateDiagram-v2
+    [*] --&gt; Off
+    Off --&gt; On : power
+    state On {
+        [*] --&gt; Idle
+        Idle --&gt; Playing : play
+        Playing --&gt; Paused : pause
+        Paused --&gt; Playing : play
+    }
+    On --&gt; Off : power</pre></div><div class="diagram-output"><pre>
+   ╭─────◯─────╮
+   │           │
+   │     ●     │
+   │           │
+   ╰─────◯─────╯
+         │
+         │
+         ▼
+   ╭───────────╮
+   │           │
+   │    Off    │◄─╮
+   │           │  │
+   ╰─────┬─────╯  │power
+    power▼        │
+ ┌────────────────┴────────────────────────────────────────────────────┐
+ │ On                                                                  │
+ │                                                                     │
+ │                                                                     │
+ │ ╭─────◯─────╮    ╭───────────╮     ╭───────────╮      ╭───────────╮ │
+ │ │           │    │           │play │           │play  │           │ │
+ │ │     ●     ├───►│   Idle    ├────►│  Playing  ├◄────►┤  Paused   │ │
+ │ │           │    │           │     │           │pause │           │ │
+ │ ╰─────◯─────╯    ╰───────────╯     ╰───────────╯      ╰───────────╯ │
+ │                                                                     │
+ └─────────────────────────────────────────────────────────────────────┘</pre></div></div></div>
+<h3 class="variation-label">Choice, fork and join</h3>
+<p class="variation-desc">Pseudo-states for branching and parallel paths</p>
+<div class="diagram-card"><div class="diagram-card-inner"><div class="diagram-source"><div class="diagram-source-header"><div class="diagram-source-label">Mermaid</div><a class="try-link" href="/?src=stateDiagram-v2%0A%20%20%20%20state%20check%20%3C%3Cchoice%3E%3E%0A%20%20%20%20state%20fork_state%20%3C%3Cfork%3E%3E%0A%20%20%20%20state%20join_state%20%3C%3Cjoin%3E%3E%0A%20%20%20%20%5B*%5D%20--%3E%20Validate%0A%20%20%20%20Validate%20--%3E%20check%0A%20%20%20%20check%20--%3E%20Rejected%20%3A%20invalid%0A%20%20%20%20check%20--%3E%20fork_state%20%3A%20valid%0A%20%20%20%20fork_state%20--%3E%20Index%0A%20%20%20%20fork_state%20--%3E%20Notify%0A%20%20%20%20Index%20--%3E%20join_state%0A%20%20%20%20Notify%20--%3E%20join_state%0A%20%20%20%20join_state%20--%3E%20%5B*%5D%0A%20%20%20%20Rejected%20--%3E%20%5B*%5D">Try it &rarr;</a></div><pre>
+stateDiagram-v2
+    state check &lt;&lt;choice&gt;&gt;
+    state fork_state &lt;&lt;fork&gt;&gt;
+    state join_state &lt;&lt;join&gt;&gt;
+    [*] --&gt; Validate
+    Validate --&gt; check
+    check --&gt; Rejected : invalid
+    check --&gt; fork_state : valid
+    fork_state --&gt; Index
+    fork_state --&gt; Notify
+    Index --&gt; join_state
+    Notify --&gt; join_state
+    join_state --&gt; [*]
+    Rejected --&gt; [*]</pre></div><div class="diagram-output"><pre>
+                      ╭───────◯──────╮
+                      │              │
+                      │      ●       │
+                      │              │
+                      ╰───────◯──────╯
+                              │
+                              │
+                              ▼
+                      ╭──────────────╮
+                      │              │
+                      │   Validate   │
+                      │              │
+                      ╰───────┬──────╯
+                              │
+                              │
+                              ▼
+                      ┌───────◇──────┐
+                      │              │
+                      │    check     │
+                      │              │
+                      └───────◇──────┘
+                              │
+                              │
+   valid╭─────────────────────┴───────────────────────╮
+        │                                             │invalid
+        ▼                                             ▼
+━━━━━━━━━━━━━━━━                              ╭──────────────╮
+━━━━━━━━━━━━━━━━                              │              │
+━━━━━━━━━━━━━━━━                              │   Rejected   │
+━━━━━━━━━━━━━━━━                              │              │
+━━━━━━━━┬━━━━━━━                              ╰───────┬──────╯
+        │                                             │
+        │                                             │
+        │                                             │
+        │                                             │
+        ├─────────────────────╮                       │
+        ▼                     ▼                       ▼
+╭──────────────╮      ╭──────────────╮        ╭───────◯──────╮
+│              │      │              │        │              │
+│    Index     │      │    Notify    │        │      ◉       │
+│              │      │              │        │              │
+╰──────┬───────╯      ╰───────┬──────╯        ╰───────◯──────╯
+       │                      │
+       │ ╭────────────────────╯
+       ▼ ▼
+━━━━━━━━━━━━━━━━
+━━━━━━━━━━━━━━━━
+━━━━━━━━━━━━━━━━
+━━━━━━━━━━━━━━━━
+━━━━━━━━┬━━━━━━━
+        │
+        │
+        ▼
+╭───────◯──────╮
+│              │
+│      ◉       │
+│              │
+╰───────◯──────╯</pre></div></div></div>
+</section>
+<section class="diagram-section" id="gantt">
+<h2>Gantt</h2>
+<p class="desc">Project schedules with tasks, sections, and dependencies</p>
+<h3 class="variation-label">Basic</h3>
+<p class="variation-desc">Project timeline with sections</p>
+<div class="diagram-card"><div class="diagram-card-inner"><div class="diagram-source"><div class="diagram-source-header"><div class="diagram-source-label">Mermaid</div><a class="try-link" href="/?src=gantt%0A%20%20%20%20title%20Sprint%201%0A%20%20%20%20dateFormat%20YYYY-MM-DD%0A%20%20%20%20section%20Backend%0A%20%20%20%20%20%20%20%20API%20design%20%20%20%20%20%3Aa1%2C%202024-01-01%2C%207d%0A%20%20%20%20%20%20%20%20Implementation%20%3Aa2%2C%20after%20a1%2C%2014d%0A%20%20%20%20section%20Frontend%0A%20%20%20%20%20%20%20%20Mockups%20%20%20%20%20%20%20%20%3Ab1%2C%202024-01-01%2C%205d%0A%20%20%20%20%20%20%20%20Build%20UI%20%20%20%20%20%20%20%3Ab2%2C%20after%20b1%2C%2010d">Try it &rarr;</a></div><pre>
+gantt
+    title Sprint 1
+    dateFormat YYYY-MM-DD
+    section Backend
+        API design     :a1, 2024-01-01, 7d
+        Implementation :a2, after a1, 14d
+    section Frontend
+        Mockups        :b1, 2024-01-01, 5d
+        Build UI       :b2, after b1, 10d</pre></div><div class="diagram-output"><pre>
+                                            Sprint 1
+
+ Backend          │
+   API design     │████████████████████
+   Implementation │                    ████████████████████████████████████████
+ Frontend         │
+   Mockups        │██████████████
+   Build UI       │              ████████████████████████████
+                  └┬────────┬─────────┬─────────┬─────────┬─────────┬─────────┬
+                Jan 01   Jan 04    Jan 08    Jan 11    Jan 15    Jan 18    Jan 22</pre></div></div></div>
+<h3 class="variation-label">Task status tags</h3>
+<p class="variation-desc">Tasks marked as done, active, or critical using tag keywords</p>
+<div class="diagram-card"><div class="diagram-card-inner"><div class="diagram-source"><div class="diagram-source-header"><div class="diagram-source-label">Mermaid</div><a class="try-link" href="/?src=gantt%0A%20%20%20%20title%20Release%20Plan%0A%20%20%20%20dateFormat%20YYYY-MM-DD%0A%20%20%20%20section%20Design%0A%20%20%20%20%20%20%20%20Wireframes%20%20%20%20%20%3Adone%2C%20des1%2C%202024-01-01%2C%202024-01-14%0A%20%20%20%20%20%20%20%20Prototypes%20%20%20%20%20%3Aactive%2C%20des2%2C%202024-01-08%2C%202024-01-21%0A%20%20%20%20section%20Development%0A%20%20%20%20%20%20%20%20Frontend%20%20%20%20%20%20%20%3Adev1%2C%20after%20des2%2C%2030d%0A%20%20%20%20%20%20%20%20Backend%20%20%20%20%20%20%20%20%3Acrit%2C%20dev2%2C%202024-01-15%2C%202024-03-01%0A%20%20%20%20section%20Testing%0A%20%20%20%20%20%20%20%20QA%20%20%20%20%20%20%20%20%20%20%20%20%20%3Atest1%2C%20after%20dev1%2C%2014d">Try it &rarr;</a></div><pre>
+gantt
+    title Release Plan
+    dateFormat YYYY-MM-DD
+    section Design
+        Wireframes     :done, des1, 2024-01-01, 2024-01-14
+        Prototypes     :active, des2, 2024-01-08, 2024-01-21
+    section Development
+        Frontend       :dev1, after des2, 30d
+        Backend        :crit, dev2, 2024-01-15, 2024-03-01
+    section Testing
+        QA             :test1, after dev1, 14d</pre></div><div class="diagram-output"><pre>
+                                          Release Plan
+
+ Design          │
+   Wireframes    │░░░░░░░░░░░░
+   Prototypes    │      ▓▓▓▓▓▓▓▓▓▓▓▓▓
+ Development     │
+   Frontend      │                   ████████████████████████████
+   Backend       │             ████████████████████████████████████████████
+ Testing         │
+   QA            │                                               ██████████████
+                 └┬─────────┬─────────┬─────────┬─────────┬─────────┬─────────┬
+               Jan 01    Jan 11    Jan 22    Feb 02    Feb 12    Feb 23    Mar 05</pre></div></div></div>
+<h3 class="variation-label">Milestones</h3>
+<p class="variation-desc">Diamond markers for key dates using the milestone keyword</p>
+<div class="diagram-card"><div class="diagram-card-inner"><div class="diagram-source"><div class="diagram-source-header"><div class="diagram-source-label">Mermaid</div><a class="try-link" href="/?src=gantt%0A%20%20%20%20title%20Launch%20Timeline%0A%20%20%20%20dateFormat%20YYYY-MM-DD%0A%20%20%20%20section%20Planning%0A%20%20%20%20%20%20%20%20Requirements%20%20%20%3Aa1%2C%202024-01-01%2C%2010d%0A%20%20%20%20%20%20%20%20Kickoff%20%20%20%20%20%20%20%20%3Amilestone%2C%20m1%2C%202024-01-11%2C%200d%0A%20%20%20%20section%20Build%0A%20%20%20%20%20%20%20%20Development%20%20%20%20%3Aa2%2C%20after%20m1%2C%2030d%0A%20%20%20%20%20%20%20%20Code%20freeze%20%20%20%20%3Amilestone%2C%20m2%2C%20after%20a2%2C%200d%0A%20%20%20%20section%20Release%0A%20%20%20%20%20%20%20%20QA%20%20%20%20%20%20%20%20%20%20%20%20%20%3Aa3%2C%20after%20m2%2C%2014d%0A%20%20%20%20%20%20%20%20Launch%20%20%20%20%20%20%20%20%20%3Amilestone%2C%20m3%2C%20after%20a3%2C%200d">Try it &rarr;</a></div><pre>
+gantt
+    title Launch Timeline
+    dateFormat YYYY-MM-DD
+    section Planning
+        Requirements   :a1, 2024-01-01, 10d
+        Kickoff        :milestone, m1, 2024-01-11, 0d
+    section Build
+        Development    :a2, after m1, 30d
+        Code freeze    :milestone, m2, after a2, 0d
+    section Release
+        QA             :a3, after m2, 14d
+        Launch         :milestone, m3, after a3, 0d</pre></div><div class="diagram-output"><pre>
+                                        Launch Timeline
+
+ Planning       │
+   Requirements │███████████
+   Kickoff      │           ◆
+ Build          │
+   Development  │           ██████████████████████████████████
+   Code freeze  │                                             ◆
+ Release        │
+   QA           │                                             █████████████████
+   Launch       │                                                              ◆
+                └┬─────────┬─────────┬─────────┬─────────┬─────────┬──────────┬
+              Jan 01    Jan 10    Jan 19    Jan 28    Feb 06    Feb 15     Feb 24</pre></div></div></div>
+<h3 class="variation-label">Custom date format</h3>
+<p class="variation-desc">The dateFormat directive reads dates that are not in ISO format</p>
+<div class="diagram-card"><div class="diagram-card-inner"><div class="diagram-source"><div class="diagram-source-header"><div class="diagram-source-label">Mermaid</div><a class="try-link" href="/?src=gantt%0A%20%20%20%20title%20Sprint%2042%0A%20%20%20%20dateFormat%20DD-MM-YYYY%0A%20%20%20%20section%20Backend%0A%20%20%20%20%20%20%20%20Schema%20%20%20%20%20%20%20%20%3Adone%2C%20s1%2C%2001-09-2026%2C%203d%0A%20%20%20%20%20%20%20%20Endpoints%20%20%20%20%20%3Aactive%2C%20s2%2C%20after%20s1%2C%205d%0A%20%20%20%20section%20Frontend%0A%20%20%20%20%20%20%20%20Components%20%20%20%20%3As3%2C%2003-09-2026%2C%204d%0A%20%20%20%20%20%20%20%20Integration%20%20%20%3Acrit%2C%20s4%2C%20after%20s2%2C%203d%0A%20%20%20%20section%20Release%0A%20%20%20%20%20%20%20%20Ship%20%20%20%20%20%20%20%20%20%20%3Amilestone%2C%20m1%2C%20after%20s4%2C%200d">Try it &rarr;</a></div><pre>
+gantt
+    title Sprint 42
+    dateFormat DD-MM-YYYY
+    section Backend
+        Schema        :done, s1, 01-09-2026, 3d
+        Endpoints     :active, s2, after s1, 5d
+    section Frontend
+        Components    :s3, 03-09-2026, 4d
+        Integration   :crit, s4, after s2, 3d
+    section Release
+        Ship          :milestone, m1, after s4, 0d</pre></div><div class="diagram-output"><pre>
+                                          Sprint 42
+
+ Backend       │
+   Schema      │░░░░░░░░░░░░░░░░░
+   Endpoints   │                 ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+ Frontend      │
+   Components  │           ███████████████████████
+   Integration │                                             ██████████████████
+ Release       │
+   Ship        │                                                               ◆
+               └┬─────────┬─────────┬──────────┬─────────┬─────────┬──────────┬
+             Sep 01    Sep 02    Sep 04     Sep 06    Sep 08    Sep 10     Sep 12</pre></div></div></div>
+</section>
+<section class="diagram-section" id="pie">
+<h2>Pie Chart</h2>
+<p class="desc">Proportional data as labeled slices</p>
+<h3 class="variation-label">Basic</h3>
+<p class="variation-desc">Proportional slices with labels and percentages</p>
+<div class="diagram-card"><div class="diagram-card-inner"><div class="diagram-source"><div class="diagram-source-header"><div class="diagram-source-label">Mermaid</div><a class="try-link" href="/?src=pie%20title%20Languages%0A%20%20%20%20%22Python%22%20%3A%2040%0A%20%20%20%20%22JavaScript%22%20%3A%2030%0A%20%20%20%20%22Go%22%20%3A%2020%0A%20%20%20%20%22Rust%22%20%3A%2010">Try it &rarr;</a></div><pre>
+pie title Languages
+    "Python" : 40
+    "JavaScript" : 30
+    "Go" : 20
+    "Rust" : 10</pre></div><div class="diagram-output"><pre>
+
+
+                          Languages
+
+             ████████████████░░░░░░░░░░░░▒▒▒▒▒▒▒▒▚▚▚▚
+                   40%           30%       20%   10%
+
+
+      Python┃████████████████  40.0%
+  JavaScript┃░░░░░░░░░░░░  30.0%
+          Go┃▒▒▒▒▒▒▒▒  20.0%
+        Rust┃▚▚▚▚  10.0%</pre></div></div></div>
+<h3 class="variation-label">Budget breakdown</h3>
+<p class="variation-desc">A team&#x27;s budget split by area</p>
+<div class="diagram-card"><div class="diagram-card-inner"><div class="diagram-source"><div class="diagram-source-header"><div class="diagram-source-label">Mermaid</div><a class="try-link" href="/?src=pie%20title%20Q4%20Budget%0A%20%20%20%20%22Engineering%22%20%3A%2045%0A%20%20%20%20%22Marketing%22%20%3A%2025%0A%20%20%20%20%22Operations%22%20%3A%2015%0A%20%20%20%20%22Support%22%20%3A%2010%0A%20%20%20%20%22Other%22%20%3A%205">Try it &rarr;</a></div><pre>
+pie title Q4 Budget
+    "Engineering" : 45
+    "Marketing" : 25
+    "Operations" : 15
+    "Support" : 10
+    "Other" : 5</pre></div><div class="diagram-output"><pre>
+
+
+                          Q4 Budget
+
+              ██████████████████░░░░░░░░░░▒▒▒▒▒▒▚▚▚▚▞▞
+                     45%           25%     15%  10%
+
+
+  Engineering┃██████████████████  45.0%
+    Marketing┃░░░░░░░░░░  25.0%
+   Operations┃▒▒▒▒▒▒  15.0%
+      Support┃▚▚▚▚  10.0%
+        Other┃▞▞   5.0%</pre></div></div></div>
+</section>
+<section class="diagram-section" id="xychart">
+<h2>XY Chart</h2>
+<p class="desc">Bar charts, line charts, and combinations</p>
+<h3 class="variation-label">Bar chart</h3>
+<p class="variation-desc">Vertical bars with axis labels</p>
+<div class="diagram-card"><div class="diagram-card-inner"><div class="diagram-source"><div class="diagram-source-header"><div class="diagram-source-label">Mermaid</div><a class="try-link" href="/?src=xychart-beta%0A%20%20%20%20title%20%22Quarterly%20Sales%22%0A%20%20%20%20x-axis%20%5BQ1%2C%20Q2%2C%20Q3%2C%20Q4%5D%0A%20%20%20%20y-axis%20%22Revenue%20(k)%22%200%20--%3E%20120%0A%20%20%20%20bar%20%5B45%2C%2078%2C%2062%2C%20105%5D">Try it &rarr;</a></div><pre>
+xychart-beta
+    title "Quarterly Sales"
+    x-axis [Q1, Q2, Q3, Q4]
+    y-axis "Revenue (k)" 0 --&gt; 120
+    bar [45, 78, 62, 105]</pre></div><div class="diagram-output"><pre>
+           Quarterly Sales
+ Revenue (k)
+    120 │
+        │
+        │                  ████
+     96 │                  ████
+        │                  ████
+        │      ▄▄▄▄        ████
+     72 │      ████        ████
+        │      ████  ▄▄▄▄  ████
+        │      ████  ████  ████
+     48 │▄▄▄▄  ████  ████  ████
+        │████  ████  ████  ████
+        │████  ████  ████  ████
+     24 │████  ████  ████  ████
+        │████  ████  ████  ████
+        │████  ████  ████  ████
+      0 └──┬─────┬─────┬─────┬─
+          Q1    Q2    Q3    Q4</pre></div></div></div>
+<h3 class="variation-label">Line chart</h3>
+<p class="variation-desc">Trend line connecting data points</p>
+<div class="diagram-card"><div class="diagram-card-inner"><div class="diagram-source"><div class="diagram-source-header"><div class="diagram-source-label">Mermaid</div><a class="try-link" href="/?src=xychart-beta%0A%20%20%20%20title%20%22Temperature%22%0A%20%20%20%20x-axis%20%5BMon%2C%20Tue%2C%20Wed%2C%20Thu%2C%20Fri%5D%0A%20%20%20%20y-axis%20%22Celsius%22%200%20--%3E%2040%0A%20%20%20%20line%20%5B18%2C%2022%2C%2025%2C%2021%2C%2019%5D">Try it &rarr;</a></div><pre>
+xychart-beta
+    title "Temperature"
+    x-axis [Mon, Tue, Wed, Thu, Fri]
+    y-axis "Celsius" 0 --&gt; 40
+    line [18, 22, 25, 21, 19]</pre></div><div class="diagram-output"><pre>
+                Temperature
+ Celsius
+     40 │
+        │
+        │
+     32 │
+        │
+        │
+     24 │           ╭─────╮
+        │     ╭─────╯     │
+        │     │           ╰─────────
+     16 │  ───╯
+        │
+        │
+      8 │
+        │
+        │
+      0 └──┬─────┬─────┬─────┬─────┬─
+          Mon   Tue   Wed   Thu   Fri</pre></div></div></div>
+<h3 class="variation-label">Bar + line combo</h3>
+<p class="variation-desc">Bars and line overlaid on the same axes</p>
+<div class="diagram-card"><div class="diagram-card-inner"><div class="diagram-source"><div class="diagram-source-header"><div class="diagram-source-label">Mermaid</div><a class="try-link" href="/?src=xychart-beta%0A%20%20%20%20title%20%22Monthly%20Revenue%22%0A%20%20%20%20x-axis%20%5BJan%2C%20Feb%2C%20Mar%2C%20Apr%2C%20May%2C%20Jun%5D%0A%20%20%20%20y-axis%20%22Revenue%20(k)%22%200%20--%3E%20100%0A%20%20%20%20bar%20%5B30%2C%2045%2C%2062%2C%2055%2C%2078%2C%2091%5D%0A%20%20%20%20line%20%5B30%2C%2045%2C%2062%2C%2055%2C%2078%2C%2091%5D">Try it &rarr;</a></div><pre>
+xychart-beta
+    title "Monthly Revenue"
+    x-axis [Jan, Feb, Mar, Apr, May, Jun]
+    y-axis "Revenue (k)" 0 --&gt; 100
+    bar [30, 45, 62, 55, 78, 91]
+    line [30, 45, 62, 55, 78, 91]</pre></div><div class="diagram-output"><pre>
+                 Monthly Revenue
+ Revenue (k)
+    100 │
+        │                              ▄▄▄▄
+        │                             ╭───█
+     80 │                        ▄▄▄▄ │████
+        │                       ╭─────╯████
+        │            ▄▄▄▄       │████  ████
+     60 │           ╭─────╮     │████  ████
+        │           │████ ╰─────╯████  ████
+        │      ▄▄▄▄ │████  ████  ████  ████
+     40 │     ╭─────╯████  ████  ████  ████
+        │▄▄▄▄ │████  ████  ████  ████  ████
+        │██───╯████  ████  ████  ████  ████
+     20 │████  ████  ████  ████  ████  ████
+        │████  ████  ████  ████  ████  ████
+        │████  ████  ████  ████  ████  ████
+      0 └──┬─────┬─────┬─────┬─────┬─────┬─
+          Jan   Feb   Mar   Apr   May   Jun</pre></div></div></div>
+<h3 class="variation-label">Horizontal</h3>
+<p class="variation-desc">Horizontal orientation using the horizontal keyword</p>
+<div class="diagram-card"><div class="diagram-card-inner"><div class="diagram-source"><div class="diagram-source-header"><div class="diagram-source-label">Mermaid</div><a class="try-link" href="/?src=xychart-beta%20horizontal%0A%20%20%20%20title%20%22Team%20Size%22%0A%20%20%20%20x-axis%20%5BBackend%2C%20Frontend%2C%20DevOps%2C%20QA%5D%0A%20%20%20%20y-axis%200%20--%3E%2015%0A%20%20%20%20bar%20%5B12%2C%208%2C%205%2C%206%5D">Try it &rarr;</a></div><pre>
+xychart-beta horizontal
+    title "Team Size"
+    x-axis [Backend, Frontend, DevOps, QA]
+    y-axis 0 --&gt; 15
+    bar [12, 8, 5, 6]</pre></div><div class="diagram-output"><pre>
+                              Team Size
+
+  Backend │████████████████████████████████████████
+          │
+ Frontend │██████████████████████████
+          │
+   DevOps │████████████████
+          │
+       QA │████████████████████
+          └┬────────┬─────────┬─────────┬─────────┬─────────┬
+           0        3         6         9        12        15</pre></div></div></div>
+</section>
+<section class="diagram-section" id="quadrant">
+<h2>Quadrant Chart</h2>
+<p class="desc">2x2 grids with plotted data points</p>
+<h3 class="variation-label">Basic</h3>
+<p class="variation-desc">2x2 grid with labeled quadrants and data points</p>
+<div class="diagram-card"><div class="diagram-card-inner"><div class="diagram-source"><div class="diagram-source-header"><div class="diagram-source-label">Mermaid</div><a class="try-link" href="/?src=quadrantChart%0A%20%20%20%20title%20Tech%20Evaluation%0A%20%20%20%20x-axis%20Low%20Effort%20--%3E%20High%20Effort%0A%20%20%20%20y-axis%20Low%20Impact%20--%3E%20High%20Impact%0A%20%20%20%20quadrant-1%20Do%20First%0A%20%20%20%20quadrant-2%20Plan%0A%20%20%20%20quadrant-3%20Delegate%0A%20%20%20%20quadrant-4%20Eliminate%0A%20%20%20%20Cache%3A%20%5B0.3%2C%200.85%5D%0A%20%20%20%20Auth%3A%20%5B0.8%2C%200.75%5D%0A%20%20%20%20Typos%3A%20%5B0.15%2C%200.15%5D%0A%20%20%20%20Migrate%20DB%3A%20%5B0.75%2C%200.25%5D">Try it &rarr;</a></div><pre>
+quadrantChart
+    title Tech Evaluation
+    x-axis Low Effort --&gt; High Effort
+    y-axis Low Impact --&gt; High Impact
+    quadrant-1 Do First
+    quadrant-2 Plan
+    quadrant-3 Delegate
+    quadrant-4 Eliminate
+    Cache: [0.3, 0.85]
+    Auth: [0.8, 0.75]
+    Typos: [0.15, 0.15]
+    Migrate DB: [0.75, 0.25]</pre></div><div class="diagram-output"><pre>
+                       Tech Evaluation
+
+                                │
+                                │
+                   ● Cache      │
+                                │
+                                │                ● Auth
+               Plan             │          Do First
+                                │
+                                │
+                                │
+                                │
+  ──────────────────────────────┼─────────────────────────────
+                                │
+                                │
+                                │
+                                │             ● Migrate DB
+             Delegate           │          Eliminate
+          ● Typos               │
+                                │
+                                │
+                                │
+
+                   Low Effort -&gt; High Effort</pre></div></div></div>
+<h3 class="variation-label">Product portfolio</h3>
+<p class="variation-desc">Growth-share matrix with five plotted products</p>
+<div class="diagram-card"><div class="diagram-card-inner"><div class="diagram-source"><div class="diagram-source-header"><div class="diagram-source-label">Mermaid</div><a class="try-link" href="/?src=quadrantChart%0A%20%20%20%20title%20Product%20Portfolio%0A%20%20%20%20x-axis%20Low%20Market%20Share%20--%3E%20High%20Market%20Share%0A%20%20%20%20y-axis%20Low%20Growth%20--%3E%20High%20Growth%0A%20%20%20%20quadrant-1%20Stars%0A%20%20%20%20quadrant-2%20Question%20Marks%0A%20%20%20%20quadrant-3%20Dogs%0A%20%20%20%20quadrant-4%20Cash%20Cows%0A%20%20%20%20Analytics%3A%20%5B0.78%2C%200.82%5D%0A%20%20%20%20Mobile%20App%3A%20%5B0.35%2C%200.9%5D%0A%20%20%20%20Legacy%20CRM%3A%20%5B0.2%2C%200.15%5D%0A%20%20%20%20Billing%3A%20%5B0.85%2C%200.25%5D%0A%20%20%20%20Chat%3A%20%5B0.5%2C%200.6%5D">Try it &rarr;</a></div><pre>
+quadrantChart
+    title Product Portfolio
+    x-axis Low Market Share --&gt; High Market Share
+    y-axis Low Growth --&gt; High Growth
+    quadrant-1 Stars
+    quadrant-2 Question Marks
+    quadrant-3 Dogs
+    quadrant-4 Cash Cows
+    Analytics: [0.78, 0.82]
+    Mobile App: [0.35, 0.9]
+    Legacy CRM: [0.2, 0.15]
+    Billing: [0.85, 0.25]
+    Chat: [0.5, 0.6]</pre></div><div class="diagram-output"><pre>
+                      Product Portfolio
+
+                                │
+                      ● Mobile App
+                                │
+                                │               ● Analytics
+                                │
+          Question Marks        │            Stars
+                                │
+                               ● Chat
+                                │
+                                │
+  ──────────────────────────────┼─────────────────────────────
+                                │
+                                │
+                                │
+                                │                   ● Billing
+               Dogs             │          Cash Cows
+             ● Legacy CRM       │
+                                │
+                                │
+                                │
+
+             Low Market Share -&gt; High Market Share</pre></div></div></div>
+</section>
+<section class="diagram-section" id="architecture">
+<h2>Architecture</h2>
+<p class="desc">Service groups with directional connections</p>
+<h3 class="variation-label">Service group</h3>
+<p class="variation-desc">Services inside a named group with directional edges</p>
+<div class="diagram-card"><div class="diagram-card-inner"><div class="diagram-source"><div class="diagram-source-header"><div class="diagram-source-label">Mermaid</div><a class="try-link" href="/?src=architecture-beta%0A%20%20%20%20group%20cloud(cloud)%5BCloud%5D%0A%20%20%20%20service%20web(server)%5BWeb%20Server%5D%20in%20cloud%0A%20%20%20%20service%20api(server)%5BAPI%20Server%5D%20in%20cloud%0A%20%20%20%20service%20db(database)%5BDatabase%5D%20in%20cloud%0A%20%20%20%20web%3AR%20--%3E%20L%3Aapi%0A%20%20%20%20api%3AR%20--%3E%20L%3Adb">Try it &rarr;</a></div><pre>
+architecture-beta
+    group cloud(cloud)[Cloud]
+    service web(server)[Web Server] in cloud
+    service api(server)[API Server] in cloud
+    service db(database)[Database] in cloud
+    web:R --&gt; L:api
+    api:R --&gt; L:db</pre></div><div class="diagram-output"><pre>
+
+ ┌─────────────────────────────────────────────────────────────────┐
+ │ Cloud                                                           │
+ │                                                                 │
+ │                                                                 │
+ │ ┌─────────────────┐    ┌─────────────────┐    ┌───────────────┐ │
+ │ │                 │    │                 │    │               │ │
+ │ │  🖥 Web Server   ├───►│  🖥 API Server   ├───►│  🗄 Database   │ │
+ │ │                 │    │                 │    │               │ │
+ │ └─────────────────┘    └─────────────────┘    └───────────────┘ │
+ │                                                                 │
+ └─────────────────────────────────────────────────────────────────┘</pre></div></div></div>
+<h3 class="variation-label">Nested groups</h3>
+<p class="variation-desc">Groups inside groups with external services connecting in</p>
+<div class="diagram-card"><div class="diagram-card-inner"><div class="diagram-source"><div class="diagram-source-header"><div class="diagram-source-label">Mermaid</div><a class="try-link" href="/?src=architecture-beta%0A%20%20%20%20group%20infra(cloud)%5BInfrastructure%5D%0A%20%20%20%20group%20backend(server)%5BBackend%5D%20in%20infra%0A%20%20%20%20service%20api(server)%5BAPI%5D%20in%20backend%0A%20%20%20%20service%20db(database)%5BDatabase%5D%20in%20backend%0A%20%20%20%20service%20cdn(internet)%5BCDN%5D%0A%20%20%20%20service%20client(internet)%5BClient%5D%0A%20%20%20%20client%3AR%20--%3E%20L%3Acdn%0A%20%20%20%20cdn%3AR%20--%3E%20L%3Aapi%0A%20%20%20%20api%3AB%20--%3E%20T%3Adb">Try it &rarr;</a></div><pre>
+architecture-beta
+    group infra(cloud)[Infrastructure]
+    group backend(server)[Backend] in infra
+    service api(server)[API] in backend
+    service db(database)[Database] in backend
+    service cdn(internet)[CDN]
+    service client(internet)[Client]
+    client:R --&gt; L:cdn
+    cdn:R --&gt; L:api
+    api:B --&gt; T:db</pre></div><div class="diagram-output"><pre>
+
+                                     ┌───────────────────────┐
+                                     │ Infrastructure        │
+                                     │                       │
+                                     │                       │
+                                     │ ┌───────────────────┐ │
+                                     │ │ Backend           │ │
+                                     │ │                   │ │
+                                     │ │                   │ │
+┌─────────────┐    ┌──────────┐      │ │ ┌───────────────┐ │ │
+│             │    │          │      │ │ │               │ │ │
+│  🌐 Client  ├───►│  🌐 CDN  ├──────┼─┼►│    🖥 API      │ │ │
+│             │    │          │      │ │ │               │ │ │
+└─────────────┘    └──────────┘      │ │ └───────┬───────┘ │ │
+                                     │ │         │         │ │
+                                     │ │         │         │ │
+                                     │ │         ▼         │ │
+                                     │ │ ┌───────────────┐ │ │
+                                     │ │ │               │ │ │
+                                     │ │ │  🗄 Database   │ │ │
+                                     │ │ │               │ │ │
+                                     │ │ └───────────────┘ │ │
+                                     │ │                   │ │
+                                     │ └───────────────────┘ │
+                                     │                       │
+                                     └───────────────────────┘</pre></div></div></div>
+</section>
+<section class="diagram-section" id="block">
+<h2>Block</h2>
+<p class="desc">Grid-based block layouts</p>
+<h3 class="variation-label">Basic grid</h3>
+<p class="variation-desc">Columns keyword controls the number of items per row</p>
+<div class="diagram-card"><div class="diagram-card-inner"><div class="diagram-source"><div class="diagram-source-header"><div class="diagram-source-label">Mermaid</div><a class="try-link" href="/?src=block-beta%0A%20%20%20%20columns%203%0A%20%20%20%20A%5B%22Frontend%22%5D%20B%5B%22API%20Gateway%22%5D%20C%5B%22Backend%22%5D%0A%20%20%20%20D%5B%22React%22%5D%20E%5B%22Auth%22%5D%20F%5B%22Database%22%5D">Try it &rarr;</a></div><pre>
+block-beta
+    columns 3
+    A["Frontend"] B["API Gateway"] C["Backend"]
+    D["React"] E["Auth"] F["Database"]</pre></div><div class="diagram-output"><pre>
+
+
+  ┌──────────┐    ┌─────────────┐    ┌──────────┐
+  │          │    │             │    │          │
+  │ Frontend │    │ API Gateway │    │ Backend  │
+  │          │    │             │    │          │
+  └──────────┘    └─────────────┘    └──────────┘
+
+
+  ┌──────────┐    ┌─────────────┐    ┌──────────┐
+  │          │    │             │    │          │
+  │  React   │    │    Auth     │    │ Database │
+  │          │    │             │    │          │
+  └──────────┘    └─────────────┘    └──────────┘</pre></div></div></div>
+<h3 class="variation-label">Nested groups</h3>
+<p class="variation-desc">Blocks inside named groups with edges between the groups</p>
+<div class="diagram-card"><div class="diagram-card-inner"><div class="diagram-source"><div class="diagram-source-header"><div class="diagram-source-label">Mermaid</div><a class="try-link" href="/?src=block-beta%0A%20%20%20%20columns%203%0A%20%20%20%20block%3Afrontend%3A1%0A%20%20%20%20%20%20%20%20columns%201%0A%20%20%20%20%20%20%20%20web%5B%22Web%22%5D%0A%20%20%20%20%20%20%20%20mobile%5B%22Mobile%22%5D%0A%20%20%20%20end%0A%20%20%20%20gateway%5B%22API%20Gateway%22%5D%0A%20%20%20%20block%3Abackend%3A1%0A%20%20%20%20%20%20%20%20columns%201%0A%20%20%20%20%20%20%20%20auth%5B%22Auth%22%5D%0A%20%20%20%20%20%20%20%20orders%5B%22Orders%22%5D%0A%20%20%20%20end%0A%20%20%20%20frontend%20--%3E%20gateway%0A%20%20%20%20gateway%20--%3E%20backend">Try it &rarr;</a></div><pre>
+block-beta
+    columns 3
+    block:frontend:1
+        columns 1
+        web["Web"]
+        mobile["Mobile"]
+    end
+    gateway["API Gateway"]
+    block:backend:1
+        columns 1
+        auth["Auth"]
+        orders["Orders"]
+    end
+    frontend --&gt; gateway
+    gateway --&gt; backend</pre></div><div class="diagram-output"><pre>
+
+
+  ┌────────────────┐    ┌─────────────┐    ┌────────────────┐
+  │    frontend    │    │             │    │    backend     │
+  │                │    │             │    │                │
+  │                │    │             │    │                │
+  │  ┌──────────┐  │    │             │    │  ┌──────────┐  │
+  │  │          │  │    │             │    │  │          │  │
+  │  │   Web    │  │    │             │    │  │   Auth   │  │
+  │  │          │  │    │             │    │  │          │  │
+  │  └──────────┘  │    │             │    │  └──────────┘  │
+  │                │───►│ API Gateway │───►│                │
+  │                │    │             │    │                │
+  │  ┌──────────┐  │    │             │    │  ┌──────────┐  │
+  │  │          │  │    │             │    │  │          │  │
+  │  │  Mobile  │  │    │             │    │  │  Orders  │  │
+  │  │          │  │    │             │    │  │          │  │
+  │  └──────────┘  │    │             │    │  └──────────┘  │
+  │                │    │             │    │                │
+  │                │    │             │    │                │
+  └────────────────┘    └─────────────┘    └────────────────┘</pre></div></div></div>
+</section>
+<section class="diagram-section" id="git">
+<h2>Git Graph</h2>
+<p class="desc">Branch and merge histories</p>
+<h3 class="variation-label">Basic</h3>
+<p class="variation-desc">Branch, commit, and merge operations</p>
+<div class="diagram-card"><div class="diagram-card-inner"><div class="diagram-source"><div class="diagram-source-header"><div class="diagram-source-label">Mermaid</div><a class="try-link" href="/?src=gitGraph%0A%20%20%20%20commit%0A%20%20%20%20branch%20develop%0A%20%20%20%20commit%0A%20%20%20%20commit%0A%20%20%20%20checkout%20main%0A%20%20%20%20merge%20develop%0A%20%20%20%20commit">Try it &rarr;</a></div><pre>
+gitGraph
+    commit
+    branch develop
+    commit
+    commit
+    checkout main
+    merge develop
+    commit</pre></div><div class="diagram-output"><pre>
+
+
+  main    ──●─────┼───────────●─────●─
+            0     │           │     4
+                  │           │
+  develop         ●─────●─────┼
+                  1     2</pre></div></div></div>
+<h3 class="variation-label">Feature branches</h3>
+<p class="variation-desc">Multiple branches with parallel work and merges</p>
+<div class="diagram-card"><div class="diagram-card-inner"><div class="diagram-source"><div class="diagram-source-header"><div class="diagram-source-label">Mermaid</div><a class="try-link" href="/?src=gitGraph%0A%20%20%20%20commit%0A%20%20%20%20branch%20feature-a%0A%20%20%20%20commit%0A%20%20%20%20commit%0A%20%20%20%20checkout%20main%0A%20%20%20%20branch%20feature-b%0A%20%20%20%20commit%0A%20%20%20%20checkout%20main%0A%20%20%20%20merge%20feature-a%0A%20%20%20%20merge%20feature-b%0A%20%20%20%20commit">Try it &rarr;</a></div><pre>
+gitGraph
+    commit
+    branch feature-a
+    commit
+    commit
+    checkout main
+    branch feature-b
+    commit
+    checkout main
+    merge feature-a
+    merge feature-b
+    commit</pre></div><div class="diagram-output"><pre>
+
+
+  main      ──●─────┼───────────┼─────●─────●─────●─
+              0     │           │     │     │     6
+                    │           │     │     │
+  feature-a         ●─────●─────┼─────┼     │
+                    1     2     │           │
+                                │           │
+  feature-b                     ●───────────┼
+                                3</pre></div></div></div>
+</section>
+<section class="diagram-section" id="treemap">
+<h2>Treemap</h2>
+<p class="desc">Hierarchical data as nested rectangles</p>
+<h3 class="variation-label">Basic</h3>
+<p class="variation-desc">Nested rectangles showing hierarchy and proportion</p>
+<div class="diagram-card"><div class="diagram-card-inner"><div class="diagram-source"><div class="diagram-source-header"><div class="diagram-source-label">Mermaid</div><a class="try-link" href="/?src=treemap-beta%0A%20%20%20%20%22Engineering%22%0A%20%20%20%20%20%20%20%20%22Backend%22%3A%2045%0A%20%20%20%20%20%20%20%20%22Frontend%22%3A%2040%0A%20%20%20%20%20%20%20%20%22Infra%22%3A%2035%0A%20%20%20%20%22Product%22%0A%20%20%20%20%20%20%20%20%22PM%22%3A%2020%0A%20%20%20%20%20%20%20%20%22Analytics%22%3A%2010%0A%20%20%20%20%22Design%22%0A%20%20%20%20%20%20%20%20%22UX%22%3A%2015%0A%20%20%20%20%20%20%20%20%22Visual%22%3A%2010">Try it &rarr;</a></div><pre>
+treemap-beta
+    "Engineering"
+        "Backend": 45
+        "Frontend": 40
+        "Infra": 35
+    "Product"
+        "PM": 20
+        "Analytics": 10
+    "Design"
+        "UX": 15
+        "Visual": 10</pre></div><div class="diagram-output"><pre>
+┌┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┐ ┌┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┐ ┌┄┄┄┄┄┄┄┄┄┄┄┄┄┐
+┆                            Engineering                            ┆ ┆    Product     ┆ ┆   Design    ┆
+┆┌──────────────────────┐ ┌────────────────────┐ ┌─────────────────┐┆ ┆┌──┐ ┌─────────┐┆ ┆┌──┐ ┌──────┐┆
+┆│       Backend        │ │      Frontend      │ │      Infra      │┆ ┆│PM│ │Analytics│┆ ┆│UX│ │Visual│┆
+┆│          45          │ │         40         │ │       35        │┆ ┆│20│ │   10    │┆ ┆│15│ │  10  │┆
+┆│                      │ │                    │ │                 │┆ ┆│  │ │         │┆ ┆│  │ │      │┆
+┆└──────────────────────┘ └────────────────────┘ └─────────────────┘┆ ┆└──┘ └─────────┘┆ ┆└──┘ └──────┘┆
+└┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┘ └┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┘ └┄┄┄┄┄┄┄┄┄┄┄┄┄┘</pre></div></div></div>
+<h3 class="variation-label">Nested sections</h3>
+<p class="variation-desc">Three levels of hierarchy with sizes summed per section</p>
+<div class="diagram-card"><div class="diagram-card-inner"><div class="diagram-source"><div class="diagram-source-header"><div class="diagram-source-label">Mermaid</div><a class="try-link" href="/?src=treemap-beta%0A%20%20%20%20%22Company%22%0A%20%20%20%20%20%20%20%20%22Engineering%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%22Platform%22%3A%2030%0A%20%20%20%20%20%20%20%20%20%20%20%20%22Mobile%22%3A%2020%0A%20%20%20%20%20%20%20%20%20%20%20%20%22Web%22%3A%2025%0A%20%20%20%20%20%20%20%20%22Sales%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%22EMEA%22%3A%2015%0A%20%20%20%20%20%20%20%20%20%20%20%20%22US%22%3A%2020%0A%20%20%20%20%20%20%20%20%22Ops%22%3A%2010">Try it &rarr;</a></div><pre>
+treemap-beta
+    "Company"
+        "Engineering"
+            "Platform": 30
+            "Mobile": 20
+            "Web": 25
+        "Sales"
+            "EMEA": 15
+            "US": 20
+        "Ops": 10</pre></div><div class="diagram-output"><pre>
+┌┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┐
+┆                                  Company                                   ┆
+┆┌┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┐ ┌┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┐ ┌────┐┆
+┆┆                Engineering                 ┆ ┆       Sales        ┆ │Ops │┆
+┆┆┌───────────────┐ ┌────────────┐ ┌─────────┐┆ ┆┌─────────┐ ┌──────┐┆ │ 10 │┆
+┆┆│   Platform    │ │    Web     │ │ Mobile  │┆ ┆│   US    │ │ EMEA │┆ │    │┆
+┆┆│      30       │ │     25     │ │   20    │┆ ┆│   20    │ │  15  │┆ │    │┆
+┆┆│               │ │            │ │         │┆ ┆│         │ │      │┆ │    │┆
+┆┆│               │ │            │ │         │┆ ┆│         │ │      │┆ │    │┆
+┆┆└───────────────┘ └────────────┘ └─────────┘┆ ┆└─────────┘ └──────┘┆ │    │┆
+┆└┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┘ └┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┘ └────┘┆
+└┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┄┘</pre></div></div></div>
+</section>
+<section class="diagram-section" id="mindmap">
+<h2>Mindmap</h2>
+<p class="desc">Radial idea maps branching from a root</p>
+<div class="diagram-card"><div class="diagram-card-inner"><div class="diagram-source"><div class="diagram-source-header"><div class="diagram-source-label">Mermaid</div><a class="try-link" href="/?src=mindmap%0A%20%20%20%20root((Project))%0A%20%20%20%20%20%20%20%20Planning%0A%20%20%20%20%20%20%20%20%20%20%20%20Requirements%0A%20%20%20%20%20%20%20%20%20%20%20%20Timeline%0A%20%20%20%20%20%20%20%20%20%20%20%20Budget%0A%20%20%20%20%20%20%20%20Development%0A%20%20%20%20%20%20%20%20%20%20%20%20Frontend%0A%20%20%20%20%20%20%20%20%20%20%20%20Backend%0A%20%20%20%20%20%20%20%20%20%20%20%20Testing%0A%20%20%20%20%20%20%20%20Launch%0A%20%20%20%20%20%20%20%20%20%20%20%20Marketing%0A%20%20%20%20%20%20%20%20%20%20%20%20Support">Try it &rarr;</a></div><pre>
+mindmap
+    root((Project))
+        Planning
+            Requirements
+            Timeline
+            Budget
+        Development
+            Frontend
+            Backend
+            Testing
+        Launch
+            Marketing
+            Support</pre></div><div class="diagram-output"><pre>
+                                ╭─ Requirements
+                  ╭─ Planning ──├─ Timeline
+                  │             ╰─ Budget
+root((Project)) ──┤                ╭─ Frontend
+                  ├─ Development ──├─ Backend
+                  │                ╰─ Testing
+                  ╰─ Launch ──╭─ Marketing
+                              ╰─ Support</pre></div></div></div>
+</section>
+<section class="diagram-section" id="journey">
+<h2>User Journey</h2>
+<p class="desc">Task timelines with satisfaction scores</p>
+<h3 class="variation-label">Basic</h3>
+<p class="variation-desc">Tasks scored 1-5 with actor assignments per section</p>
+<div class="diagram-card"><div class="diagram-card-inner"><div class="diagram-source"><div class="diagram-source-header"><div class="diagram-source-label">Mermaid</div><a class="try-link" href="/?src=journey%0A%20%20%20%20title%20My%20Working%20Day%0A%20%20%20%20section%20Morning%0A%20%20%20%20%20%20%20%20Wake%20up%3A%203%3A%20Me%0A%20%20%20%20%20%20%20%20Breakfast%3A%204%3A%20Me%2C%20Cat%0A%20%20%20%20%20%20%20%20Go%20to%20work%3A%201%3A%20Me%0A%20%20%20%20section%20Work%0A%20%20%20%20%20%20%20%20Code%20review%3A%204%3A%20Me%0A%20%20%20%20%20%20%20%20Lunch%3A%205%3A%20Me%2C%20Coworker%0A%20%20%20%20%20%20%20%20Deploy%3A%202%3A%20Me">Try it &rarr;</a></div><pre>
+journey
+    title My Working Day
+    section Morning
+        Wake up: 3: Me
+        Breakfast: 4: Me, Cat
+        Go to work: 1: Me
+    section Work
+        Code review: 4: Me
+        Lunch: 5: Me, Coworker
+        Deploy: 2: Me</pre></div><div class="diagram-output"><pre>
+  My Working Day
+
+  ● Cat
+  ◆ Coworker
+  ■ Me
+
+  ╭────────────── Morning ────────────────╮   ╭────────────── Work ───────────────╮
+
+  ╭■────────╮ ╭●■─────────╮ ╭■───────────╮    ╭■────────────╮ ╭◆■─────╮ ╭■───────╮
+ ─│ Wake up │─│ Breakfast │─│ Go to work │────│ Code review │─│ Lunch │─│ Deploy │────►
+  ╰─────────╯ ╰───────────╯ ╰────────────╯    ╰─────────────╯ ╰───────╯ ╰────────╯
+      😐           😊             😞                😊           😄         😟</pre></div></div></div>
+<h3 class="variation-label">Onboarding flow</h3>
+<p class="variation-desc">New employee experience across their first week</p>
+<div class="diagram-card"><div class="diagram-card-inner"><div class="diagram-source"><div class="diagram-source-header"><div class="diagram-source-label">Mermaid</div><a class="try-link" href="/?src=journey%0A%20%20%20%20title%20New%20Hire%20Onboarding%0A%20%20%20%20section%20Day%201%0A%20%20%20%20%20%20%20%20Setup%20laptop%3A%203%3A%20Employee%0A%20%20%20%20%20%20%20%20Meet%20team%3A%205%3A%20Employee%2C%20Manager%0A%20%20%20%20%20%20%20%20Read%20docs%3A%202%3A%20Employee%0A%20%20%20%20section%20Week%201%0A%20%20%20%20%20%20%20%20First%20PR%3A%204%3A%20Employee%0A%20%20%20%20%20%20%20%20Code%20review%3A%204%3A%20Employee%2C%20Mentor%0A%20%20%20%20%20%20%20%20Demo%3A%205%3A%20Employee%2C%20Team">Try it &rarr;</a></div><pre>
+journey
+    title New Hire Onboarding
+    section Day 1
+        Setup laptop: 3: Employee
+        Meet team: 5: Employee, Manager
+        Read docs: 2: Employee
+    section Week 1
+        First PR: 4: Employee
+        Code review: 4: Employee, Mentor
+        Demo: 5: Employee, Team</pre></div><div class="diagram-output"><pre>
+  New Hire Onboarding
+
+  ● Employee
+  ◆ Manager
+  ■ Mentor
+  ▲ Team
+
+  ╭───────────────── Day 1 ───────────────────╮   ╭───────────── Week 1 ───────────────╮
+
+  ╭●─────────────╮ ╭●◆─────────╮ ╭●──────────╮    ╭●─────────╮ ╭●■───────────╮ ╭●▲────╮
+ ─│ Setup laptop │─│ Meet team │─│ Read docs │────│ First PR │─│ Code review │─│ Demo │────►
+  ╰──────────────╯ ╰───────────╯ ╰───────────╯    ╰──────────╯ ╰─────────────╯ ╰──────╯
+         😐             😄            😟               😊            😊           😄</pre></div></div></div>
+</section>
+<section class="diagram-section" id="packet">
+<h2>Packet</h2>
+<p class="desc">Bit-aligned network protocol layouts</p>
+<h3 class="variation-label">UDP header</h3>
+<p class="variation-desc">Header fields aligned to 32-bit rows</p>
+<div class="diagram-card"><div class="diagram-card-inner"><div class="diagram-source"><div class="diagram-source-header"><div class="diagram-source-label">Mermaid</div><a class="try-link" href="/?src=packet-beta%0A%20%20%20%200-15%3A%20%22Source%20Port%22%0A%20%20%20%2016-31%3A%20%22Destination%20Port%22%0A%20%20%20%2032-47%3A%20%22Length%22%0A%20%20%20%2048-63%3A%20%22Checksum%22%0A%20%20%20%2064-95%3A%20%22Data%22">Try it &rarr;</a></div><pre>
+packet-beta
+    0-15: "Source Port"
+    16-31: "Destination Port"
+    32-47: "Length"
+    48-63: "Checksum"
+    64-95: "Data"</pre></div><div class="diagram-output"><pre>
+ 0                                             15 16                                           31
+ ╭───────────────────────────────────────────────┬───────────────────────────────────────────────╮
+ │                 Source Port                   │               Destination Port                │
+ ╰───────────────────────────────────────────────┴───────────────────────────────────────────────╯
+ 32                                            47 48                                           63
+ ╭───────────────────────────────────────────────┬───────────────────────────────────────────────╮
+ │                    Length                     │                   Checksum                    │
+ ╰───────────────────────────────────────────────┴───────────────────────────────────────────────╯
+ 64                                                                                            95
+ ╭───────────────────────────────────────────────────────────────────────────────────────────────╮
+ │                                             Data                                              │
+ ╰───────────────────────────────────────────────────────────────────────────────────────────────╯</pre></div></div></div>
+<h3 class="variation-label">Auto-increment fields</h3>
+<p class="variation-desc">ICMP header using +N widths instead of explicit bit ranges</p>
+<div class="diagram-card"><div class="diagram-card-inner"><div class="diagram-source"><div class="diagram-source-header"><div class="diagram-source-label">Mermaid</div><a class="try-link" href="/?src=packet%0A%20%20%20%20%2B8%3A%20%22Type%22%0A%20%20%20%20%2B8%3A%20%22Code%22%0A%20%20%20%20%2B16%3A%20%22Checksum%22%0A%20%20%20%20%2B32%3A%20%22Rest%20of%20Header%22">Try it &rarr;</a></div><pre>
+packet
+    +8: "Type"
+    +8: "Code"
+    +16: "Checksum"
+    +32: "Rest of Header"</pre></div><div class="diagram-output"><pre>
+ 0                      7 8                    15 16                                           31
+ ╭───────────────────────┬───────────────────────┬───────────────────────────────────────────────╮
+ │         Type          │         Code          │                   Checksum                    │
+ ╰───────────────────────┴───────────────────────┴───────────────────────────────────────────────╯
+ 32                                                                                            63
+ ╭───────────────────────────────────────────────────────────────────────────────────────────────╮
+ │                                        Rest of Header                                         │
+ ╰───────────────────────────────────────────────────────────────────────────────────────────────╯</pre></div></div></div>
+</section>
+<section class="diagram-section" id="timeline">
+<h2>Timeline</h2>
+<p class="desc">Chronological event lists with details</p>
+<h3 class="variation-label">Basic</h3>
+<p class="variation-desc">Chronological events grouped by section</p>
+<div class="diagram-card"><div class="diagram-card-inner"><div class="diagram-source"><div class="diagram-source-header"><div class="diagram-source-label">Mermaid</div><a class="try-link" href="/?src=timeline%0A%20%20%20%20title%20Project%20History%0A%20%20%20%20section%202023%0A%20%20%20%20%20%20%20%20January%20%3A%20Kickoff%20meeting%0A%20%20%20%20%20%20%20%20March%20%3A%20Alpha%20release%0A%20%20%20%20%20%20%20%20June%20%3A%20Beta%20testing%0A%20%20%20%20section%202024%0A%20%20%20%20%20%20%20%20January%20%3A%20v1.0%20launch%0A%20%20%20%20%20%20%20%20June%20%3A%2010k%20users">Try it &rarr;</a></div><pre>
+timeline
+    title Project History
+    section 2023
+        January : Kickoff meeting
+        March : Alpha release
+        June : Beta testing
+    section 2024
+        January : v1.0 launch
+        June : 10k users</pre></div><div class="diagram-output"><pre>
+Project History
+
+ ══ 2023 ══
+ │
+ ●── January
+ │   Kickoff meeting
+ │
+ ●── March
+ │   Alpha release
+ │
+ ●── June
+ │   Beta testing
+ │
+ ══ 2024 ══
+ │
+ ●── January
+ │   v1.0 launch
+ │
+ ●── June
+ │   10k users</pre></div></div></div>
+<h3 class="variation-label">Multiple details per event</h3>
+<p class="variation-desc">Comma-separated details listed under each event</p>
+<div class="diagram-card"><div class="diagram-card-inner"><div class="diagram-source"><div class="diagram-source-header"><div class="diagram-source-label">Mermaid</div><a class="try-link" href="/?src=timeline%0A%20%20%20%20title%20Web%20Platform%20Releases%0A%20%20%20%20section%202025%0A%20%20%20%20%20%20%20%20Q1%20%3A%20v1.0%20public%20launch%2C%20Docs%20site%0A%20%20%20%20%20%20%20%20Q3%20%3A%20v1.5%20plugin%20API%0A%20%20%20%20section%202026%0A%20%20%20%20%20%20%20%20Q1%20%3A%20v2.0%20rewrite%2C%20Dark%20mode%2C%20CLI%0A%20%20%20%20%20%20%20%20Q3%20%3A%20v2.2%20offline%20support">Try it &rarr;</a></div><pre>
+timeline
+    title Web Platform Releases
+    section 2025
+        Q1 : v1.0 public launch, Docs site
+        Q3 : v1.5 plugin API
+    section 2026
+        Q1 : v2.0 rewrite, Dark mode, CLI
+        Q3 : v2.2 offline support</pre></div><div class="diagram-output"><pre>
+Web Platform Releases
+
+ ══ 2025 ══
+ │
+ ●── Q1
+ │   v1.0 public launch
+ │   Docs site
+ │
+ ●── Q3
+ │   v1.5 plugin API
+ │
+ ══ 2026 ══
+ │
+ ●── Q1
+ │   v2.0 rewrite
+ │   Dark mode
+ │   CLI
+ │
+ ●── Q3
+ │   v2.2 offline support</pre></div></div></div>
+</section>
+<section class="diagram-section" id="kanban">
+<h2>Kanban</h2>
+<p class="desc">Column-based task boards with cards</p>
+<h3 class="variation-label">Basic</h3>
+<p class="variation-desc">Columns of task cards</p>
+<div class="diagram-card"><div class="diagram-card-inner"><div class="diagram-source"><div class="diagram-source-header"><div class="diagram-source-label">Mermaid</div><a class="try-link" href="/?src=kanban%0A%20%20%20%20Todo%0A%20%20%20%20%20%20%20%20Design%20landing%20page%0A%20%20%20%20%20%20%20%20Write%20API%20docs%0A%20%20%20%20In%20Progress%0A%20%20%20%20%20%20%20%20Build%20auth%20flow%0A%20%20%20%20%20%20%20%20Setup%20CI%2FCD%0A%20%20%20%20Done%0A%20%20%20%20%20%20%20%20Project%20setup%0A%20%20%20%20%20%20%20%20Database%20schema">Try it &rarr;</a></div><pre>
+kanban
+    Todo
+        Design landing page
+        Write API docs
+    In Progress
+        Build auth flow
+        Setup CI/CD
+    Done
+        Project setup
+        Database schema</pre></div><div class="diagram-output"><pre>
+╭───────────────────────╮  ╭───────────────────╮  ╭───────────────────╮
+│         Todo          │  │    In Progress    │  │       Done        │
+│───────────────────────│  │───────────────────│  │───────────────────│
+│ ┌───────────────────┐ │  │ ┌───────────────┐ │  │ ┌───────────────┐ │
+│ │Design landing page│ │  │ │Build auth flow│ │  │ │Project setup  │ │
+│ └───────────────────┘ │  │ └───────────────┘ │  │ └───────────────┘ │
+│                       │  │                   │  │                   │
+│ ┌───────────────────┐ │  │ ┌───────────────┐ │  │ ┌───────────────┐ │
+│ │Write API docs     │ │  │ │Setup CI/CD    │ │  │ │Database schema│ │
+│ └───────────────────┘ │  │ └───────────────┘ │  │ └───────────────┘ │
+╰───────────────────────╯  ╰───────────────────╯  ╰───────────────────╯</pre></div></div></div>
+<h3 class="variation-label">Column and card ids</h3>
+<p class="variation-desc">id[Title] syntax for columns and cards</p>
+<div class="diagram-card"><div class="diagram-card-inner"><div class="diagram-source"><div class="diagram-source-header"><div class="diagram-source-label">Mermaid</div><a class="try-link" href="/?src=kanban%0A%20%20%20%20backlog%5BBacklog%5D%0A%20%20%20%20%20%20%20%20b1%5BRefactor%20auth%20module%5D%0A%20%20%20%20%20%20%20%20b2%5BAdd%20rate%20limiting%5D%0A%20%20%20%20review%5BIn%20Review%5D%0A%20%20%20%20%20%20%20%20r1%5BFix%20pagination%20bug%5D%0A%20%20%20%20shipped%5BShipped%5D%0A%20%20%20%20%20%20%20%20s1%5BDark%20mode%5D%0A%20%20%20%20%20%20%20%20s2%5BCSV%20export%5D">Try it &rarr;</a></div><pre>
+kanban
+    backlog[Backlog]
+        b1[Refactor auth module]
+        b2[Add rate limiting]
+    review[In Review]
+        r1[Fix pagination bug]
+    shipped[Shipped]
+        s1[Dark mode]
+        s2[CSV export]</pre></div><div class="diagram-output"><pre>
+╭────────────────────────╮  ╭──────────────────────╮  ╭──────────────╮
+│        Backlog         │  │      In Review       │  │   Shipped    │
+│────────────────────────│  │──────────────────────│  │──────────────│
+│ ┌────────────────────┐ │  │ ┌──────────────────┐ │  │ ┌──────────┐ │
+│ │Refactor auth module│ │  │ │Fix pagination bug│ │  │ │Dark mode │ │
+│ └────────────────────┘ │  │ └──────────────────┘ │  │ └──────────┘ │
+│                        │  │                      │  │              │
+│ ┌────────────────────┐ │  │                      │  │ ┌──────────┐ │
+│ │Add rate limiting   │ │  │                      │  │ │CSV export│ │
+│ └────────────────────┘ │  │                      │  │ └──────────┘ │
+╰────────────────────────╯  ╰──────────────────────╯  ╰──────────────╯</pre></div></div></div>
+</section>
+</div>
+<!-- gallery:end -->
         </div>
 
         <footer>
@@ -341,142 +2077,5 @@
         </footer>
     </div>
 
-    <script>
-        const SECTIONS = [
-            {
-                title: 'Core',
-                items: [
-                    ['flowchart', 'Flowchart', 'Decision trees, process flows, and directed graphs'],
-                    ['sequence', 'Sequence', 'Message exchanges between participants over time'],
-                    ['class', 'Class', 'Object-oriented class hierarchies and relationships'],
-                    ['er', 'ER Diagram', 'Entity-relationship models for databases'],
-                    ['state', 'State Diagram', 'State machines with transitions and conditions'],
-                ],
-            },
-            {
-                title: 'Charts',
-                items: [
-                    ['gantt', 'Gantt', 'Project schedules with tasks, sections, and dependencies'],
-                    ['pie', 'Pie Chart', 'Proportional data as labeled slices'],
-                    ['xychart', 'XY Chart', 'Bar charts, line charts, and combinations'],
-                    ['quadrant', 'Quadrant Chart', '2x2 grids with plotted data points'],
-                ],
-            },
-            {
-                title: 'Other',
-                items: [
-                    ['architecture', 'Architecture', 'Service groups with directional connections'],
-                    ['block', 'Block', 'Grid-based block layouts'],
-                    ['git', 'Git Graph', 'Branch and merge histories'],
-                    ['treemap', 'Treemap', 'Hierarchical data as nested rectangles'],
-                    ['mindmap', 'Mindmap', 'Radial idea maps branching from a root'],
-                    ['journey', 'User Journey', 'Task timelines with satisfaction scores'],
-                    ['packet', 'Packet', 'Bit-aligned network protocol layouts'],
-                    ['timeline', 'Timeline', 'Chronological event lists with details'],
-                    ['kanban', 'Kanban', 'Column-based task boards with cards'],
-                ],
-            },
-        ];
-
-        function renderCard(ex) {
-            const card = document.createElement('div');
-            card.className = 'diagram-card';
-            const inner = document.createElement('div');
-            inner.className = 'diagram-card-inner';
-
-            const srcPanel = document.createElement('div');
-            srcPanel.className = 'diagram-source';
-
-            const srcHeader = document.createElement('div');
-            srcHeader.className = 'diagram-source-header';
-            const srcLabel = document.createElement('div');
-            srcLabel.className = 'diagram-source-label';
-            srcLabel.textContent = 'Mermaid';
-            srcHeader.appendChild(srcLabel);
-            const tryLink = document.createElement('a');
-            tryLink.className = 'try-link';
-            tryLink.textContent = 'Try it \u2192';
-            tryLink.href = '/?src=' + encodeURIComponent(ex.source);
-            srcHeader.appendChild(tryLink);
-            srcPanel.appendChild(srcHeader);
-
-            const srcPre = document.createElement('pre');
-            srcPre.textContent = ex.source;
-            srcPanel.appendChild(srcPre);
-
-            const outPanel = document.createElement('div');
-            outPanel.className = 'diagram-output';
-            const outPre = document.createElement('pre');
-            outPre.textContent = ex.output;
-            outPanel.appendChild(outPre);
-
-            inner.appendChild(srcPanel);
-            inner.appendChild(outPanel);
-            card.appendChild(inner);
-            return card;
-        }
-
-        async function init() {
-            const resp = await fetch('gallery.json');
-            const gallery = await resp.json();
-
-            const sidebar = document.getElementById('sidebar');
-            const content = document.getElementById('content');
-
-            for (const section of SECTIONS) {
-                const group = document.createElement('div');
-                group.className = 'sidebar-group';
-                const groupTitle = document.createElement('div');
-                groupTitle.className = 'sidebar-group-title';
-                groupTitle.textContent = section.title;
-                group.appendChild(groupTitle);
-
-                for (const [key, label, desc] of section.items) {
-                    const a = document.createElement('a');
-                    a.href = '#' + key;
-                    a.textContent = label;
-                    group.appendChild(a);
-
-                    const items = gallery[key];
-                    if (!items || !items.length) continue;
-
-                    const div = document.createElement('div');
-                    div.className = 'diagram-section';
-                    div.id = key;
-
-                    const h2 = document.createElement('h2');
-                    h2.textContent = label;
-                    div.appendChild(h2);
-
-                    const p = document.createElement('p');
-                    p.className = 'desc';
-                    p.textContent = desc;
-                    div.appendChild(p);
-
-                    for (const ex of items) {
-                        if (items.length > 1) {
-                            const vLabel = document.createElement('div');
-                            vLabel.className = 'variation-label';
-                            vLabel.textContent = ex.title;
-                            div.appendChild(vLabel);
-
-                            const vDesc = document.createElement('div');
-                            vDesc.className = 'variation-desc';
-                            vDesc.textContent = ex.desc;
-                            div.appendChild(vDesc);
-                        }
-
-                        div.appendChild(renderCard(ex));
-                    }
-
-                    content.appendChild(div);
-                }
-
-                sidebar.appendChild(group);
-            }
-        }
-
-        init();
-    </script>
 </body>
 </html>

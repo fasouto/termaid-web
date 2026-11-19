@@ -10,5 +10,5 @@ Show
 Type "Draw an ER diagram of schema.sql as mermaid. Just the diagram."
 Sleep 500ms
 Enter
-Wait+Screen@240s /done \d\d:\d\d/
-Sleep 4s
+Wait+Screen@240s /done \d+:\d\d/
+Sleep 3s

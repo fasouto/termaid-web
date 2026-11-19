@@ -10,5 +10,5 @@ Show
 Type "How does termaid --claude-hook handle a reply? Answer with a mermaid flowchart of at most 10 nodes and one sentence."
 Sleep 500ms
 Enter
-Wait+Screen@300s /done \d\d:\d\d/
-Sleep 6s
+Wait+Screen@300s /done \d+:\d\d/
+Sleep 3s

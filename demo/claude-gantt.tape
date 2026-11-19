@@ -10,5 +10,5 @@ Show
 Type "Plan a 6 week v2 launch for this service as a mermaid gantt chart with 3 sections. Just the diagram."
 Sleep 500ms
 Enter
-Wait+Screen@240s /done \d\d:\d\d/
-Sleep 4s
+Wait+Screen@240s /done \d+:\d\d/
+Sleep 3s
