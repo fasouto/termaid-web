@@ -283,8 +283,8 @@
         <article>
             <h1>Mermaid diagrams in Claude Code</h1>
             <p class="lede">
-                Claude writes Mermaid diagrams all the time, but Claude Code shows them as code blocks.
-                With the termaid plugin, Claude Code draws them in your terminal as diagrams, while the reply streams.
+                Claude often answers with Mermaid diagrams. With the termaid plugin, Claude Code draws them
+                in your terminal as Unicode diagrams, while the reply streams.
             </p>
 
             <figure>
@@ -316,16 +316,6 @@ uv tool install termaid</pre>
                 each reply, and a <code>/termaid:mermaid</code> skill.
             </p>
 
-            <h2 id="before-after">Before and after</h2>
-            <p>
-                Claude Code doesn't draw Mermaid on its own. Here is the same request with the plugin turned off:
-                you get the Mermaid source as text.
-            </p>
-            <figure>
-                <img src="img/claude-without.gif" width="1100" height="820" loading="lazy"
-                     alt="Claude Code without the termaid plugin, showing the raw Mermaid source of a sequence diagram">
-                <figcaption>Without the plugin, the reply is Mermaid source.</figcaption>
-            </figure>
 
             <h2 id="ask">Ask Claude for a diagram</h2>
             <p>
